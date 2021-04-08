@@ -1,0 +1,222 @@
+#joblistTable{
+  color: #303030 !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 1px;
+  line-height: 3em;
+  width: 100%;
+  text-align: left !important;
+}
+table td{
+  text-align: left !important;
+}
+.joblistTable tr.odd td {
+  background-color: #f5f5f5;
+}
+.joblistTable tr.even td {
+  background-color: #ffffff;
+}
+
+.joblistTable td div {
+  padding: 3px 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.joblist-column-1{
+  position: relative;
+  width: 35%;
+}
+.joblist-column-2{
+  position: relative;
+  width: 25%;
+}
+.joblist-column-3{
+  position: relative;
+  width: 15%;
+}
+.joblist-column-4{
+  position: relative;
+  width: 25%;
+}
+table.dataTable thead th, table.dataTable thead td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #111;
+  text-align: left;
+  line-height: 150%;
+}
+.joblist-column-1 a{
+  display:block;
+  width: 100%;
+  height: 100%;
+  position:absolute;
+  top: 0;
+  left: 0;
+}
+.filterContainer{
+  position: relative;
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  margin-bottom: 80px;
+  grid-column-gap: 30px;
+}
+
+
+.dropdown dd, .dropdown dt {
+  margin:0px;
+  padding:0px;
+  position:relative;
+}
+.dropdown ul {
+  margin:0px;
+  padding:0px;
+}
+.dropdown dd {
+  margin-top: -40px;
+}
+.dropdown dt{
+  background: none !important;
+  border-bottom: 1px solid #e0e0e0 !important;
+  border-radius: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+#position{
+  border: none;
+  border-bottom: 1px solid #e0e0e0 !important;
+  width: 100%;
+  margin-top: -2px;
+  height: 30px;
+}
+#position:focus{
+  outline: none !important;
+}
+.dropdown a, .dropdown a:visited {
+  color:#000;
+  text-decoration:none;
+  outline:none;
+  margin:0px;
+  padding:0px;
+  min-height: 30px;
+}
+.dropdown dt a {
+  background-color:#FFF;
+  display:block;
+  overflow: hidden;
+  width:100%;
+  margin:0px;
+  padding:0px;
+}
+.dropdown dt a span, .multiSel span {
+  cursor:pointer;
+  display:inline-block;
+  margin:0px;
+  font-size: 12px;
+}
+.multiSel, .initialOption{
+  padding: 0;
+  margin: 0;
+  line-height: 100%;
+  height: 100%;
+
+}
+.dropdown dd ul {
+  background-color: #FFF;
+  color:#000;
+  display:none;
+  position:absolute;
+  list-style:none;
+  height: auto;
+  overflow: auto;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+  padding: 10px 0;
+  border-radius: 3px;
+  top: -1px;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+  width: 120%;
+}
+.dropdown span.value {
+  display:none;
+  margin:0px;
+  padding:0px;
+}
+.dropdown dd ul li a {
+  display:block;
+  margin:0px;
+  padding:0px;
+}
+.dropdown dd ul li a:hover {
+  background-color:#fff;
+  margin:0px;
+  padding:0px;
+}
+.multiSelect{
+  position: relative;
+  z-index: 999;
+}
+.multiSelect ul li{
+  text-transform: uppercase;
+  font-weight: 300;
+  font-size: 14px;
+}
+.filterColumn label{
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #303030 !important;
+  letter-spacing: 1px;
+  line-height: 3em;
+}
+
+input[type=checkbox] {
+  display: none;
+}
+
+.multiSelect label {
+  display: inline-block;
+  color: #666666;
+  cursor: pointer;
+  position: relative;
+  padding: 8px 15px;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 300;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.multiSelect label:before {
+  line-height: 20px;
+  content: "";
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  position: absolute;
+  right: 0;
+  top: 30%;
+}
+
+input[type=checkbox]:checked + label:before,
+.multiSelect label:hover:before {
+  content: "\2713";
+  font-size: 19px;
+  color: #666;
+  text-align: center;
+  line-height: 10px;
+  width: 16px;
+  padding-left: 2px;
+}
+
+label:hover:before {
+  color: #d5d5d5;
+  text-shadow: none;
+}
+#searchPhrase{
+  width: 700px;
+}
+tr{
+  cursor: pointer !important;
+}
