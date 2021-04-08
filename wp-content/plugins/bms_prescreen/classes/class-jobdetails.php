@@ -24,7 +24,7 @@ class Jobdetails{
 
     public function templateJobDetail( $template ) {
         $id = get_query_var( 'jobid' );
-        var_dump($id);
+        //var_dump($id);
         $idPos = (int) strrpos($id, '-') + 1;
         $id = (int) substr($id, $idPos, 6);
         $slug = get_query_var( 'jobid' );
