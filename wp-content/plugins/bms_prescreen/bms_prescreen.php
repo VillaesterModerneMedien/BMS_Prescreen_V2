@@ -58,7 +58,7 @@ class BMS_Prescreen_Plugin {
                 add_action('admin_post_nopriv_sendFormTest', array( $this->candidate, 'writeCandidate' ));
                 add_action('wp_enqueue_scripts',array( $this, 'jobdetails_scripts' ));
             }
-        }
+        }-
 
         $this->joblist =  new Joblist();
         add_action( 'wp_enqueue_scripts', array( $this, 'joblist_scripts' ));
@@ -70,7 +70,7 @@ class BMS_Prescreen_Plugin {
     public function templateJobDetail( $template  ) {
         //var_dump('kikiki');die;
         $id = get_query_var( 'jobid' );
-        var_dump($id);
+- nur var_dump entfernt        //var_dump($id);
         $idPos = (int) strrpos($id, '-') + 1;
         $id = (int) substr($id, $idPos, 6);
         $slug = get_query_var( 'jobid' );
