@@ -203,9 +203,12 @@ input:checked + .recruit-toggleswitch-slider:before {
   margin-top: -200px !important;
   text-align: center;
 }
+#tm-mainKarriere{
+  padding-top: 0px !important;
+}
 .jobdetailsTopImage{
   width: 100%;
-
+  padding: 0 !important;
   img{
     width: 100%;
   }
@@ -223,7 +226,7 @@ input:checked + .recruit-toggleswitch-slider:before {
 }
 
 .hellgrau{
-  background: $hellgrau;
+  background: $hellgrau !important;
 }
 section h2{
   color: #282828;
@@ -327,7 +330,7 @@ h4.subtitles{
   top: 135px;
 }
 .starHidden{
-  /* display: none; */
+  display: none;
 }
 .starRatingContainer{
   display: flex;
@@ -385,7 +388,7 @@ h4.subtitles{
   justify-content: center;
 }
 #formTest label{
-  text-align: left !important;
+  text-align: left;
   display: block;
 }
 .warning{
@@ -446,4 +449,18 @@ form button{
 .preloaderVisible{
   opacity: 0.95;
   z-index: 109;
+}
+#topSection{
+  padding-top: 0px;
+}
+
+.typeCheckboxLabel{
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.bms-field-label label{
+  text-align: center !important;
 }

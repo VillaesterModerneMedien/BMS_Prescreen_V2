@@ -248,4 +248,8 @@ tr {
   cursor: pointer !important;
 }
 
+.preloader {
+  text-align: center;
+}
+
 /*# sourceMappingURL=joblist.css.map */
