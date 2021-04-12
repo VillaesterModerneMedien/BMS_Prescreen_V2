@@ -17,11 +17,29 @@ class Joblist{
 
     /**
      * Make Shortcode
+     * --> set Preloader
      *
      */
 
     function shortcodeJoblist( $atts, $content, $tag ){
+        $html = '<div class="joblistContainer">
+                    <div class="preloader">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only"><img src="/wp-content/plugins/bms_prescreen/assets/images/spinner-joblist.gif"></span>
+                        </div>
+                        <p>Daten werden geladen</p>
+                    </div>
+                </div>';
+        return $html;
+    }
 
+    /**
+     * Make Shortcode callable via Ajax
+     *
+     */
+
+    function getJoblist()
+    {
         // Set page limit
         // maybe implement pagination soon
 
@@ -30,13 +48,11 @@ class Joblist{
             'is_published_on_widget' => true
         ];
 
-
         $response = $this->apiHelper->PrescreenAPI('job', 'GET', $parameters);
 
         $output = $this->templateLoader( BMSPRE_PLUGIN_DIR . '/templates/job-list.php', array('data' => $response->data), false);
-        return $output;
+        echo $output;
     }
-
 
 
     /**

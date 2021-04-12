@@ -1,10 +1,21 @@
 jQuery(document).ready(function($){
 
+
+
   var searchArray = [];
   var clickedValue;
   var searchString = '';
   var searchStringSelects = '';
   var searchStringText = '';
+
+    $.get({
+        url: 'http://bms-refresh.wamrhein.de/wp-admin/admin-ajax.php?action=getJoblist',
+        contentType: false,
+        processData: false,
+        success: function(response){
+            $('.joblistContainer').html(response);
+        }
+    });
 
   /**********************************/
   // Set Datatable
@@ -149,7 +160,8 @@ jQuery(document).ready(function($){
 
   // TR on click visit link
 
-  $('tr').on('click', function(){
+  $('body').on('click','tr',  function(){
+      alert();
     var link = $(this).data('link');
     window.open(link, "_self");
   })

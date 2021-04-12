@@ -17,9 +17,11 @@ $skills = $jobdetailsHelper->getRecruitainmentLi($jobdetails->description, 'recr
 ?>
 <?php get_header(); ?>
 
-<section class="jobdetailsTopImage">
+<section class="jobdetailsTopImage jobdetailsTitle">
     <img itemprop="image" src="http://bms.wamrhein.de/wp-content/uploads/2018/10/bms_standardbanner.jpg" alt="stellenausschreibung_template">
+    <h1><?= $jobdetails->title; ?></h1>
 </section>
+
 <div class="preloader">
     <div class="spinner-border" role="status">
         <span class="sr-only">Loading...</span>
@@ -27,47 +29,51 @@ $skills = $jobdetailsHelper->getRecruitainmentLi($jobdetails->description, 'recr
     <p>Ihre Bewerbung wird übermittelt...</p>
 </div>
 
-<section class="container jobdetailsTitle">
-    <h1><?= $jobdetails->title; ?></h1>
-</section>
-
-
-<section class="container-fluid  sectionAbout">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <?php
-                    $html = $jobdetails->job_contents[0]->content;
-                ?>
-                <h2><?= $jobdetailsHelper->getByID($html, 'recruitainment-ueberuns-titel'); ?></h2>
+<section id="topSection" class="uk-section-default uk-section">
+    <div class="uk-container">
+        <?php
+            $html = $jobdetails->job_contents[0]->content;
+        ?>
+        <div class="tm-grid-expand uk-child-width-1-1 uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+            <div class="uk-first-column">
+                <h2 class="uk-heading-medium uk-text-center">
+                    <?= $jobdetailsHelper->getByID($html, 'recruitainment-ueberuns-titel'); ?>
+                </h2>
                 <h4 class="subtitles"><?= $jobdetailsHelper->getByID($html, 'recruitainment-ueberuns-subtitel'); ?></h4>
-                <p><?= $jobdetailsHelper->getByID($html, 'recruitainment-ueberuns-text'); ?></p>
-                <h4 class="subtitles"><?= $jobdetailsHelper->getByID($html, 'recruitainment-bietendir-ueberschrift'); ?></h4>
-                <ul class="wirBietenList">
-                    <?php foreach($jobdetailsHelper->getListElements($html) as $listenelement): ?>
-                        <li>
-                            <img src="<?= '/wp-content/plugins/bms_prescreen//assets/images/recruitainment/wirbieten_icons/' . $jobdetailsHelper->imageRenaming($listenelement) . '.png'; ?>" />
-                            <h4><?= $listenelement; ?></h4>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
+
+                <div class="uk-panel uk-margin uk-text-center">
+                    <?= $jobdetailsHelper->getByID($html, 'recruitainment-ueberuns-text'); ?>
+                </div>
             </div>
+        </div>
+        <div class="tm-grid-expand uk-grid-margin uk-grid" uk-grid="">
+
+            <div class="uk-width-1-1@m uk-first-column">
+                <h4 class="subtitles"><?= $jobdetailsHelper->getByID($html, 'recruitainment-bietendir-ueberschrift'); ?></h4>
+            </div>
+
+            <?php foreach($jobdetailsHelper->getListElements($html) as $listenelement): ?>
+                <div class="uk-width-1-3@m">
+                    <img src="<?= '/wp-content/plugins/bms_prescreen//assets/images/recruitainment/wirbieten_icons/' . $jobdetailsHelper->imageRenaming($listenelement) . '.png'; ?>" />
+                    <h4><?= $listenelement; ?></h4>
+                </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </section>
 
-<section class="container-fluid hellgrau sectionAufgaben">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 sectionMeta">
-                <?php
-                $html = $jobdetails->job_contents[1]->content;
-                ?>
-                <h2><?= $jobdetailsHelper->getByID($html, 'recruitainment-aufgaben-ueberschrift'); ?></h2>
+<section id="sectionAufgaben" class="uk-section-default hellgrau sectionAufgaben uk-section">
+    <div class="uk-container">
+        <?php
+        $html = $jobdetails->job_contents[1]->content;
+        ?>
+        <div class="tm-grid-expand uk-grid-margin uk-grid" uk-grid="">
+            <div class="uk-width-1-1@m uk-first-column">
+                <h2 class="uk-heading-medium uk-text-center">
+                    <?= $jobdetailsHelper->getByID($html, 'recruitainment-aufgaben-ueberschrift'); ?>
+                </h2>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
+            <div class="uk-width-1-1@m">
                 <ul>
                     <?php foreach($jobdetailsHelper->getListElements($html) as $listenelement): ?>
                         <li>
@@ -80,35 +86,42 @@ $skills = $jobdetailsHelper->getRecruitainmentLi($jobdetails->description, 'recr
     </div>
 </section>
 
+
 <form enctype="multipart/form-data" action="<?=admin_url( 'admin-post.php' ) ?>" method="post" name="formTest" id="formTest">
 
-    <section class="container-fluid sectionUnsWichtig">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 sectionMeta">
-                    <h2><?= $customFields['03_unswichtig_ueberschrift']; ?></h2>
-                    <p><?= $customFields['04_unswichtig_hilfetext']; ?></p>
+    <section id="sectionUnsWichtig" class="uk-section-default uk-section">
+        <div class="uk-container uk-container-small">
+            <div class="tm-grid-expand uk-child-width-1-1 uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+                <div class="uk-first-column">
+                    <h2 class="uk-heading-medium uk-text-center">
+                        <h2 class="uk-heading-medium uk-text-center">
+                            <?= $customFields['03_unswichtig_ueberschrift']; ?>
+                        </h2>
+                    </h2>
+                    <div class="uk-panel uk-margin uk-text-center">
+                        <p><?= $customFields['04_unswichtig_hilfetext']; ?></p>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12 switchGrid">
-                    <?php $counter = 0; ?>
-                    <?php foreach($switches as $switch): ?>
-                        <?php $counter++; ?>
+            <div class="tm-grid-expand uk-grid-margin uk-grid" uk-grid="">
+                <?php $counter = 0; ?>
+                <?php foreach($switches as $switch): ?>
+                    <?php $counter++; ?>
+                    <div class="uk-width-1-3@m">
                         <label class="recruit-toggleswitch" for="<?= $jobdetailsHelper->imageRenaming($switch); ?>">
                             <span class="switchLabel"><?= $switch; ?></span>
                             <input id="<?= $jobdetailsHelper->imageRenaming($switch); ?>" name="skillSwitch<?= $counter; ?>" aria-describedby="<?= $jobdetailsHelper->imageRenaming($switch); ?>" class="recruit-toggleswitch-checkbox" type="checkbox" value="<?= $jobdetailsHelper->imageRenaming($switch); ?>">
                             <span class="recruit-toggleswitch-slider"></span>
                         </label>
-                    <?php endforeach; ?>
-                </div>
+                    </div>
+                <?php endforeach; ?>
             </div>
 
-            <div class="row">
-                <div class="col-12 skillGrid">
-                    <?php $counter = 0; ?>
-                    <?php foreach($skills as $skill): ?>
-                        <?php $counter++; ?>
+            <div class="tm-grid-expand uk-grid-margin uk-grid" uk-grid="">
+                <?php $counter = 0; ?>
+                <?php foreach($skills as $skill): ?>
+                    <?php $counter++; ?>
+                    <div class="uk-width-1-3@m">
                         <div class="bmsSkillField">
                             <div class="starRatingContainer">
                                 <div class="bms-field-label">
@@ -128,27 +141,33 @@ $skills = $jobdetailsHelper->getRecruitainmentLi($jobdetails->description, 'recr
                                 </div>
                             </div>
                         </div>
-                    <?php endforeach; ?>
-                </div>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </section>
 
-    <section class="container-fluid hellgrau sectionDirWichtig">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 sectionMeta">
-                    <h2><?= $customFields['05_dirwichtig_ueberschrift']; ?></h2>
-                    <p><?= $customFields['06_dirwichtig_hilfetext']; ?></p>
+    <section id="sectionDirWichtig" class="uk-section-default hellgrau sectionDirWichtig uk-section">
+        <div class="uk-container">
+            <div class="tm-grid-expand uk-child-width-1-1 uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+                <div class="uk-first-column">
+                    <h2 class="uk-heading-medium uk-text-center">
+                        <h2 class="uk-heading-medium uk-text-center">
+                            <?= $customFields['05_dirwichtig_ueberschrift']; ?>
+                        </h2>
+                    </h2>
+                    <div class="uk-panel uk-margin uk-text-center">
+                        <p><?= $customFields['06_dirwichtig_hilfetext']; ?></p>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12">
+            <div class="tm-grid-expand uk-grid-margin uk-grid" uk-grid="">
+                <div class="uk-width-1-1@m">
                     <fieldset class="sliders">
                         <div class="field">
                             <?php
-                                $field = $customFields['07_slider_1'];
-                                $values = explode('<->', $field);
+                            $field = $customFields['07_slider_1'];
+                            $values = explode('<->', $field);
                             ?>
                             <div class="sliderLeft">
                                 <img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/slider_icons/<?= $jobdetailsHelper->imageRenaming(strtolower($values[0])); ?>.png">
@@ -167,8 +186,8 @@ $skills = $jobdetailsHelper->getRecruitainmentLi($jobdetails->description, 'recr
 
                         <div class="field">
                             <?php
-                                $field = $customFields['07_slider_2'];
-                                $values = explode('<->', $field);
+                            $field = $customFields['07_slider_2'];
+                            $values = explode('<->', $field);
                             ?>
                             <div class="sliderLeft">
                                 <img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/slider_icons/<?= $jobdetailsHelper->imageRenaming(strtolower($values[0])); ?>.png">
@@ -187,8 +206,8 @@ $skills = $jobdetailsHelper->getRecruitainmentLi($jobdetails->description, 'recr
 
                         <div class="field">
                             <?php
-                                $field = $customFields['07_slider_3'];
-                                $values = explode('<->', $field);
+                            $field = $customFields['07_slider_3'];
+                            $values = explode('<->', $field);
                             ?>
                             <div class="sliderLeft">
                                 <img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/slider_icons/<?= $jobdetailsHelper->imageRenaming(strtolower($values[0])); ?>.png">
@@ -207,8 +226,8 @@ $skills = $jobdetailsHelper->getRecruitainmentLi($jobdetails->description, 'recr
 
                         <div class="field">
                             <?php
-                                $field = $customFields['07_slider_4'];
-                                $values = explode('<->', $field);
+                            $field = $customFields['07_slider_4'];
+                            $values = explode('<->', $field);
                             ?>
                             <div class="sliderLeft">
                                 <img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/slider_icons/<?= $jobdetailsHelper->imageRenaming(strtolower($values[0])); ?>.png">
@@ -230,16 +249,22 @@ $skills = $jobdetailsHelper->getRecruitainmentLi($jobdetails->description, 'recr
         </div>
     </section>
 
-    <section class="container-fluid sectionTyp">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 sectionMeta">
-                    <h2><?= $customFields['08_werbistdu_ueberschrift']; ?></h2>
-                    <p><?= $customFields['09_werbistdu_hilfetext']; ?></p>
+    <section id="sectionTyp" class="uk-section-default sectionTyp uk-section">
+        <div class="uk-container">
+            <div class="tm-grid-expand uk-child-width-1-1 uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+                <div class="uk-first-column">
+                    <h2 class="uk-heading-medium uk-text-center">
+                        <h2 class="uk-heading-medium uk-text-center">
+                            <?= $customFields['08_werbistdu_ueberschrift']; ?>
+                        </h2>
+                    </h2>
+                    <div class="uk-panel uk-margin uk-text-center">
+                        <p><?= $customFields['09_werbistdu_hilfetext']; ?></p>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-8 offset-md-2 col-12">
+            <div class="tm-grid-expand uk-child-width-1-1 uk-grid-margin uk-grid uk-grid-stack uk-text-center" uk-grid="">
+                <div class="uk-first-column">
                     <div class="typeCheckboxes">
                         <label class="typeCheckboxLabel" for="typeCheckbox-1">
                             <div class="circle">
@@ -318,86 +343,61 @@ $skills = $jobdetailsHelper->getRecruitainmentLi($jobdetails->description, 'recr
         </div>
     </section>
 
-    <section class="container-fluid hellgrau sectionForm">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 sectionMeta">
-                    <h2><?= $customFields['11_ansprechpartner_ueberschrift']; ?></h2>
-                    <span class="subheading">Deine Ansprechpartner</span>
-                    <ul class="contactData">
-                        <?php
-                            $contactData = $jobdetails->main_contact;
-                        ?>
-                        <li><img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/ansprechpartner/recruitainment_<?= strtolower($contactData->firstname . '_' . $contactData->lastname); ?>.png"></li>
-                        <li class="contactName"><strong><?= $contactData->firstname . ' ' . $contactData->lastname; ?></strong></li>
-                        <li class="contactPosition"><?= $contactData->job_title; ?></li>
-                        <li class="contactPhone"><?= $contactData->phone; ?></li>
-                    </ul>
-                    <span class="subheading">Deine Daten</span>
-
-                </div>
+    <section id="sectionKontakt" class="uk-section-default hellgrau sectionKontakt uk-section">
+        <div class="uk-container uk-container-small">
+            <div class="tm-grid-expand uk-child-width-1-1 uk-grid-margin uk-grid uk-grid-stack sectionMeta uk-text-center" uk-grid="">
+                <h2 class="uk-heading-medium uk-text-center">
+                    <?= $customFields['11_ansprechpartner_ueberschrift']; ?>
+                </h2>
+                <span class="subheading">Deine Ansprechpartner</span>
+                <ul class="contactData">
+                    <?php
+                    $contactData = $jobdetails->main_contact;
+                    ?>
+                    <li><img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/ansprechpartner/recruitainment_<?= strtolower($contactData->firstname . '_' . $contactData->lastname); ?>.png"></li>
+                    <li class="contactName"><strong><?= $contactData->firstname . ' ' . $contactData->lastname; ?></strong></li>
+                    <li class="contactPosition"><?= $contactData->job_title; ?></li>
+                    <li class="contactPhone"><?= $contactData->phone; ?></li>
+                </ul>
+                <span class="subheading">Deine Daten</span>
             </div>
-            <div class="row">
-                <div class="col-md-8 offset-md-2 col-12">
 
-                        <div class="mb-3">
-                            <label for="firstname" class="form-label">Vorname*</label>
-                            <input name="firstname" type="firstname" class="form-control inputText" id="firstname" class="required">
-                            <div class="warning" class="form-text">Dies ist ein Pflichtfeld.</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="lastname" class="form-label">Nachname*</label>
-                            <input name="lastname" type="lastname" class="form-control inputText" id="lastname" class="required">
-                            <div class="warning" class="form-text">Dies ist ein Pflichtfeld.</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">E-Mail Adresse*</label>
-                            <input name="email" type="email" class="form-control inputText" id="email" class="required">
-                            <div class="warning" class="form-text">Dies ist ein Pflichtfeld.</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="file" class="form-label">Lebenslauf</label>
+            <div class="tm-grid-expand uk-child-width-1-1 uk-grid-margin uk-grid uk-grid-stack sectionMeta uk-text-center" uk-grid="">
+                <div class="mb-3">
+                    <label for="firstname" class="form-label">Vorname*</label>
+                    <input name="firstname" type="firstname" class="form-control inputText" id="firstname" class="required">
+                    <div class="warning" class="form-text">Dies ist ein Pflichtfeld.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="lastname" class="form-label">Nachname*</label>
+                    <input name="lastname" type="lastname" class="form-control inputText" id="lastname" class="required">
+                    <div class="warning" class="form-text">Dies ist ein Pflichtfeld.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">E-Mail Adresse*</label>
+                    <input name="email" type="email" class="form-control inputText" id="email" class="required">
+                    <div class="warning" class="form-text">Dies ist ein Pflichtfeld.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="file" class="form-label">Lebenslauf</label>
 
-                            <input type="file" name="file" id="file">
-                            <div class="upload-area"  id="uploadfile">
-                                <span class="uploadMessage">Lebenslauf mit der Mouse hereinziehen oder auf das Feld klicken zum Hochladen<br/><strong>Achtung: Nur doc, docx, pdf und rtf erlaubt.</strong></span>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div id="recaptcha" class="g-recaptcha" data-sitekey="6Lc3mSYTAAAAAHh2h9ERE0-nqu5Gi_1RehRxSkLy"></div>
-                        </div>
-                        <div class="mb-3">
-                            <button type="submit" id="sendCandidate">Bewerbung abschicken</button>
-                        </div>
+                    <input type="file" name="file" id="file">
+                    <div class="upload-area"  id="uploadfile">
+                        <span class="uploadMessage">Lebenslauf mit der Mouse hereinziehen oder auf das Feld klicken zum Hochladen<br/><strong>Achtung: Nur doc, docx, pdf und rtf erlaubt.</strong></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div id="recaptcha" class="g-recaptcha" data-sitekey="6Lc3mSYTAAAAAHh2h9ERE0-nqu5Gi_1RehRxSkLy"></div>
+                </div>
+                <div class="mb-3">
+                    <button type="submit" id="sendCandidate">Bewerbung abschicken</button>
                 </div>
             </div>
         </div>
     </section>
 </form>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Launch demo modal
-</button>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 
