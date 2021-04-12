@@ -132,9 +132,6 @@ class BMS_Prescreen_Plugin {
     }
 
 
-
-
-
     /*******************************************************************************************************************
      *******************************************************************************************************************
      * Admin
@@ -150,10 +147,12 @@ class BMS_Prescreen_Plugin {
 
         // Add options to database if they don't already exist
         add_option("apiKey", "", "", "yes");
+        add_option("googleApiKey", "", "", "yes");
         add_option("BMSRewriteSlugJobdetail", "", "", "yes");
 
         // Register settings that this form is allowed to update
         register_setting('bms-prescreen-api', 'apiKey', []);
+        register_setting('bms-prescreen-api', 'googleApiKey', []);
         register_setting('bms-prescreen-api', 'BMSRewriteSlugJobdetail', []);
 
     }
@@ -184,6 +183,7 @@ class BMS_Prescreen_Plugin {
     protected function _getPluginOptions(){
         $options = [
             'apiKey'                    => esc_html( get_option( 'apiKey' ) ),
+            'googleApiKey'              => esc_html( get_option( 'googleApiKey' ) ),
             'rewriteSlugJobdetails'     => esc_html( get_option( 'BMSRewriteSlugJobdetail' ) ),
         ];
         return $options;

@@ -387,7 +387,7 @@ $skills = $jobdetailsHelper->getRecruitainmentLi($jobdetails->description, 'recr
                     </div>
                 </div>
                 <div class="mb-3">
-                    <div id="recaptcha" class="g-recaptcha" data-sitekey="6Lc3mSYTAAAAAHh2h9ERE0-nqu5Gi_1RehRxSkLy"></div>
+                    <div id="recaptcha" class="g-recaptcha" data-sitekey="<?= get_option( 'googleApiKey' ); ?>"></div>
                 </div>
                 <div class="mb-3">
                     <button type="submit" id="sendCandidate">Bewerbung abschicken</button>
@@ -396,12 +396,6 @@ $skills = $jobdetailsHelper->getRecruitainmentLi($jobdetails->description, 'recr
         </div>
     </section>
 </form>
-
-
-
-
-
-
 
 <?php do_action('qodef_page_after_container') ?>
 <?php get_footer(); ?>

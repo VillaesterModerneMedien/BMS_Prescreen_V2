@@ -28,6 +28,9 @@
               <p><?php esc_html_e( 'Rewrite Slug (Job Details)', 'bms-prescreen-api'); ?></p>
                 <input style="width:98%;font-family:monospace;" id="BMSRewriteSlugJobdetail" name="BMSRewriteSlugJobdetail" value="<?php echo esc_html( get_option( 'BMSRewriteSlugJobdetail' ) ); ?>">
 
+              <p><?php esc_html_e( 'Google Recaptche API Key', 'bms-prescreen-api'); ?></p>
+                <input style="width:98%;font-family:monospace;" id="googleApiKey" name="googleApiKey" value="<?php echo esc_html( get_option( 'googleApiKey' ) ); ?>">
+
                 <p class="submit">
                     <input class="button button-primary" type="submit" name="Submit" value="<?php esc_html_e( 'Einstellungen speichern', 'bms-prescreen-api'); ?>" />
                 </p>
