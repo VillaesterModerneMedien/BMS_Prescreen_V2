@@ -112,7 +112,7 @@ input:checked + .recruit-toggleswitch-slider {
   background-image: url("../images/recruitainment/skillrating/BMS_switch_off.png");
   -webkit-transition: .4s;
   transition: .4s;
-  margin-left: -30px;
+  margin-left: 0px;
 }
 
 .star-container{
@@ -463,4 +463,8 @@ form button{
 
 .bms-field-label label{
   text-align: center !important;
+}
+
+#sectionUnsWichtig{
+  text-align: center;
 }
