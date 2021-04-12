@@ -8,8 +8,12 @@ jQuery(document).ready(function($){
   var searchStringSelects = '';
   var searchStringText = '';
 
+    /**********************************/
+    // Init loading joblist via ajax
+    /**********************************/
+
     $.get({
-        url: 'http://bms-refresh.wamrhein.de/wp-admin/admin-ajax.php?action=getJoblist',
+        url: '/wp-admin/admin-ajax.php?action=getJoblist',
         contentType: false,
         processData: false,
         success: function(response){
@@ -161,7 +165,6 @@ jQuery(document).ready(function($){
   // TR on click visit link
 
   $('body').on('click','tr',  function(){
-      alert();
     var link = $(this).data('link');
     window.open(link, "_self");
   })

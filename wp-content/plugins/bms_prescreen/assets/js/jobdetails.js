@@ -116,7 +116,7 @@ jQuery(document).ready(function($){
 
 
     $.post({
-      url: 'http://bms.test/wp-admin/admin-ajax.php?action=writeCandidate',
+      url: '/wp-admin/admin-ajax.php?action=writeCandidate',
       data: formdata,
       contentType: false,
       processData: false,
@@ -146,7 +146,7 @@ jQuery(document).ready(function($){
 
 
     $.post({
-      url: 'http://bms.test/wp-admin/admin-ajax.php?action=patchApplication',
+      url: '/wp-admin/admin-ajax.php?action=patchApplication',
       data: formdata,
       contentType: false,
       processData: false,
