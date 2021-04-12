@@ -58,37 +58,18 @@ class BMS_Prescreen_Plugin {
                 add_action('admin_post_nopriv_sendFormTest', array( $this->candidate, 'writeCandidate' ));
                 add_action('wp_enqueue_scripts',array( $this, 'jobdetails_scripts' ));
             }
-        }-
+        }
 
         $this->joblist =  new Joblist();
+
         add_action( 'wp_enqueue_scripts', array( $this, 'joblist_scripts' ));
+
+        add_action('wp_ajax_getJoblist',  array( $this->joblist, 'getJoblist' ));
+        add_action('wp_ajax_nopriv_getJoblist', array( $this->joblist, 'getJoblist' ));
+
 
         add_action( 'wp_ajax_writeCandidate', array( $this, 'candidate_ajax_callback' ));
         add_action( 'wp_ajax_nopriv_writeCandidate', array( $this, 'candidate_ajax_callback' ));
-    }
-
-    public function templateJobDetail( $template  ) {
-        //var_dump('kikiki');die;
-        $id = get_query_var( 'jobid' );
-- nur var_dump entfernt        //var_dump($id);
-        $idPos = (int) strrpos($id, '-') + 1;
-        $id = (int) substr($id, $idPos, 6);
-        $slug = get_query_var( 'jobid' );
-        $parameters = [
-            'id' => $id
-        ];
-
-        $response = $this->apiHelper->PrescreenAPI('job', 'GET', $parameters);
-        if ( $id ) {
-            $args = [
-                'id'        =>  $id,
-                'response'  =>  $response,
-                'slug'      =>  $slug
-            ];
-            load_template(  BMSPRE_PLUGIN_DIR . '/templates/job-detail.php',  $require_once = true,  $args);
-            exit;
-        }
-        return $template;
     }
 
     /**
@@ -149,6 +130,7 @@ class BMS_Prescreen_Plugin {
         $this->candidate =  new Candidate();
         $this->candidate->writeCandidate();
     }
+
 
 
 
@@ -234,6 +216,9 @@ class BMS_Prescreen_Plugin {
         $vars[] = 'jobid';
         return $vars;
     }
+
+
+
 
 }
 $bms_plugin = new BMS_Prescreen_Plugin();
