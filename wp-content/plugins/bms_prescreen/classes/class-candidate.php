@@ -18,6 +18,7 @@ class Candidate{
 
     public function writeCandidate() {
         $files = $this->writeFile();
+        //ar_dump($files);die;
 
         $email      = sanitize_email( $_POST['email'] );
         $firstname  = sanitize_text_field( $_POST['firstname'] );
@@ -218,6 +219,7 @@ class Candidate{
 
         //wp_redirect( '/danke' );
         echo json_encode($response, true);
+        unlink($files['src']);
         die();
     }
 
@@ -225,13 +227,15 @@ class Candidate{
         /* Getting file name */
         $filename = $_FILES['file']['name'];
         $file = $_FILES['file']['tmp_name'];
+
+        //var_dump($filename);
         $fileType = substr($filename, strrpos($filename, '.') + 1, 3);
 
         /* Getting File size */
         $filesize = $_FILES['file']['size'];
 
         /* Location */
-        $location = "../upload/".$filename;
+        $location = "../wp-content/uploads/".$filename;
 
         $return_arr = array();
 
