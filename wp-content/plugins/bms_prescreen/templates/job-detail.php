@@ -24,9 +24,10 @@ $skills = $jobdetailsHelper->getRecruitainmentLi($jobdetails->description, 'recr
 
 <div class="preloader">
     <div class="spinner-border" role="status">
-        <span class="sr-only">Loading...</span>
+        <span class="sr-only"><img src="/wp-content/plugins/bms_prescreen/assets/images/spinner-joblist.gif"></span>
     </div>
     <p>Ihre Bewerbung wird übermittelt...</p>
+    <p>Nach erfolreicher Übermittlung werden Sie zurück zur Startseite geleitet.</p>
 </div>
 
 <section id="topSection" class="uk-section-default uk-section">
