@@ -25,6 +25,7 @@ jQuery(document).ready(function($){
   // CV Uploader
   /********************************************************************************************************************/
 
+  var uploadFile;
 
   // preventing page from redirecting
   $("html").on("dragover", function(e) {
@@ -39,29 +40,28 @@ jQuery(document).ready(function($){
   $('.upload-area').on('dragenter', function (e) {
     e.stopPropagation();
     e.preventDefault();
-    $("h1").text("Drop");
+    $('.uploadMessage').text('Datei ablegen zum hochladen.<br><strong>Achtung: Nur doc, docx, pdf und rtf erlaubt.</strong>');
   });
 
   // Drag over
   $('.upload-area').on('dragover', function (e) {
     e.stopPropagation();
     e.preventDefault();
-    $("h1").text("Drop");
+    $('.uploadMessage').text('Datei ablegen zum hochladen.<br><strong>Achtung: Nur doc, docx, pdf und rtf erlaubt.</strong>');
   });
 
   // Drop
   $('.upload-area').on('drop', function (e) {
     e.stopPropagation();
     e.preventDefault();
-
-    $("h1").text("Upload");
-
-    var file = e.originalEvent.dataTransfer.files;
     var fd = new FormData();
 
-    fd.append('file', file[0]);
+    var file = e.originalEvent.dataTransfer.files;
 
-    uploadData(fd);
+    uploadFile =  file[0];
+
+    $('.uploadMessage').text(file[0].name);
+    fd.append('file', file[0]);
   });
 
   // Open file selector on div click
@@ -72,48 +72,20 @@ jQuery(document).ready(function($){
   // file selected
   $("#file").change(function(){
     var fd = new FormData();
-
     var files = $('#file')[0].files[0];
-
     fd.append('file',files);
-
-    uploadData(fd);
   });
 
-  // Added thumbnail
-  function addThumbnail(data){
-    $("#uploadfile h1").remove();
-    var len = $("#uploadfile div.thumbnail").length;
-
-    var num = Number(len);
-    num = num + 1;
-
-    var name = data.formdata.name;
-    var size = convertSize(data.formdata.size);
-    var src = data.formdata.src;
-
-
-    // Creating an thumbnail
-    $("#uploadfile").append('<div id="thumbnail_'+num+'" class="thumbnail"></div>');
-    $("#thumbnail_"+num).append('<img src="'+src+'" width="100%" height="78%">');
-    $("#thumbnail_"+num).append('<span class="size">'+size+'<span>');
-  }
-
-  // Bytes conversion
-  function convertSize(size) {
-    var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-    if (size == 0) return '0 Byte';
-    var i = parseInt(Math.floor(Math.log(size) / Math.log(1024)));
-    return Math.round(size / Math.pow(1024, i), 2) + ' ' + sizes[i];
-  }
+  /********************************************************************************************************************/
+  // Upload Data and send API
+  /********************************************************************************************************************/
 
   function uploadData(formdata){
     var data = {
       'action': 'writeCandidate'
     };
-    //console.log(data);
-    console.log('formData',formdata);
 
+    //console.log('formData',formdata);
 
     $.post({
       url: '/wp-admin/admin-ajax.php?action=writeCandidate',
@@ -124,29 +96,29 @@ jQuery(document).ready(function($){
         $('.preloader').addClass('preloaderVisible');
       },
       success: function(response){
+
         var data = JSON.parse(response);
         if(data.message !== undefined)
         {
           alert(data.message);
         }
         $('.preloader').removeClass('preloaderVisible');
-
-        console.log('kiki');
-        console.log(data.id);
-        console.log(data);
-        //addThumbnail(response);
+        window.location.href = "/";
       }
     });
   }
+
+  /********************************************************************************************************************/
+  // Patch Candidate
+  /********************************************************************************************************************/
+  // To patch....TODO
 
   function patchApplication() {
 
     //console.log(data);
     console.log('formData', formdata);
-
-
     $.post({
-      url: '/wp-admin/admin-ajax.php?action=patchApplication',
+      url: ' /wp-admin/admin-ajax.php?action=patchApplication',
       data: formdata,
       contentType: false,
       processData: false,
@@ -160,14 +132,13 @@ jQuery(document).ready(function($){
         }
         $('.preloader').removeClass('preloaderVisible');
 
-        console.log('kiki');
-        console.log(data.id);
-        console.log(data);
+        //console.log('kiki');
+        //console.log(data.id);
+        //console.log(data);
         //addThumbnail(response);
       }
     });
   }
-
   /********************************************************************************************************************/
   // Form JS
   /********************************************************************************************************************/
@@ -280,6 +251,7 @@ jQuery(document).ready(function($){
     }
   })
 
+
   /********************************************************************************************************************/
   // Ajax Send
   /********************************************************************************************************************/
@@ -290,10 +262,9 @@ jQuery(document).ready(function($){
   $('#sendCandidate').click(function(e){
     e.preventDefault();
     var form = $('#formTest');
-    var fd = new FormData(form[0]);
 
-    //var files = $('#file')[0].files[0];
-    //fd.append('file',files);
+    var fd = new FormData(form[0]);
+    fd.append('file',uploadFile);
 
     recaptchaValidation();
     inputValidation();
