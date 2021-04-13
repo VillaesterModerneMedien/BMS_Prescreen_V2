@@ -57,6 +57,7 @@ jQuery(document).ready(function($){
     }
   });
 
+
   /**********************************/
   // Dropdowns for select
   /**********************************/
