@@ -87,7 +87,7 @@ class BMS_Prescreen_Plugin {
         // JavaScript
         wp_enqueue_script( 'bootstrap-js', plugins_url( 'assets/js/bootstrap.min.js', __FILE__ ),array('jquery'));
         wp_enqueue_script( 'recaptcha-js', 'https://www.google.com/recaptcha/api.js',array('jquery'));
-        wp_enqueue_script( 'bms-jobdetails', plugins_url( 'assets/js/jobdetails.js', __FILE__ ),array('jquery'));
+        wp_enqueue_script( 'bms-jobdetails', plugins_url( 'assets/js/jobdetails.min.js', __FILE__ ),array('jquery'));
 
         // Pass ajax_url to script.js
         wp_localize_script( 'bms-jobdetails', 'plugin_ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
@@ -120,7 +120,7 @@ class BMS_Prescreen_Plugin {
             // JavaScript
             wp_enqueue_script ('datatables' , plugins_url( 'assets/js/jquery.dataTables.min.js', __FILE__ ) , '' , '' , true);
             wp_enqueue_script ('ellipsis' , plugins_url( 'assets/js/ellipsis.js', __FILE__ ) , '' , '' , true);
-            wp_enqueue_script( 'joblist', plugins_url( 'assets/js//joblist.js', __FILE__ ),array('jquery'));
+            wp_enqueue_script( 'joblist', plugins_url( 'assets/js//joblist.min.js', __FILE__ ),array('jquery'));
         }
     }
 
