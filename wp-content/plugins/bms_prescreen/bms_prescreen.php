@@ -62,11 +62,11 @@ class BMS_Prescreen_Plugin {
 
         $this->joblist =  new Joblist();
 
-        add_action( 'wp_enqueue_scripts', array( $this, 'joblist_scripts' ));
 
         add_action('wp_ajax_getJoblist',  array( $this->joblist, 'getJoblist' ));
         add_action('wp_ajax_nopriv_getJoblist', array( $this->joblist, 'getJoblist' ));
 
+        add_action( 'wp_enqueue_scripts', array( $this, 'joblist_scripts' ));
 
         add_action( 'wp_ajax_writeCandidate', array( $this, 'candidate_ajax_callback' ));
         add_action( 'wp_ajax_nopriv_writeCandidate', array( $this, 'candidate_ajax_callback' ));

@@ -8,11 +8,13 @@ use BMSPrescreen\Helpers\PrescreenAPIHelper;
 class Joblist{
 
     protected $apiHelper;
+    protected $counter;
 
     public function __construct()
     {
         $this->apiHelper = new PrescreenAPIHelper();
         add_shortcode( 'joblist',  array( $this, 'shortcodeJoblist' ));
+        // $this->counter = 0;
     }
 
     /**
@@ -40,6 +42,7 @@ class Joblist{
 
     function getJoblist()
     {
+        $this->counter++;
         // Set page limit
         // maybe implement pagination soon
 
@@ -49,9 +52,7 @@ class Joblist{
         ];
 
         $response = $this->apiHelper->PrescreenAPI('job', 'GET', $parameters);
-
         $output = $this->templateLoader( BMSPRE_PLUGIN_DIR . '/templates/job-list.php', array('data' => $response->data), false);
-        echo $output;
     }
 
 
@@ -74,12 +75,9 @@ class Joblist{
             include $filePath;
 
             // End buffering and return its contents
-            $output = ob_get_clean();
+            $output = ob_get_flush();
+            exit();
         }
-        if ($print) {
-            print $output;
-        }
-        return $output;
     }
 
 }
