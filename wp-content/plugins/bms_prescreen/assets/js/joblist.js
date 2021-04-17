@@ -1,6 +1,6 @@
 jQuery(document).ready(function($){
 
-
+//alert();
 
   var searchArray = [];
   var clickedValue;
@@ -14,8 +14,8 @@ jQuery(document).ready(function($){
 
     $.get({
         url: '/wp-admin/admin-ajax.php?action=getJoblist',
-        contentType: false,
-        processData: false,
+        async: false,
+        contentType: 'application/json',
         success: function(response){
             $('.joblistContainer').html(response);
         }
