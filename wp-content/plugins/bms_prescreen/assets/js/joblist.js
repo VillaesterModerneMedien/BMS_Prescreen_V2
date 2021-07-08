@@ -14,11 +14,12 @@ jQuery(document).ready(function($){
 
     $.get({
         url: '/wp-admin/admin-ajax.php?action=getJoblist',
-        async: false,
+        async: true,
         contentType: 'application/json',
         success: function(response){
             $('.joblistContainer').html(response);
         }
+
     });
 
   /**********************************/

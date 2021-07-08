@@ -81,7 +81,7 @@ class PrescreenAPIHelper
             default:
                 $url  = $this->prescreenBaseURL . $type . '?' . $parameter;
         }
-//var_dump($url);
+
         return $url;
 
     }
