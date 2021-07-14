@@ -27,10 +27,19 @@ class BMS_Prescreen_Plugin {
     protected $joblist;
     protected $candidate;
     protected $options;
+    protected $shortCode = false;
+    protected $post;
+    protected $wpdb;
 
     public function __construct() {
+        global $post, $wpdb;
+
+        $this->post = $post;
+        $this->wpdb = $wpdb;
+
         // registriert den neuen custom post type
         //add_action( 'init', array( $this, 'register_custom_post_type' ) );
+
 
         add_action( 'init', array( &$this, 'init' ) );
         add_action( 'admin_init', array( &$this, 'admin_init' ) );
@@ -41,6 +50,7 @@ class BMS_Prescreen_Plugin {
 
     public function init() {
         $options = $this->options;
+        add_action( 'wp_enqueue_scripts', array( $this, '_getShortcode' ));
 
         // When Request URI = rewriteSlugJobDetails
         // --> Jobdetails
@@ -59,17 +69,14 @@ class BMS_Prescreen_Plugin {
                 add_action('wp_enqueue_scripts',array( $this, 'jobdetails_scripts' ));
             }
         }
-
         $this->joblist =  new Joblist();
-
-
         add_action('wp_ajax_getJoblist',  array( $this->joblist, 'getJoblist' ));
         add_action('wp_ajax_nopriv_getJoblist', array( $this->joblist, 'getJoblist' ));
 
-        add_action( 'wp_enqueue_scripts', array( $this, 'joblist_scripts' ));
-
         add_action( 'wp_ajax_writeCandidate', array( $this, 'candidate_ajax_callback' ));
         add_action( 'wp_ajax_nopriv_writeCandidate', array( $this, 'candidate_ajax_callback' ));
+
+        add_action( 'wp_enqueue_scripts', array( $this, 'joblist_scripts' ));
     }
 
     /**
@@ -81,7 +88,7 @@ class BMS_Prescreen_Plugin {
     function jobdetails_scripts() {
         // CSS
         //wp_enqueue_style( 'style-css', plugins_url( '/style.css', __FILE__ ));
-        wp_enqueue_style( 'bootstrap-css', plugins_url( 'assets/css/bootstrap.min.css', __FILE__ ));
+        //wp_enqueue_style( 'bootstrap-css', plugins_url( 'assets/css/bootstrap.min.css', __FILE__ ));
         wp_enqueue_style( 'jobdetails-css', plugins_url( 'assets/css/jobdetails.css', __FILE__ ));
 
         // JavaScript
@@ -109,10 +116,12 @@ class BMS_Prescreen_Plugin {
             $result = $wpdb->get_var( $wpdb->prepare(
                 "SELECT count(*) FROM $wpdb->postmeta " .
                 "WHERE post_id = %d and meta_value LIKE '%%joblist%%'", $post->ID ) );
+
             $shortcode_found = ! empty( $result );
         }
 
         if ( $shortcode_found ) {
+
             // CSS
             wp_enqueue_style( 'datatables-css', plugins_url( 'assets/css/dataTables.min.css', __FILE__ ));
             wp_enqueue_style( 'joblist-css', plugins_url( 'assets/css/joblist.css', __FILE__ ));
@@ -122,6 +131,24 @@ class BMS_Prescreen_Plugin {
             wp_enqueue_script ('ellipsis' , plugins_url( 'assets/js/ellipsis.js', __FILE__ ) , '' , '' , true);
             wp_enqueue_script( 'joblist', plugins_url( 'assets/js//joblist.min.js', __FILE__ ),array('jquery'));
         }
+    }
+
+    /**
+     * Get plugin options from the Backend
+     *
+     */
+
+    function _getShortcode(){
+        global $post, $wpdb;
+
+        $shortcode_found = false;
+        if ( has_shortcode($post->post_content, 'joblist') ) {
+            $shortcode_found = 'joblist';
+        }
+        if ( has_shortcode($post->post_content, 'testwurst') ) {
+            $shortcode_found = 'joblist';
+        }
+        $this->shortCode = $shortcode_found;
     }
 
     ## Fetch all records
