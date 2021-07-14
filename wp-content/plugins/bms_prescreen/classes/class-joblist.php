@@ -14,7 +14,6 @@ class Joblist{
     {
         $this->apiHelper = new PrescreenAPIHelper();
         add_shortcode( 'joblist',  array( $this, 'shortcodeJoblist' ));
-        // $this->counter = 0;
     }
 
     /**
@@ -24,15 +23,36 @@ class Joblist{
      */
 
     function shortcodeJoblist( $atts, $content, $tag ){
-        $html = '<div class="joblistContainer">
+        $html = '<div id="hiddenData"';
+        if(!empty($atts)){
+            foreach($atts as $attributeName => $value){
+                $html .= 'data-' . $attributeName . '="' . $value . '" ';
+            }
+        }
+
+        $html .= '></div>';
+
+        $html .= '<div class="joblistContainer">
                     <div class="preloader">
                         <div class="spinner-border" role="status">
                             <span class="sr-only"><img src="/wp-content/plugins/bms_prescreen/assets/images/spinner-joblist.gif"></span>
                         </div>
                         <p>Daten werden geladen</p>
+                        <table id="joblistTable" class="joblistTable"></table>
                     </div>
                 </div>';
         return $html;
+    }
+
+    /**
+     * Make Shortcode
+     * --> set Preloader
+     *
+     */
+
+    function shortcodeJoblistAttributes( $atts, $content, $tag ){
+
+        return $this->attributes;
     }
 
     /**
@@ -42,6 +62,8 @@ class Joblist{
 
     function getJoblist()
     {
+
+        $test = $_POST;
         $this->counter++;
         // Set page limit
         // maybe implement pagination soon
