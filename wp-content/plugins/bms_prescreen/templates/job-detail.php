@@ -1,5 +1,7 @@
 <?php
 
+use BMSPrescreen\Helpers\JoblistHelper;
+
 if (!defined('ABSPATH')) exit;
 /*
 Template Name: job-detail
@@ -7,20 +9,30 @@ Template Name: job-detail
 $jobdetails = $args['response']->data[0];
 //use BMSPrescreen\Helpers\JobdetailsHelper;
 require_once(BMSPRE_PLUGIN_DIR . '/helpers/jobdetailsHelper.php');
+require_once(BMSPRE_PLUGIN_DIR . '/helpers/joblistHelper.php');
 $jobdetailsHelper = new JobdetailsHelper();
+$joblistHelper = new JoblistHelper();
 
 $customFields = $jobdetailsHelper->getCustomFields($jobdetails->custom_fields);
 //var_dump($customFields);
 
 $switches = $jobdetailsHelper->getRecruitainmentLi($jobdetails->description, 'recruitainment-toggleswitches');
 $skills = $jobdetailsHelper->getRecruitainmentLi($jobdetails->description, 'recruitainment-skills');
+
+//var_dump($customFields['00_wer_schreibt_aus']);
+
+$companyInformationsJoblist = $joblistHelper->setUnternehmen($customFields['00_wer_schreibt_aus']);
+$companyInfosYootheme = $args['company'][$companyInformationsJoblist['name']];
+//var_dump($companyInfosYootheme);
+
+$companyName = $companyInfosYootheme['company'];
+$companyClass = $companyName;
+$companyClass = preg_replace("/[^A-Za-z0-9 ]/", '_', $companyClass);
+$companyClass = str_replace(' ', '_', $companyClass);
+$companyClass = strtolower($companyClass);
+$html = $jobdetails->job_contents[0]->content;
 ?>
 <?php get_header(); ?>
-
-<section class="jobdetailsTopImage jobdetailsTitle">
-    <img itemprop="image" src="http://bms.wamrhein.de/wp-content/uploads/2018/10/bms_standardbanner.jpg" alt="stellenausschreibung_template">
-    <h1><?= $jobdetails->title; ?></h1>
-</section>
 
 <div class="preloader">
     <div class="spinner-border" role="status">
@@ -30,11 +42,56 @@ $skills = $jobdetailsHelper->getRecruitainmentLi($jobdetails->description, 'recr
     <p>Nach erfolreicher Übermittlung werden Sie zurück zur Startseite geleitet.</p>
 </div>
 
+<div class="uk-section-default uk-section" id="jobdetailsTop">
+    <div class="uk-container uk-container-small">
+        <div class="tm-grid-expand uk-child-width-1-1 uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+            <div class="uk-first-column">
+                <div class="uk-panel uk-margin <?= $companyClass; ?>" id="jobdetailsTopHeadlineContainer">
+                    <h1 class="uk-heading-large uk-heading-light jobdetailsHeadline">
+                        <?= $jobdetails->title; ?>
+                    </h1>
+                    <a href="#" class="uk-button-default-white">Bewirb dich jetzt</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="uk-section-default uk-section" id="jobdetailsCompanySection">
+    <div class="uk-container uk-container-small">
+        <div class="tm-grid-expand uk-child-width-1-1 uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+            <div class="uk-first-column">
+                <div class="uk-panel uk-margin" id="jobdetailsCompanyContainer">
+                    <img class="jobdetailsLogo" src="/<?= $companyInfosYootheme['logo']; ?>" />
+                    <div class="companyData">
+                        <span class="companySubtitle <?= $companyClass; ?>">Kurzportrait</span>
+                        <h3 class="uk-heading-large companyHeadline"><?= $companyInfosYootheme['headline']; ?></h3>
+                        <div>
+                            <?= $companyInfosYootheme['content']; ?>
+                        </div>
+                    </div>
+                    <a href="<?= $companyInfosYootheme['webseiteLink']; ?>" class="uk-button-default-dark">Zur Firmenwebsite</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="uk-section-default uk-section" id="wirbietendirSection">
+    <div class="uk-container uk-container-small">
+        <div class="tm-grid-expand uk-child-width-1-2@m uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+            <?php foreach($jobdetailsHelper->getListElements($html) as $listenelement): ?>
+                <div class="wirbietendirElements">
+                    <img src="<?= '/wp-content/plugins/bms_prescreen//assets/images/recruitainment/wirbieten_icons/' . $jobdetailsHelper->imageRenaming($listenelement) . '.png'; ?>" />
+                    <h4><?= $listenelement; ?></h4>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>
+
 <section id="topSection" class="uk-section-default uk-section">
-    <div class="uk-container">
-        <?php
-            $html = $jobdetails->job_contents[0]->content;
-        ?>
+    <div class="uk-container uk-container-small">
         <div class="tm-grid-expand uk-child-width-1-1 uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
             <div class="uk-first-column">
                 <h2 class="uk-heading-medium uk-text-center">
@@ -53,18 +110,13 @@ $skills = $jobdetailsHelper->getRecruitainmentLi($jobdetails->description, 'recr
                 <h4 class="subtitles"><?= $jobdetailsHelper->getByID($html, 'recruitainment-bietendir-ueberschrift'); ?></h4>
             </div>
 
-            <?php foreach($jobdetailsHelper->getListElements($html) as $listenelement): ?>
-                <div class="uk-width-1-3@m">
-                    <img src="<?= '/wp-content/plugins/bms_prescreen//assets/images/recruitainment/wirbieten_icons/' . $jobdetailsHelper->imageRenaming($listenelement) . '.png'; ?>" />
-                    <h4><?= $listenelement; ?></h4>
-                </div>
-            <?php endforeach; ?>
+
         </div>
     </div>
 </section>
 
 <section id="sectionAufgaben" class="uk-section-default hellgrau sectionAufgaben uk-section">
-    <div class="uk-container">
+    <div class="uk-container uk-container-small">
         <?php
         $html = $jobdetails->job_contents[1]->content;
         ?>
@@ -149,7 +201,7 @@ $skills = $jobdetailsHelper->getRecruitainmentLi($jobdetails->description, 'recr
     </section>
 
     <section id="sectionDirWichtig" class="uk-section-default hellgrau sectionDirWichtig uk-section">
-        <div class="uk-container">
+        <div class="uk-container uk-container-small">
             <div class="tm-grid-expand uk-child-width-1-1 uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
                 <div class="uk-first-column">
                     <h2 class="uk-heading-medium uk-text-center">
@@ -251,7 +303,7 @@ $skills = $jobdetailsHelper->getRecruitainmentLi($jobdetails->description, 'recr
     </section>
 
     <section id="sectionTyp" class="uk-section-default sectionTyp uk-section">
-        <div class="uk-container">
+        <div class="uk-container uk-container-small">
             <div class="tm-grid-expand uk-child-width-1-1 uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
                 <div class="uk-first-column">
                     <h2 class="uk-heading-medium uk-text-center">
