@@ -15,138 +15,122 @@ $cities = $joblistHelper->getCities();
 $companies = $joblistHelper->getCompaniesSelect($data);
 ?>
 <input type="text" id="searchPhrase">
-<div class="filterContainer">
-    <div class="filterColumn">
-        <label>Position</label>
-        <dt>
-            <input type="text" id="position" name="position" placeholder="Position">
-        </dt>
-    </div>
 
-    <div class="filterColumn">
-        <label>Bereich</label>
-        <dl class="dropdown" id="bereich">
-            <dt>
-                <a data-id="bereich">
-                    <span class="initialOption">Bereich auswählen</span>
-                    <p class="multiSel"></p>
-                    <input type="hidden" class="hiddenSelect">
-                </a>
-            </dt>
-
-            <dd>
-                <div class="multiSelect">
-                    <ul>
-                        <li>
-                            <input type="checkbox" data-boxtype="Bereich" data-id="bereich" id="NPO" value="Non Profit Organisationen" />
-                            <label for="NPO">Non Profit Organisationen</label>
-
-                        </li>
-                        <li>
-                            <input type="checkbox" data-boxtype="Bereich" data-id="bereich" id="finanz" value="Finanzdienstleister" />
-                            <label for="finanz">Finanzdienstleister</label>
-                        </li>
-                    </ul>
+    <div class="uk-filterContainer">
+        <div class="tm-grid-expand uk-child-width-1-1 uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+            <div class="uk-first-column">
+                <div class="uk-margin">
+                    <div>
+                        <label class="uk-form-label" for="Suche">Suche</label>
+                        <div class="uk-form-controls">
+                            <div class="uk-inline uk-display-block">
+                                <span class="uk-form-icon uk-icon" uk-icon="icon: search"><svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="#000" stroke-width="1.1" cx="9" cy="9" r="7"></circle><path fill="none" stroke="#000" stroke-width="1.1" d="M14,14 L18,18 L14,14 Z"></path></svg></span>
+                                <input class="uk-input" id="Suche" type="text" name="Suche" placeholder="Suche">
+                            </div>
+                        </div>
+                        <div class="uk-text-danger uk-text-small""></div>
+                    </div>
                 </div>
-            </dd>
-        </dl>
-    </div>
+            </div>
+        </div>
+        <div class="tm-grid-expand uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+            <div class="uk-width-1-2@m uk-first-column">
 
-    <div class="filterColumn">
-        <label>Unternehmen</label>
-        <dl class="dropdown" id="unternehmen">
-            <dt>
-                <a data-id="unternehmen">
-                    <span class="initialOption">Unternehmen auswählen</span>
-                    <p class="multiSel"></p>
-                    <input type="hidden" class="hiddenSelect">
-                </a>
-            </dt>
-
-            <dd>
-                <div class="multiSelect">
-                    <ul>
-                        <?php foreach ($companies as $company): ?>
-                            <li>
-                                <input type="checkbox" data-boxtype="Unternehmen" data-id="unternehmen" id="<?= $company; ?>" value="<?= $company; ?>" />
-                                <label for="<?= $company; ?>"><?= $company; ?></label>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
+                <div data-id="page#1-1-0-0" class="uk-margin">
+                    <div data-yooessentials-form-field="Bereich">
+                        <label class="uk-form-label" for="Bereich">Bereich</label>
+                        <div class="uk-form-controls">
+                            <select class="uk-select filterSelect" id="Bereich" name="Bereich">
+                                <option value="">Bereich</option>
+                                <option value="Finanzdienstleister">Finanzdienstleister</option>
+                                <option value="Non Profit Organisationen">Non Profit Organisationen</option>
+                                <option value="Verwaltung">Verwaltung</option>
+                                <option value="Consulting">Consulting</option>
+                                <option value="Design">Design</option>
+                                <option value="Training">Training</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-            </dd>
-        </dl>
-    </div>
+            </div>
 
-    <div class="filterColumn">
-        <label>Standort</label>
-        <dl class="dropdown" id="standort">
-            <dt>
-                <a data-id="standort">
-                    <span class="initialOption">Standort auswählen</span>
-                    <p class="multiSel"></p>
-                    <input type="hidden" class="hiddenSelect">
-                </a>
-            </dt>
-
-            <dd>
-                <div class="multiSelect">
-                    <ul>
-                        <?php foreach ($cities as $city): ?>
-                            <li>
-                                <input type="checkbox" data-boxtype="Standort" data-id="standort" value="<?= $city; ?>" /> <?= $city; ?>
-                                <label for="<?= $city; ?>"><?= $city; ?></label>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
+            <div class="uk-width-1-2@m uk-grid-margin uk-first-column">
+                <div class="uk-margin">
+                    <div>
+                        <label class="uk-form-label" for="Unternehmen">Unternehmen</label>
+                        <div class="uk-form-controls">
+                            <select class="uk-select filterSelect" id="Unternehmen" name="Unternehmen">
+                                <option value="">Unternehmen</option>
+                                <?php foreach ($companies as $company): ?>
+                                    <option value="<?= $company; ?>"><?= $company; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-            </dd>
-        </dl>
+            </div>
+        </div>
+        <div class="tm-grid-expand uk-child-width-1-1 uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+            <div class="uk-first-column">
+                <div class="uk-margin">
+                    <div>
+                        <label class="uk-form-label" for="Standort">Standort</label>
+                        <div class="uk-form-controls">
+                            <select class="uk-select filterSelect" id="Bereich" name="Bereich">
+                                <option value="">Standort</option>
+                                <?php foreach ($cities as $city): ?>
+                                    <option value="<?= $city; ?>"><?= $city; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <div class="tm-grid-expand uk-child-width-1-1 uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+        <div class="uk-first-column">
+            <table id="joblistTable" class="joblistTable">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                    <?php foreach ($data as $stellenanzeige): ?>
 
-</div>
+                    <?php
+                        $counter++;
+                        $customFields = $joblistHelper->customFields($stellenanzeige->custom_fields);
+                        $link = '/' . $rewriteSlug . '/' .  $joblistHelper->stringURLSafe($stellenanzeige->title) . '-' . $stellenanzeige->id;
+                        //var_dump($customFields);
 
+                        $company = $joblistHelper->setUnternehmen($customFields['00_wer_schreibt_aus'])['name'];
+                        $company = preg_replace("/[^A-Za-z0-9 ]/", '_', $company);
+                        $company = str_replace(' ', '_', $company);
+                        $company = strtolower($company);
+                        //var_dump($company);
+                    ?>
 
-<table id="joblistTable" class="joblistTable">
-    <thead>
-    <tr>
-        <th>Position</th>
-        <th>Bereich</th>
-        <th>Unternehmen</th>
-        <th>Standort</th>
-    </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($data as $stellenanzeige): ?>
-
-        <?php
-            $counter++;
-            if($counter % 2){
-                $rowClass = 'odd';
-            }
-            else{
-                $rowClass = 'even';
-            }
-            $customFields = $joblistHelper->customFields($stellenanzeige->custom_fields);
-            $link = '/' . $rewriteSlug . '/' .  $joblistHelper->stringURLSafe($stellenanzeige->title) . '-' . $stellenanzeige->id;
-
-        ?>
-
-        <tr class="<?= $rowClass; ?>"  data-link="<?= $link; ?>">
-            <td class="joblist-column-1">
-                <?= substr($stellenanzeige->title, 0, 55 ) . '...'; ?>
-            </td>
-            <td class="joblist-column-2">
-                <?= $joblistHelper->setUnternehmen($customFields['00_wer_schreibt_aus'])['type']; ?>
-            </td>
-            <td class="joblist-column-3">
-                <?= $joblistHelper->setUnternehmen($customFields['00_wer_schreibt_aus'])['name']; ?>
-            </td>
-            <td class="joblist-column-4">
-                <?= $customFields['01a_standort_der_stelle']; ?>
-            </td>
-        </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+                    <tr class="joblistResultRow" data-link="<?= $link; ?>">
+                        <td class="joblistResultLeft">
+                            <span class="joblistResultType <?= $company; ?>">
+                                <?= $joblistHelper->setUnternehmen($customFields['00_wer_schreibt_aus'])['type']; ?>
+                            </span>
+                            <span class="joblistResultCompany">
+                                Firma: <?= $joblistHelper->setUnternehmen($customFields['00_wer_schreibt_aus'])['name']; ?>
+                            </span>
+                            <h3 class="joblistResultHeadline">
+                                <?= substr($stellenanzeige->title, 0, 55 ) . '...'; ?>
+                            </h3>
+                        </td>
+                        <td class="joblistResultRight">
+                            <?= $customFields['01a_standort_der_stelle']; ?>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
 

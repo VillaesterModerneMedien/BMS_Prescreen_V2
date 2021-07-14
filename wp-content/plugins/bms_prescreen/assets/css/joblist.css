@@ -14,57 +14,6 @@ table td {
   text-align: left !important;
 }
 
-.joblistTable tr.odd td {
-  background-color: #f5f5f5;
-}
-
-.joblistTable tr.even td {
-  background-color: #ffffff;
-}
-
-.joblistTable td div {
-  padding: 3px 10px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.joblist-column-1 {
-  position: relative;
-  width: 35%;
-}
-
-.joblist-column-2 {
-  position: relative;
-  width: 25%;
-}
-
-.joblist-column-3 {
-  position: relative;
-  width: 15%;
-}
-
-.joblist-column-4 {
-  position: relative;
-  width: 25%;
-}
-
-table.dataTable thead th, table.dataTable thead td {
-  padding: 8px 10px;
-  border-bottom: 1px solid #111;
-  text-align: left;
-  line-height: 150%;
-}
-
-.joblist-column-1 a {
-  display: block;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
 .filterContainer {
   position: relative;
   display: grid;
@@ -242,7 +191,7 @@ label:hover:before {
 
 #searchPhrase {
   width: 700px;
-  display: none;
+  /* display:none; */
 }
 
 tr {
@@ -251,6 +200,85 @@ tr {
 
 .preloader {
   text-align: center;
+}
+
+.joblistResultRow {
+  background: white !important;
+  box-shadow: 0px 6px 12px #00000029;
+  border-radius: 8px !important;
+  display: flex;
+  width: 105%;
+  margin: 20px auto;
+  padding: 20px 15px;
+}
+
+.joblistResultRow > * {
+  line-height: 125%;
+}
+
+.joblistResultLeft {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+
+.joblistResultType {
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.joblistResultHeadline {
+  margin: 0;
+  text-transform: none;
+  font-size: 20px;
+  line-height: 25px !important;
+  font-weight: normal;
+}
+
+.joblistResultCompany {
+  font-size: 12px;
+  font-weight: normal;
+  text-transform: none;
+}
+
+.joblistResultType.bms_consulting {
+  color: #CC151A;
+  background: none;
+}
+
+.joblistResultType.eudemonia_solutions {
+  color: #1870B7;
+  background: none;
+}
+
+.joblistResultType.bms_orga___design {
+  color: #A9B8DE;
+  background: none;
+}
+
+.joblistResultType.bms_training___coaching {
+  color: #991917;
+  background: none;
+}
+
+.joblistResultType.npo_applications {
+  color: #669934;
+  background: none;
+}
+
+.joblistResultType.bms_corporate_solutions {
+  color: #1870B7;
+  background: none;
+}
+
+.joblistResultType.payfree {
+  color: #00BFA7;
+  background: none;
+}
+
+.joblistResultType.banking_guide {
+  color: #232856;
+  background: none;
 }
 
 /*# sourceMappingURL=joblist.css.map */
