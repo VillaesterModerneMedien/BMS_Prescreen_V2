@@ -508,4 +508,117 @@ form button {
   text-align: center;
 }
 
+/*** NEW ****/
+#jobdetailsTop {
+  height: 60vh;
+  padding: 0;
+}
+
+#jobdetailsTop div {
+  height: 100% !important;
+}
+
+.jobdetailsHeadline {
+  margin-bottom: 70px !important;
+}
+
+#jobdetailsTopHeadlineContainer {
+  display: flex;
+  border-radius: 0px 0px 16px 16px;
+  padding: 30px 120px 120px 120px;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+
+#jobdetailsCompanyContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wirbietendirElements {
+  text-align: center;
+  border-radius: 0px 16px 16px 0px;
+}
+
+.wirbietendirElements.uk-first-column {
+  border-radius: 16px 0px 0px 16px;
+}
+
+.wirbietendirElements:nth-child(1) {
+  background: #FFCE00;
+}
+
+.wirbietendirElements:nth-child(2) {
+  background: #2E9BE5;
+}
+
+.wirbietendirElements:nth-child(3) {
+  background: #FF4D5E;
+}
+
+.wirbietendirElements:nth-child(4) {
+  background: #8ECC46;
+}
+
+.wirbietendirElements:nth-child(5) {
+  background: #00E5C4;
+}
+
+.wirbietendirElements:nth-child(6) {
+  background: #A9B8DE;
+}
+
+.companySubtitle.bms_consulting {
+  color: #CC151A;
+  background: none;
+}
+
+.companyData {
+  width: 100%;
+  text-align: left;
+}
+
+.companySubtitle {
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.companySubtitle.eudemonia_solutions {
+  color: #1870B7;
+  background: none;
+}
+
+.companySubtitle.bms_orga___design {
+  color: #A9B8DE;
+  background: none;
+}
+
+.companySubtitle.bms_training___coaching {
+  color: #991917;
+  background: none;
+}
+
+.companySubtitle.npo_applications {
+  color: #669934;
+  background: none;
+}
+
+.companySubtitle.bms_corporate_solutions {
+  color: #1870B7;
+  background: none;
+}
+
+.companySubtitle.payfree {
+  color: #00BFA7;
+  background: none;
+}
+
+.companySubtitle.banking_guide {
+  color: #232856;
+  background: none;
+}
+
 /*# sourceMappingURL=jobdetails.css.map */
