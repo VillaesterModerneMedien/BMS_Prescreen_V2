@@ -45,42 +45,42 @@ class JoblistHelper
                 $unternehmen = [
                     'name'  =>  'BMS Consulting',
                     'url'   =>  'https://www.bms-consulting.de',
-                    'type'  =>  ''
+                    'type'  =>  'Verwaltung'
                 ];
                 break;
             case "ESAG":
                 $unternehmen = [
                     'name'  =>  'Eudemonia Solutions',
                     'url'   =>  'https://www.eudemonia-solutions.de',
-                    'type'  =>  ''
+                    'type'  =>  'Finanzdienstleister'
                 ];
                 break;
             case "NPO":
                 $unternehmen = [
                     'name'  =>  'NPO Applications',
                     'url'   =>  'https://www.npo-applications.de',
-                    'type'  =>  ''
+                    'type'  =>  'Finanzdienstleister'
                 ];
                 break;
             case "BMSUG":
                 $unternehmen = [
                     'name'  =>  'BMS Consulting Unternehmensgruppe',
                     'url'   =>  'https://www.bms-consulting.de',
-                    'type'  =>  ''
+                    'type'  =>  'Consulting'
                 ];
                 break;
             case "BMSOD":
                 $unternehmen = [
                     'name'  =>  'BMS Orga & Design',
                     'url'   =>  'https://www.bms-od.de',
-                    'type'  =>  ''
+                    'type'  =>  'Design'
                 ];
                 break;
             case "BMSTC":
                 $unternehmen = [
                     'name'  =>  'BMS Training & Coaching',
                     'url'   =>  'https://www.bms-tc.de',
-                    'type'  =>  ''
+                    'type'  =>  'Training'
                 ];
                 break;
             default:
