@@ -1,0 +1,100 @@
+{
+    "@import": "./element.php",
+    "name": "companygrid_item",
+    "title": "Item",
+    "width": 500,
+    "placeholder": {
+        "props": {
+            "title": "Title",
+            "meta": "",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            "image": "",
+            "icon": ""
+        }
+    },
+    "templates": {
+        "render": "./templates/template.php",
+        "content": "./templates/content.php"
+    },
+    "fields": {
+        "id": {
+            "label": "ID (des Posts...)",
+            "source": true
+        },
+        "title": {
+            "label": "Company",
+            "source": true
+        },
+        "headline": {
+            "label": "Headline",
+            "source": true
+        },
+        "content": {
+            "label": "Content",
+            "type": "editor",
+            "source": true
+        },
+        "webseiteLink": {
+            "label": "Link Webseite",
+            "source": true
+        },
+        "jobLink": {
+            "label": "Link Job",
+            "source": true
+        },
+        "image": "${builder.image}",
+
+        "link": "${builder.link}",
+        "tags": {
+            "label": "Tags",
+            "description": "Enter a comma-separated list of tags, for example, <code>blue, white, black</code>.",
+            "source": true
+        },
+        "panel_style": {
+            "label": "Style",
+            "description": "Select one of the boxed card styles.",
+            "type": "select",
+            "options": {
+                "None": "",
+                "Card Default": "card-default",
+                "Card Primary": "card-primary",
+                "Card Secondary": "card-secondary",
+                "Card Hover": "card-hover"
+            }
+        },
+        "status": "${builder.statusItem}",
+        "source": "${builder.source}"
+
+    },
+    "fieldset": {
+        "default": {
+            "type": "tabs",
+            "fields": [
+                {
+                    "title": "Content",
+                    "fields": [
+                        "title",
+                        "headline",
+                        "content",
+                        "webseiteLink",
+                        "jobLink",
+                        "image"
+                    ]
+                },
+                {
+                    "title": "Settings",
+                    "fields": [
+                        {
+                            "label": "Panel",
+                            "type": "group",
+                            "fields": [
+                                "panel_style"
+                            ]
+                        }
+                    ]
+                },
+                "${builder.advancedItem}"
+            ]
+        }
+    }
+}
