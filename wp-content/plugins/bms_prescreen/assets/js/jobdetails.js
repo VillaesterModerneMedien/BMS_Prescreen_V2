@@ -103,42 +103,11 @@ jQuery(document).ready(function($){
           alert(data.message);
         }
         $('.preloader').removeClass('preloaderVisible');
-        window.location.href = "/";
+        //window.location.href = "/";
       }
     });
   }
 
-  /********************************************************************************************************************/
-  // Patch Candidate
-  /********************************************************************************************************************/
-  // To patch....TODO
-
-  function patchApplication() {
-
-    //console.log(data);
-    console.log('formData', formdata);
-    $.post({
-      url: ' /wp-admin/admin-ajax.php?action=patchApplication',
-      data: formdata,
-      contentType: false,
-      processData: false,
-      beforeSend: function () {
-        $('.preloader').addClass('preloaderVisible');
-      },
-      success: function (response) {
-        var data = JSON.parse(response);
-        if (data.message !== undefined) {
-          alert(data.message);
-        }
-        $('.preloader').removeClass('preloaderVisible');
-
-        //console.log('kiki');
-        //console.log(data.id);
-        //console.log(data);
-        //addThumbnail(response);
-      }
-    });
-  }
   /********************************************************************************************************************/
   // Form JS
   /********************************************************************************************************************/
@@ -152,16 +121,16 @@ jQuery(document).ready(function($){
     stars.each(function( index ) {
       index = index + 1;
       if(index <= selectedID){
-        $( this ).addClass('rotSelected');
+        $( this ).addClass('starSelected');
       }
       else{
-        $( this ).removeClass('rotSelected');
+        $( this ).removeClass('starSelected');
       }
     });
   })
 
   $('.star').on('mouseleave', function(){
-    $( '.star' ).removeClass('rotSelected');
+    $( '.star' ).removeClass('starSelected');
   })
 
   $('.star').on('click', function(){
@@ -176,10 +145,10 @@ jQuery(document).ready(function($){
     stars.each(function( index ) {
       index = index + 1;
       if(index <= selectedID){
-        $( this ).addClass('rotChecked');
+        $( this ).addClass('starChecked');
       }
       else{
-        $( this ).removeClass('rotChecked');
+        $( this ).removeClass('starChecked');
 
       }
     });
@@ -207,7 +176,23 @@ jQuery(document).ready(function($){
     }
   });
 
+  $('.skillCheckbox').on('change', function(evt) {
+    var checked = jQuery(this).is(':checked');
+    var company = jQuery(this).data('company');
+    var checkbox = jQuery(this).next('.customCheckbox');
+    if(checked){
+      jQuery(checkbox).addClass(company);
+    }
+    else{
+      jQuery(checkbox).removeClass(company);
+    }
+  });
+
+
+
   // Recaptcha Validation
+
+  var recaptchaValidState;
 
   function recaptchaValidation(){
       var $captcha = $( '#recaptcha' ),
@@ -219,35 +204,39 @@ jQuery(document).ready(function($){
         if( !$captcha.hasClass( "error" ) ){
           $captcha.addClass( "error" );
         }
-        alert( 'Bitte das reCAPTCHA ausfüllen!' );
+        //alert( 'Bitte das reCAPTCHA ausfüllen!' );
+        recaptchaValidState = false;
       } else {
         $( '.msg-error' ).text('');
         $captcha.removeClass( "error" );
+        recaptchaValidState = true;
       }
   }
+  var inputValidState;
 
   function inputValidation(){
     var inputText = $('.inputText');
     inputText.each(function( index ) {
       var value = $(this).val();
       if(value.length === 0){
-        $(this).next('.warning').addClass('warningVisible');
-        alert('Bitte die Pflichtfelder ausfüllen!');
+        $(this).parent().next('.warning').addClass('warningVisible');
+        //alert('Bitte die Pflichtfelder ausfüllen!');
+        inputValidState = false;
       }
       else{
-        $(this).next('.warning').removeClass('warningVisible');
+        $(this).parent().next('.warning').removeClass('warningVisible');
+        inputValidState =  true;
       }
     });
   }
-  //inputValidation();
 
   $('.inputText').on('change', function(){
     var value = $(this).val();
     if(value.length === 0){
-      $(this).next('.warning').addClass('warningVisible');
+      $(this).parent().next('.warning').addClass('warningVisible');
     }
     else{
-      $(this).next('.warning').removeClass('warningVisible');
+      $(this).parent().next('.warning').removeClass('warningVisible');
     }
   })
 
@@ -262,12 +251,30 @@ jQuery(document).ready(function($){
   $('#sendCandidate').click(function(e){
     e.preventDefault();
     var form = $('#formTest');
+    inputValidation();
+    recaptchaValidation();
 
     var fd = new FormData(form[0]);
     fd.append('file',uploadFile);
 
-    recaptchaValidation();
-    inputValidation();
-    uploadData(fd);
+    if(inputValidState && recaptchaValidState){
+      uploadData(fd);
+    }
+    else{
+      console.log(inputValidState, recaptchaValidState);
+      var modalElement = jQuery('#validationModal');
+      if(!inputValidState && !recaptchaValidState){
+        jQuery('.warningText').text('Bitte Pflichtfelder und Recpatcha ausfüllen')
+      }
+      else if(inputValidState && !recaptchaValidState){
+        jQuery('.warningText').text('Bitte Recpatcha ausfüllen')
+      }
+      else if(!inputValidState && recaptchaValidState){
+        jQuery('.warningText').text('Bitte Pflichtfelder ausfüllen')
+      }
+      UIkit.modal(modalElement).show();
+
+      //alert(inputValidState, recaptchaValidState);
+    }
   });
 });
