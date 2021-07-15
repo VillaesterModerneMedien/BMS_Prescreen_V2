@@ -4,32 +4,7 @@ $hellgrau: #F6F5F5;
 .container{
   background-color: transparent !important;
 }
-.upload-area{
-  width: 70%;
-  height: 200px;
-  border: 2px solid lightgray;
-  border-radius: 3px;
-  margin: 0 auto;
-  margin-top: 100px;
-  text-align: center;
-  overflow: auto;
-}
 
-.upload-area:hover{
-  cursor: pointer;
-}
-
-.upload-area h1{
-  text-align: center;
-  font-weight: normal;
-  font-family: sans-serif;
-  line-height: 50px;
-  color: darkslategray;
-}
-
-#file{
-  display: none;
-}
 
 /* Thumbnail */
 .thumbnail{
@@ -73,14 +48,28 @@ $hellgrau: #F6F5F5;
   background-repeat: no-repeat;
   margin: 2px auto;
 }
-input:checked + .recruit-toggleswitch-slider {
-  background-color:$unternehmensfarbe;
+input:checked + .customCheckbox {
 }
-.recruit-toggleswitch input {display:none;}
 
-.recruit-toggleswitch > *{
-  float:left;
+.checkboxRow{
+  padding-top: 30px !important;
+  padding-bottom: 30px !important;
 }
+.customCheckboxLabel{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.customCheckbox{
+  display: block;
+  height: 40px;
+  width: 40px;
+  background: #70707033;
+  border-radius: 50%;
+}
+.customCheckboxLabel input {display:none;}
+
 .recruit-recruiting-buttons{
   background-color: $unternehmensfarbe;
   border: none;
@@ -104,33 +93,13 @@ input:checked + .recruit-toggleswitch-slider {
   /* padding-bottom: 90px; */
 }
 
-.recruit-toggleswitch-slider:before {
-  position: absolute;
-  content: "";
-  height: 33px;
-  width: 33px;
-  background-image: url("../images/recruitainment/skillrating/BMS_switch_off.png");
-  -webkit-transition: .4s;
-  transition: .4s;
-  margin-left: 0px;
-}
 
 .star-container{
   display:inline-block;
-  width: 33px;
-  height: 33px;
-  background-image: url("../images/recruitainment/slider_icons/bms_rating_on_schablone.png");
-  background-color: #f6f5f5;
+  width: 40px;
+  height: 40px;
   background-repeat: no-repeat;
   margin: 0 0 0 0;
-}
-
-
-input:checked + .recruit-toggleswitch-slider:before {
-  -webkit-transform: translateX(25px);
-  -ms-transform: translateX(25px);
-  transform: translateX(25px);
-  background-image: url("../images/recruitainment/skillrating/BMS_switch_on.png");
 }
 
 .recruit-recruiting-buttons:disabled{
@@ -145,59 +114,8 @@ input:checked + .recruit-toggleswitch-slider:before {
   display: flex;
   flex-direction: column;
 }
-.stars{
-  display: flex;
-}
-.star {
-  width: 33px !important;
-  height: 33px !important;
-  background: url(../images/recruitainment/skillrating/BMS_rating_off.png) !important;
-  display: block;
-}
 
-.star:hover, .rotMarked, .rotSelected, .rotChecked {
-  background: url(../images/recruitainment/skillrating/BMS_rating_on.png) !important;
-}
 
-.slider {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 2px;
-  background: #333;
-  outline: none;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-}
-
-.slider:hover {
-  opacity: 1;
-}
-
-.slider::-webkit-slider-thumb {
-  cursor: pointer;
-  appearance: none !important;
-  border: 0px solid #000000 !important;
-  width: 33px !important;
-  margin-top: 1px !important;
-  height: 33px !important;
-  border-radius: 0px !important;
-  background: transparent !important;
-  background-image: url(../images/recruitainment/slider_icons/BMS_schieberegler.png) !important;
-  background-repeat: no-repeat !important;
-}
-
-.slider::-moz-range-thumb {
-  cursor: pointer;
-  appearance: none !important;
-  border: 0px solid #000000 !important;
-  width: 33px !important;
-  margin-top: 1px !important;
-  height: 33px !important;
-  border-radius: 0px !important;
-  background: transparent !important;
-  background-image: url(https://www.bms-consulting.de/wp-content/uploads/recruitainment/slider_icons/BMS_schieberegler.png) !important;
-  background-repeat: no-repeat !important;
-}
 .content{
   position: relative !important;
   margin-top: -200px !important;
@@ -298,45 +216,6 @@ h4.subtitles{
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-.sliders .field{
-  position: relative;
-  float: left;
-  width: 100%;
-  margin-bottom: 20px;
-}
-.sliders img{
-  margin-bottom: 20px;
-}
-.sliderLeft{
-  float: left;
-  display: flex;
-  flex-direction: column;
-  margin-top: 10px;
-  text-align: left;
-  font-size: 20px;
-}
-.sliderRight{
-  float: right;
-  display: flex;
-  flex-direction: column;
-  margin-top: 10px;
-  text-align: right;
-  font-size: 20px;
-}
-
-.sliderContainer{
-  position: absolute;
-  width: 100%;
-  top: 135px;
-}
-.starHidden{
-  display: none;
-}
-.starRatingContainer{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 .switchGrid, .skillGrid{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -349,22 +228,36 @@ h4.subtitles{
   grid-column-gap: 40px;
   grid-row-gap: 40px;
 }
-.switchLabel{
-  margin-bottom: 15px;
-}
+
 
 .circle{
   display: inline-block;
   border-radius: 50%;
-  background: #575756;
-  padding: 15px;
+  height: 84px;
+  width: 84px;
+  position: relative;
 }
-.typChecked .circle{
-  background: $unternehmensfarbe;
+.circle img{
+  position: relative;
+  z-index: 2;
 }
-.circle:hover{
-  background: rgb(197, 198, 198);
+.innerCircle{
+  position: absolute;
+  z-index: 1;
+  width: 85%;
+  height: 85%;
+  border-radius: 50%;
+  top: 7.5%;
+  left: 7.5%;
+  display: none;
 }
+.innerCircleShown{
+  display:block;
+}
+.typChecked .innerCircle, .circle:hover .innerCircle{
+  display: block;
+}
+
 .typeCheckbox{
   display: none;
 }
@@ -374,23 +267,8 @@ h4.subtitles{
   font-size: 20px;
   margin-top: 15px;
 }
-#uploadfile{
-  width: 100%;
-  min-height: 100px;
-  text-align: center;
-  border: 3px dashed #999999;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
-  margin: 10px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-#formTest label{
-  text-align: left;
-  display: block;
-}
+
+
 .warning{
   color: $unternehmensfarbe;
   padding: 5px;
@@ -462,15 +340,46 @@ form button{
   flex-direction: column;
 }
 
-.bms-field-label label{
-  text-align: center !important;
-}
-
 #sectionUnsWichtig{
   text-align: center;
 }
 
 /*** NEW ****/
+
+
+
+#uploadfile{
+  width: 100%;
+  min-height: 100px;
+  height: 200px;
+  text-align: center;
+  border: 1px dashed #707070;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: auto;
+}
+
+.upload-area:hover{
+  cursor: pointer;
+}
+
+.upload-area h1{
+  text-align: center;
+  font-weight: normal;
+  font-family: sans-serif;
+  line-height: 50px;
+  color: darkslategray;
+}
+
+#file{
+  display: none;
+}
 
 #jobdetailsTop{
   height: 60vh;
@@ -491,7 +400,9 @@ form button{
   justify-content: flex-end;
   flex-direction: column;
 }
-
+#recaptcha{
+  float:left;
+}
 #jobdetailsCompanyContainer{
   display: flex;
   flex-direction: column;
@@ -523,7 +434,6 @@ form button{
 .wirbietendirElements:nth-child(6){
   background: #A9B8DE;
 }
-
 .companySubtitle.bms_consulting{
   color: #CC151A;
   background: none;
@@ -536,6 +446,264 @@ form button{
   font-weight: bold;
   font-size: 16px;
   line-height: 20px;
+}
+.subtitle{
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 20px;
+  color: #333;
+}
+.bms-field-label label, .switchLabel{
+  text-align: center !important;
+  font-weight: bold;
+  color: #333;
+  font-size: 20px;
+  line-height: 25px;
+  margin-top: 20px;
+  display:block;
+}
+
+.switchLabel{
+  margin-bottom: 15px;
+}
+.dirwichtigContent{
+  float: right;
+  margin-right: 80px;
+  max-width: 70%;
+}
+.bmsSkillField{
+  padding: 0 30px 20px 30px;
+}
+.jobdetailsMainContainer .uk-heading-large{
+  margin: 0 !important;
+  padding: 0!important;
+  text-align:left;
+  margin-bottom: 20px !important;
+}
+.uk-grid-nopadding > *{
+  padding-left: 0px !important;
+}
+.jobdetailsText{
+  font-size: 20px;
+  margin: 0;
+}
+
+.uk-container-expand-right .uk-tile-muted{
+  border-radius: 16px 0px 0px 16px;
+}
+.uk-container-expand-left .uk-tile-muted{
+  border-radius: 0px 16px 16px 0px;
+}
+.wirbietendirElements{
+  padding: 60px;
+}
+.wirbietendirHeadline{
+  font-size: 30px;
+  line-height: 38px;
+  margin: 30px;
+  padding: 0;
+  color: #FFF;
+  text-transform: none;
+  font-weight: 400;
+}
+
+.aufgabenList{
+
+}
+
+.aufgabenList li{
+  font-size: 20px;
+  line-height: 25px;
+  margin: 20px 0px;
+}
+
+.stars{
+  display: flex;
+  background: none !important
+}
+.star {
+  width: 40px !important;
+  height: 40px !important;
+  background: #70707033 !important;
+  border-radius: 50%;
+  display: block;
+  margin: 3px;
+}
+.star:hover, .starMarked, .starSelected, .starChecked {
+  background: #70707033;
+}
+
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  background: #E6E6E6 !important;
+  outline: none;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  border-radius: 100px;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+
+.sliders .field{
+  position: relative;
+  float: left;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.sliders img{
+  margin-bottom: 10px;
+  width: 60px;
+  height: 60px;
+}
+.sliderLeft{
+  float: left;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  text-align: left;
+  font-size: 20px;
+}
+.sliderRight{
+  float: right;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  text-align: right;
+  font-size: 20px;
+}
+
+.sliderContainer{
+  margin-bottom: 40px;
+}
+.starHidden{
+  display: none;
+}
+.starRatingContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.uk-input{
+  border: 1px solid #707070 !important;
+  border-radius: 8px !important;
+  height: 44px !important;
+  line-height: 44px !important;
+  color: #333 !important;
+  font-size: 20px !important;
+}
+.uk-form-label {
+  font-size: 16px !important;
+  color: #333333BF !important;
+  font-weight: 400 !important;
+  text-align: left !important;
+  display: block !important;
+  line-height: 20px !important;
+  margin-bottom: 10px !important;
+}
+.bms_consulting::-webkit-slider-thumb {
+  cursor: pointer;
+  appearance: none !important;
+  border: 0px solid #000000 !important;
+  width: 20px !important;
+  margin-top: 1px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+}
+.slider::-moz-range-thumb {
+  cursor: pointer;
+  appearance: none !important;
+  border: 0px solid #000000 !important;
+  width: 20px !important;
+  margin-top: 1px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+}
+.slidersSection{
+  padding: 80px 0 80px 0;
+}
+.bms_consulting::-webkit-slider-thumb{
+  background: #CC151A !important;
+}
+.bms_consulting::-moz-range-thumb{
+  background: #CC151A !important;
+}
+.eudemonia_solutions::-webkit-slider-thumb{
+  background: #1870B7 !important;
+}
+.eudemonia_solutions::-moz-range-thumb{
+  background: #1870B7 !important;
+}
+.bms_orga___design::-webkit-slider-thumb{
+  background: #A9B8DE !important;
+}
+.bms_orga___design::-moz-range-thumb{
+  background: #A9B8DE !important;
+}
+.bms_training___coaching::-webkit-slider-thumb{
+  background: #991917 !important;
+}
+.slider.bms_training___coaching::-moz-range-thumb{
+  background: #991917 !important;
+}
+.npo_applications::-webkit-slider-thumb{
+  background: #669934 !important;
+}
+.npo_applications::-moz-range-thumb{
+  background: #669934 !important;
+}
+.bms_corporate_solutions::-webkit-slider-thumb{
+  background: #1870B7 !important;
+}
+.bms_corporate_solutions::-moz-range-thumb{
+  background: #1870B7 !important;
+}
+.payfree::-webkit-slider-thumb{
+  background: #00BFA7 !important;
+}
+.payfree::-moz-range-thumb{
+  background: #00BFA7 !important;
+}
+.banking_guide::-webkit-slider-thumb{
+  background: #232856 !important;
+}
+.banking_guide::-moz-range-thumb{
+  background: #232856 !important;
+}
+
+.bms_consulting .star:hover,.bms_consulting .starMarked,.bms_consulting .starSelected,.bms_consulting .starChecked {
+  background: #CC151A !important;
+}
+.eudemonia_solutions .star:hover,.eudemonia_solutions .starMarked,.eudemonia_solutions .starSelected,.eudemonia_solutions .starChecked {
+  background: #1870B7 !important;
+}
+.bms_orga___design .star:hover,.bms_orga___design .starMarked,.bms_orga___design .starSelected,.bms_orga___design .starChecked {
+  background: #A9B8DE !important;
+}
+.bms_training___coaching .star:hover,.bms_training___coaching .starMarked,.bms_training___coaching .starSelected,.bms_training___coaching .starChecked {
+  background: #991917 !important;
+}
+.npo_applications .star:hover,.npo_applications .starMarked,.npo_applications .starSelected,.npo_applications .starChecked {
+  background: #669934 !important;
+}
+.bms_corporate_solutions .star:hover,.bms_corporate_solutions .starMarked,.bms_corporate_solutions .starSelected,.bms_corporate_solutions .starChecked {
+  background: #1870B7 !important;
+}
+.payfree .star:hover,.payfree .starMarked,.payfree .starSelected,.payfree .starChecked {
+  background: #00BFA7 !important;
+}
+.banking_guide .star:hover,.banking_guide .starMarked,.banking_guide .starSelected,.banking_guide .starChecked {
+  background: #232856 !important;
+}
+
+.companySubtitle.bms_consulting{
+  color: #CC151A;
+  background: none;
 }
 .companySubtitle.eudemonia_solutions{
   color: #1870B7;

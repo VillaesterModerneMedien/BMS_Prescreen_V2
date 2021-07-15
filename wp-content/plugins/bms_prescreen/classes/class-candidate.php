@@ -23,6 +23,7 @@ class Candidate{
         $email      = sanitize_email( $_POST['email'] );
         $firstname  = sanitize_text_field( $_POST['firstname'] );
         $lastname   = sanitize_text_field( $_POST['lastname'] );
+        $jobID      = sanitize_text_field( $_POST['job_id'] );
 
         $parameters = [
             'email'         =>  $email,
@@ -37,7 +38,8 @@ class Candidate{
                         'value' => ''
                     ]]
                 ],
-            ]
+            ],
+            'job_id'         =>  $jobID,
         ];
 
         // Star Ratings
