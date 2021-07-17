@@ -138,7 +138,7 @@ class JoblistHelper
             'is_published_on_widget' => true
         ];
 
-        $jobs = $this->apiHelper->PrescreenAPI('job', 'GET', $parameters);
+        $jobs = $this->apiHelper->PrescreenAPI('job', 'GET', $parameters, '');
         $cities = array();
 
         foreach ($jobs->data as $job){

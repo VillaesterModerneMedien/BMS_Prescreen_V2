@@ -6,8 +6,9 @@
   font-size: 14px;
   letter-spacing: 1px;
   line-height: 3em;
-  width: 100%;
+  width: 101%;
   text-align: left !important;
+  margin-top: -30px;
 }
 
 table td {
@@ -198,6 +199,10 @@ tr {
   cursor: pointer !important;
 }
 
+.uk-filterContainer > div {
+  margin-top: 20px !important;
+}
+
 .preloader {
   text-align: center;
 }
@@ -207,7 +212,7 @@ tr {
   box-shadow: 0px 6px 12px #00000029;
   border-radius: 8px !important;
   display: flex;
-  width: 105%;
+  width: 100%;
   margin: 20px auto;
   padding: 20px 15px;
 }
@@ -239,6 +244,18 @@ tr {
   font-size: 12px;
   font-weight: normal;
   text-transform: none;
+}
+
+.dataTables_info {
+  display: none;
+}
+
+table.dataTable.no-footer {
+  border-bottom: none !important;
+}
+
+table.dataTable thead th, table.dataTable thead td {
+  border-bottom: none !important;
 }
 
 .joblistResultType.bms_consulting {
@@ -279,6 +296,23 @@ tr {
 .joblistResultType.banking_guide {
   color: #232856;
   background: none;
+}
+
+.joblistResultsContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.joblistResultsHeadline {
+  color: #333333BF;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.joblistResults {
+  color: #333333BF;
+  font-size: 16px;
 }
 
 /*# sourceMappingURL=joblist.css.map */

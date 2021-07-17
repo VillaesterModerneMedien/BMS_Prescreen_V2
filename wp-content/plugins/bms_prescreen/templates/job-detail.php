@@ -82,7 +82,7 @@ $html = $jobdetails->job_contents[0]->content;
 
     <div class="uk-section-default uk-section" id="wirbietendirSection">
         <div class="uk-container uk-container-small">
-            <div class="tm-grid-expand uk-child-width-1-2@m uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
+            <div class="tm-grid-expand uk-child-width-1-2@m uk-grid-margin uk-grid uk-grid-stack" id="wirbietendirGrid" uk-grid="">
                 <?php foreach($jobdetailsHelper->getListElements($html) as $listenelement): ?>
                     <div class="wirbietendirElements">
                         <img src="<?= '/wp-content/plugins/bms_prescreen//assets/images/recruitainment/wirbieten_icons/' . $jobdetailsHelper->imageRenaming($listenelement) . '.svg'; ?>" />
@@ -486,7 +486,6 @@ $html = $jobdetails->job_contents[0]->content;
             </div>
         </section>
         <input id="jobID" name="job_id" type="hidden" value="<?= $jobdetails->id; ?>">
-
     </form>
 </div>
 

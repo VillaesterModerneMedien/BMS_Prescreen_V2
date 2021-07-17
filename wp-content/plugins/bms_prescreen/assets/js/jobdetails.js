@@ -85,7 +85,7 @@ jQuery(document).ready(function($){
       'action': 'writeCandidate'
     };
 
-    //console.log('formData',formdata);
+    console.log('formData',formdata);
 
     $.post({
       url: '/wp-admin/admin-ajax.php?action=writeCandidate',
@@ -97,11 +97,29 @@ jQuery(document).ready(function($){
       },
       success: function(response){
 
+
         var data = JSON.parse(response);
+
+        var candidateID = parseInt(data.id);
+        var applicationID = parseInt(data.job_applications[0].id);
+
+        jQuery('#candidateID').val(candidateID);
         if(data.message !== undefined)
         {
           alert(data.message);
         }
+        formdata.append('candidate_id',candidateID);
+        formdata.append('application_id',applicationID);
+        $.post({
+          url: '/wp-admin/admin-ajax.php?action=patchCandidate',
+          data: formdata,
+          dataType: 'json',
+          contentType: false,
+          processData: false,
+          success: function(response){
+            console.log('candidateResponse', response)
+          }
+        });
         $('.preloader').removeClass('preloaderVisible');
         //window.location.href = "/";
       }

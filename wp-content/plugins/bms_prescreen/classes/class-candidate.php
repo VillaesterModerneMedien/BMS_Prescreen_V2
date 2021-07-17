@@ -42,6 +42,20 @@ class Candidate{
             'job_id'         =>  $jobID,
         ];
 
+/*
+        if(!empty($files))
+        {
+            $parameters['profile'] = [
+                'firstname'         =>  $firstname,
+                'lastname'          =>  $lastname,
+                'avatar'    => [
+                    'base64_content'    =>  $files['base64'],
+                    'file_type'         =>  $files['type']
+                ]
+            ];
+        }
+*/
+
         // Star Ratings
 
         $skillstars = [];
@@ -216,7 +230,52 @@ class Candidate{
         $parameters = json_encode($parameters);
         //print_r($parameters);
         // var_dump($this->apiHelper);die;
-        $response = $this->apiHelper->PrescreenAPI('candidate', 'POST', $parameters);
+        $response = $this->apiHelper->PrescreenAPI('candidate', 'POST', $parameters, '');
+        //$response = $this->apiHelper->PrescreenAPI('job', 'GET', 'id', $id);
+
+        //wp_redirect( '/danke' );
+        echo json_encode($response, true);
+        unlink($files['src']);
+        die();
+    }
+
+
+    public function patchCandidate() {
+        $files = $this->writeFile();
+        //ar_dump($files);die;
+
+        $candidateID        = sanitize_text_field( $_POST['candidate_id'] );
+        $jobID              = sanitize_text_field( $_POST['job_id'] );
+        $applicationID      = sanitize_text_field( $_POST['application_id'] );
+
+        $parameters = [
+            'candidate_id'          =>  $candidateID,
+            'job_id'                =>  $jobID,
+            'is_finished'           =>  true,
+            'recruiter_files'       =>  array()
+        ];
+
+        // Sonstige Files
+
+        if(!empty($files))
+        {
+            $tester = array(1,2);
+
+            foreach($tester as $test){
+                $parameters['recruiter_files'][] = [
+                    'filename'                  =>  'filename' . $test,
+                    'base64_content'            =>  $files['base64'],
+                    'is_visible_for_candidate'  =>  true,
+                    'source'                    =>  'candidate',
+                    'upload_context'            =>  'application'
+                ];
+            }
+        }
+
+        $parameters = json_encode($parameters);
+        //var_dump($applicationID);
+        //var_dump($parameters);
+        $response = $this->apiHelper->PrescreenAPI('application', 'PATCH', $parameters, $applicationID);
         //$response = $this->apiHelper->PrescreenAPI('job', 'GET', 'id', $id);
 
         //wp_redirect( '/danke' );

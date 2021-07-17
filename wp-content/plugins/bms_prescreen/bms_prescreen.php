@@ -75,6 +75,8 @@ class BMS_Prescreen_Plugin {
 
         add_action( 'wp_ajax_writeCandidate', array( $this, 'candidate_ajax_callback' ));
         add_action( 'wp_ajax_nopriv_writeCandidate', array( $this, 'candidate_ajax_callback' ));
+        add_action( 'wp_ajax_patchCandidate', array( $this, 'candidatePatch_ajax_callback' ));
+        add_action( 'wp_ajax_nopriv_patchCandidate', array( $this, 'candidatePatch_ajax_callback' ));
 
         add_action( 'wp_enqueue_scripts', array( $this, 'joblist_scripts' ));
     }
@@ -92,7 +94,7 @@ class BMS_Prescreen_Plugin {
         wp_enqueue_style( 'jobdetails-css', plugins_url( 'assets/css/jobdetails.css', __FILE__ ));
 
         // JavaScript
-        wp_enqueue_script( 'bootstrap-js', plugins_url( 'assets/js/bootstrap.min.js', __FILE__ ),array('jquery'));
+       // wp_enqueue_script( 'bootstrap-js', plugins_url( 'assets/js/bootstrap.min.js', __FILE__ ),array('jquery'));
         wp_enqueue_script( 'recaptcha-js', 'https://www.google.com/recaptcha/api.js',array('jquery'));
         wp_enqueue_script( 'bms-jobdetails', plugins_url( 'assets/js/jobdetails.min.js', __FILE__ ),array('jquery'));
 
@@ -158,6 +160,12 @@ class BMS_Prescreen_Plugin {
         $this->candidate->writeCandidate();
     }
 
+    ## Fetch all records
+
+    function candidatePatch_ajax_callback() {
+        $this->candidate =  new Candidate();
+        $this->candidate->patchCandidate();
+    }
 
     /*******************************************************************************************************************
      *******************************************************************************************************************

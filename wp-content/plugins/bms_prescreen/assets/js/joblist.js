@@ -24,6 +24,7 @@ jQuery(document).ready(function($){
             var table = $('#joblistTable').DataTable({
                 responsive: true,
                 fixedColumns: true,
+                paging: false,
                 dom: 'lrtip',
                 columnDefs: [
 
@@ -52,7 +53,8 @@ jQuery(document).ready(function($){
                     }
                 }
             });
-
+            var numRows = table.rows( ).count();
+            jQuery('.joblistResults').html('Ergebnisse: ' + numRows);
 
             /**********************************/
             // Dropdowns for select

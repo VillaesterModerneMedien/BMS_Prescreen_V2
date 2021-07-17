@@ -23,12 +23,12 @@ class PrescreenAPIHelper
      * @return object $results
      */
 
-    public function PrescreenAPI($type, $method, $parameters){
+    public function PrescreenAPI($type, $method, $parameters, $id){
 
         $curl = curl_init();
 
         $curlOptions =  [
-            CURLOPT_URL => $this->_PrescreenURLMatcher($type, $method, $parameters),
+            CURLOPT_URL => $this->_PrescreenURLMatcher($type, $method, $parameters, $id),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -46,6 +46,17 @@ class PrescreenAPIHelper
         {
             $curlOptions[10015] = $parameters;
         }
+        else if($method === 'PATCH' && $type == 'application'){
+            var_dump($parameters);
+            $curlOptions[10015] = $parameters;
+        }
+        else{
+            var_dump($method);
+            var_dump($type);
+            //var_dump($id);
+            //var_dump($parameters);
+            //var_dump($this->_PrescreenURLMatcher($type, $method, $parameters, $id));
+        }
 
         curl_setopt_array($curl, $curlOptions);
 
@@ -56,7 +67,7 @@ class PrescreenAPIHelper
         return json_decode($response);
     }
 
-    protected function _PrescreenURLMatcher($type, $name, $parameters){
+    protected function _PrescreenURLMatcher($type, $name, $parameters, $id){
         $parameter = '';
 
         $counter = 0;
@@ -69,6 +80,8 @@ class PrescreenAPIHelper
                 $parameter .= $name . '=' . $value;
             }
         }
+
+
         switch ($type) {
             case "job":
                 if(!empty($parameter)){
@@ -76,6 +89,14 @@ class PrescreenAPIHelper
                 }
                 else{
                     $url  = $this->prescreenBaseURL . $type;
+                }
+                break;
+            case "application":
+                if(!empty($parameter)){
+                    $url  = $this->prescreenBaseURL . $type . '/' . $id .  '?' . $parameter;
+                }
+                else{
+                    $url  = $this->prescreenBaseURL . $type . '/' . $id;
                 }
                 break;
             default:

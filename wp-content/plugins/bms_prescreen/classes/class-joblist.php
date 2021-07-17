@@ -73,7 +73,7 @@ class Joblist{
             'is_published_on_widget' => true
         ];
 
-        $response = $this->apiHelper->PrescreenAPI('job', 'GET', $parameters);
+        $response = $this->apiHelper->PrescreenAPI('job', 'GET', $parameters, '');
         $output = $this->templateLoader( BMSPRE_PLUGIN_DIR . '/templates/job-list.php', array('data' => $response->data), false);
     }
 

@@ -15,7 +15,6 @@ $cities = $joblistHelper->getCities();
 $companies = $joblistHelper->getCompaniesSelect($data);
 ?>
 <input type="text" id="searchPhrase">
-
     <div class="uk-filterContainer">
         <div class="tm-grid-expand uk-child-width-1-1 uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
             <div class="uk-first-column">
@@ -24,8 +23,9 @@ $companies = $joblistHelper->getCompaniesSelect($data);
                         <label class="uk-form-label" for="Suche">Suche</label>
                         <div class="uk-form-controls">
                             <div class="uk-inline uk-display-block">
-                                <span class="uk-form-icon uk-icon" uk-icon="icon: search"><svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="#000" stroke-width="1.1" cx="9" cy="9" r="7"></circle><path fill="none" stroke="#000" stroke-width="1.1" d="M14,14 L18,18 L14,14 Z"></path></svg></span>
+                                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: search"></span>
                                 <input class="uk-input" id="Suche" type="text" name="Suche" placeholder="Suche">
+
                             </div>
                         </div>
                         <div class="uk-text-danger uk-text-small""></div>
@@ -36,8 +36,8 @@ $companies = $joblistHelper->getCompaniesSelect($data);
         <div class="tm-grid-expand uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
             <div class="uk-width-1-2@m uk-first-column">
 
-                <div data-id="page#1-1-0-0" class="uk-margin">
-                    <div data-yooessentials-form-field="Bereich">
+                <div class="uk-margin">
+                    <div>
                         <label class="uk-form-label" for="Bereich">Bereich</label>
                         <div class="uk-form-controls">
                             <select class="uk-select filterSelect" id="Bereich" name="Bereich">
@@ -90,6 +90,10 @@ $companies = $joblistHelper->getCompaniesSelect($data);
     </div>
     <div class="tm-grid-expand uk-child-width-1-1 uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
         <div class="uk-first-column">
+            <div class="joblistResultsContainer">
+                <span class="joblistResultsHeadline">Jobliste</span>
+                <span class="joblistResults"></span>
+            </div>
             <table id="joblistTable" class="joblistTable">
                 <thead>
                 <tr>

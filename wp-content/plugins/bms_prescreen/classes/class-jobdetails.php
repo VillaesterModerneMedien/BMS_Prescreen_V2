@@ -33,7 +33,7 @@ class Jobdetails{
             'id' => $id
         ];
 
-        $response = $this->apiHelper->PrescreenAPI('job', 'GET', $parameters);
+        $response = $this->apiHelper->PrescreenAPI('job', 'GET', $parameters, '');
 
         //Post mit ID Startseite holen --> Startseite
         // alles soweit entfernen und das YOOTheme JSON holen
