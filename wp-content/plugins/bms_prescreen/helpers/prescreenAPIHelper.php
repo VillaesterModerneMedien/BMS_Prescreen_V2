@@ -47,12 +47,12 @@ class PrescreenAPIHelper
             $curlOptions[10015] = $parameters;
         }
         else if($method === 'PATCH' && $type == 'application'){
-            var_dump($parameters);
+            //var_dump($parameters);
             $curlOptions[10015] = $parameters;
         }
         else{
-            var_dump($method);
-            var_dump($type);
+            //var_dump($method);
+            //var_dump($type);
             //var_dump($id);
             //var_dump($parameters);
             //var_dump($this->_PrescreenURLMatcher($type, $method, $parameters, $id));

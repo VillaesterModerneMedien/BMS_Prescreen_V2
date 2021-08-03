@@ -1,4 +1,101 @@
+var imNotARobot = function() {
+  jQuery('#recaptcha').trigger('click');
+};
 jQuery(document).ready(function($){
+
+  var fileValidation = true;
+  var fileCounter = 0;
+
+  jQuery('body').on('change', function(){
+    bodyChange();
+  });
+  jQuery('#recaptcha').on('click', function(){
+    bodyChange();
+  });
+
+  function bodyChange(){
+    inputValidation();
+    recaptchaValidation();
+
+    if(recaptchaValidState && inputValidState && fileValidation){
+      jQuery('#sendCandidate').attr('disabled', false);
+    }
+    else{
+      jQuery('#sendCandidate').attr('disabled', true);
+    }
+  }
+
+  function dragFileToInput(dragContainer,fileInputID, uploadMessage, allowedTypes, maxFiles){
+    var target = document.getElementById(dragContainer);
+    var body = document.body;
+    var fileInput = document.getElementById(fileInputID);
+
+    target.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      body.classList.add('dragging');
+    });
+
+    target.addEventListener('dragleave', () => {
+      body.classList.remove('dragging');
+    });
+
+    target.addEventListener('drop', (e) => {
+      e.preventDefault();
+      body.classList.remove('dragging');
+
+      fileInput.files = e.dataTransfer.files;
+      var files = fileInput.files;
+      var filesArray = Array.from(files);
+      fileCounter = filesArray.length;
+
+      filesArray.forEach(function( file, index ) {
+        var position = file.name.lastIndexOf('.');
+        var length = file.name.length;
+        var fileType = file.name.substr(position,length);
+        fileType = fileType.replace('.','');
+        console.log(file.name, position, length, fileType, fileCounter);
+        fileValidation = allowedTypes.includes(fileType);
+
+        var modalElement = jQuery('#validationModal');
+        if(!allowedTypes.includes(fileType)){
+          jQuery('.warningText').text('Falsches Dateiformat')
+          UIkit.modal(modalElement).show();
+        }
+        else if(fileCounter > maxFiles){
+          jQuery('.warningText').text('Beim Lebenslauf ist nur eine Datei erlaubt')
+          UIkit.modal(modalElement).show();
+        }
+
+        inputValidation();
+        recaptchaValidation();
+
+        if(recaptchaValidState && inputValidState && fileValidation && fileCounter < maxFiles){
+          jQuery('#sendCandidate').attr('disabled', false);
+        }
+        else{
+          jQuery('#sendCandidate').attr('disabled', true);
+        }
+
+      });
+
+      var filenames = '';
+      for (i = 0; i < files.length; i++) {
+        if(i > 0){
+          filenames = filenames + ', ' +  files[i].name;
+        }
+        else{
+          filenames = filenames + files[i].name;
+        }
+      }
+
+      $('.' + uploadMessage).html(filenames);
+    });
+
+  }
+
+  dragFileToInput('uploadAdditional','filesAdditional', 'uploadMessageAdd',['doc','docx', 'pdf', 'rtf'],99);
+  dragFileToInput('uploadCV','fileCV', 'uploadMessageCV', ['doc','docx', 'pdf', 'rtf'], 1);
+
 
   /********************************************************************************************************************/
   // Form Value Mappings
@@ -20,61 +117,6 @@ jQuery(document).ready(function($){
     });
   }
   setSliderValues();
-
-  /********************************************************************************************************************/
-  // CV Uploader
-  /********************************************************************************************************************/
-
-  var uploadFile;
-
-  // preventing page from redirecting
-  $("html").on("dragover", function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    $("h1").text("Drag here");
-  });
-
-  $("html").on("drop", function(e) { e.preventDefault(); e.stopPropagation(); });
-
-  // Drag enter
-  $('.upload-area').on('dragenter', function (e) {
-    e.stopPropagation();
-    e.preventDefault();
-    $('.uploadMessage').text('Datei ablegen zum hochladen.<br><strong>Achtung: Nur doc, docx, pdf und rtf erlaubt.</strong>');
-  });
-
-  // Drag over
-  $('.upload-area').on('dragover', function (e) {
-    e.stopPropagation();
-    e.preventDefault();
-    $('.uploadMessage').text('Datei ablegen zum hochladen.<br><strong>Achtung: Nur doc, docx, pdf und rtf erlaubt.</strong>');
-  });
-
-  // Drop
-  $('.upload-area').on('drop', function (e) {
-    e.stopPropagation();
-    e.preventDefault();
-    var fd = new FormData();
-
-    var file = e.originalEvent.dataTransfer.files;
-
-    uploadFile =  file[0];
-
-    $('.uploadMessage').text(file[0].name);
-    fd.append('file', file[0]);
-  });
-
-  // Open file selector on div click
-  $("#uploadfile").click(function(){
-    $("#file").click();
-  });
-
-  // file selected
-  $("#file").change(function(){
-    var fd = new FormData();
-    var files = $('#file')[0].files[0];
-    fd.append('file',files);
-  });
 
   /********************************************************************************************************************/
   // Upload Data and send API
@@ -273,7 +315,7 @@ jQuery(document).ready(function($){
     recaptchaValidation();
 
     var fd = new FormData(form[0]);
-    fd.append('file',uploadFile);
+    fd.append('file',uploadCV);
 
     if(inputValidState && recaptchaValidState){
       uploadData(fd);

@@ -458,9 +458,21 @@ $html = $jobdetails->job_contents[0]->content;
                         <label class="uk-form-label" for="file">Lebenslauf</label>
                         <div class="uk-form-controls">
                             <div class="uk-inline uk-display-block">
-                                <input type="file" name="file" id="file">
-                                <div class="upload-area"  id="uploadfile">
-                                    <span class="uploadMessage">Lebenslauf mit der Mouse hereinziehen oder auf das Feld klicken zum Hochladen<br/><strong>Achtung: Nur doc, docx, pdf und rtf erlaubt.</strong></span>
+                                <input type="file" name="file" id="fileCV">
+                                <div class="upload-areaCV upload-area"  id="uploadCV">
+                                    <span class="uploadMessageCV">Lebenslauf mit der Mouse hereinziehen oder auf das Feld klicken zum Hochladen<br/><strong>Achtung: Nur doc, docx, pdf und rtf erlaubt.</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="formRow">
+                        <label class="uk-form-label" for="file">Sonstige Dateien</label>
+                        <div class="uk-form-controls">
+                            <div class="uk-inline uk-display-block">
+                                <input type="file" name="filesAdditional[]" id="filesAdditional" multiple>
+                                <div class="upload-areaAdd upload-area"  id="uploadAdditional">
+                                    <span class="uploadMessageAdd">Sonstige Dateien mit der Mouse hereinziehen oder auf das Feld klicken zum Hochladen<br/><strong>Achtung: Nur doc, docx, pdf und rtf erlaubt.</strong></span>
                                 </div>
                             </div>
                         </div>
@@ -469,7 +481,7 @@ $html = $jobdetails->job_contents[0]->content;
                     <div class="formRow">
                         <div class="uk-form-controls">
                             <div class="uk-inline uk-display-block">
-                                <div id="recaptcha" class="g-recaptcha" data-sitekey="<?= get_option( 'googleApiKey' ); ?>"></div>
+                                <div id="recaptcha" class="g-recaptcha" data-callback="imNotARobot" data-sitekey="<?= get_option( 'googleApiKey' ); ?>"></div>
                             </div>
                         </div>
                     </div>
@@ -477,7 +489,7 @@ $html = $jobdetails->job_contents[0]->content;
                     <div class="formRow">
                         <div class="uk-form-controls">
                             <div class="uk-inline uk-display-block">
-                                <button type="submit" id="sendCandidate" class="uk-button-default-company <?= $companyClass; ?>">Bewerbung abschicken</button>
+                                <button type="submit" id="sendCandidate" class="uk-button-default-company <?= $companyClass; ?>" disabled>Bewerbung abschicken</button>
                             </div>
                         </div>
                     </div>

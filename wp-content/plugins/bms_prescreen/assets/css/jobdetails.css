@@ -366,7 +366,7 @@ form button {
 }
 
 /*** NEW ****/
-#uploadfile {
+.upload-area {
   width: 100%;
   min-height: 100px;
   height: 200px;
@@ -395,7 +395,7 @@ form button {
   color: darkslategray;
 }
 
-#file {
+#fileCV, #filesAdditional {
   display: none;
 }
 
@@ -795,6 +795,28 @@ form button {
 .companySubtitle.banking_guide {
   color: #232856;
   background: none;
+}
+
+#drop_file_zone {
+  background-color: #EEE;
+  border: #999 5px dashed;
+  width: 290px;
+  height: 200px;
+  padding: 8px;
+  font-size: 18px;
+}
+
+#drag_upload_file {
+  width: 50%;
+  margin: 0 auto;
+}
+
+#drag_upload_file p {
+  text-align: center;
+}
+
+#sendCandidate:disabled {
+  opacity: 0.5;
 }
 
 /*# sourceMappingURL=jobdetails.css.map */
