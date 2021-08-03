@@ -17,7 +17,7 @@ class Candidate{
 
 
     public function writeCandidate() {
-        $files = $this->writeFile();
+
         //ar_dump($files);die;
 
         $email      = sanitize_email( $_POST['email'] );
@@ -218,9 +218,11 @@ class Candidate{
         array_push($parameters['custom_fields'], $field);
 
         // CV File
+        $files = $this->writeFile();
 
-        if(!empty($files))
+        if($files['filename'] != '')
         {
+
             $parameters['cv_file'] = [
                 'base64_content'    =>  $files['base64'],
                 'file_type'         =>  $files['type']
@@ -228,10 +230,8 @@ class Candidate{
         }
 
         $parameters = json_encode($parameters);
-        //print_r($parameters);
-        // var_dump($this->apiHelper);die;
+
         $response = $this->apiHelper->PrescreenAPI('candidate', 'POST', $parameters, '');
-        //$response = $this->apiHelper->PrescreenAPI('job', 'GET', 'id', $id);
 
         //wp_redirect( '/danke' );
         echo json_encode($response, true);
@@ -241,8 +241,7 @@ class Candidate{
 
 
     public function patchCandidate() {
-        $files = $this->writeFile();
-        //ar_dump($files);die;
+        $files = $this->writeAddFiles();
 
         $candidateID        = sanitize_text_field( $_POST['candidate_id'] );
         $jobID              = sanitize_text_field( $_POST['job_id'] );
@@ -259,12 +258,10 @@ class Candidate{
 
         if(!empty($files))
         {
-            $tester = array(1,2);
-
-            foreach($tester as $test){
+            foreach($files as $file){
                 $parameters['recruiter_files'][] = [
-                    'filename'                  =>  'filename' . $test,
-                    'base64_content'            =>  $files['base64'],
+                    'filename'                  =>  $file['filename'],
+                    'base64_content'            =>  $file['base64'],
                     'is_visible_for_candidate'  =>  true,
                     'source'                    =>  'candidate',
                     'upload_context'            =>  'application'
@@ -273,12 +270,8 @@ class Candidate{
         }
 
         $parameters = json_encode($parameters);
-        //var_dump($applicationID);
-        //var_dump($parameters);
         $response = $this->apiHelper->PrescreenAPI('application', 'PATCH', $parameters, $applicationID);
-        //$response = $this->apiHelper->PrescreenAPI('job', 'GET', 'id', $id);
 
-        //wp_redirect( '/danke' );
         echo json_encode($response, true);
         unlink($files['src']);
         die();
@@ -295,27 +288,41 @@ class Candidate{
         /* Getting File size */
         $filesize = $_FILES['file']['size'];
 
-        /* Location */
-        $location = "../wp-content/uploads/".$filename;
-
         $return_arr = array();
 
-        /* Upload file */
-        if(move_uploaded_file($_FILES['file']['tmp_name'],$location)){
-            $return_arr = [
-                'name'      =>  $filename,
-                'size'      =>  $filesize,
-                'base64'    =>  base64_encode(file_get_contents($location)),
-                'src'       =>  $location,
-                'type'      =>  $fileType
-            ];
-        }
+        $return_arr = [
+            'filename'      =>  $filename,
+            'size'          =>  $filesize,
+            'base64'        =>  base64_encode(file_get_contents($_FILES['file']['tmp_name'])),
+            'type'          =>  $fileType,
+            'tmp_name'      =>  $_FILES['file']['tmp_name']
+        ];
 
         return $return_arr;
     }
 
-    public function patchApplication()
-    {
-    }
+    function writeAddFiles() {
+        /* Getting file name */
 
+        $filesAdd = $_FILES['filesAdditional'];
+        $filesAddCounter = count($_FILES['filesAdditional']['name']);
+
+        $return_arr = array();
+        //echo '<pre>';
+        //print_r($filesAdd);
+
+        for($i = 0; $i < $filesAddCounter; $i++) {
+            $return_arr[] = [
+                'filename'  =>  $filesAdd['name'][$i],
+                'type'      =>  $filesAdd['type'][$i],
+                'tmp_name'  =>  $filesAdd['tmp_name'][$i],
+                'base64'    =>  base64_encode(file_get_contents($filesAdd['tmp_name'][$i])),
+                'error'     =>  $filesAdd['error'][$i],
+                'size'      =>  $filesAdd['size'][$i],
+            ];
+        }
+       // print_r($return_arr);
+
+        return $return_arr;
+    }
 }
