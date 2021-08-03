@@ -84,15 +84,25 @@ jQuery(document).ready(function($){
                 var id = $(this).data('id');
                 var value = $(this).val();
 
-                console.log(value);
-                // Push values to search array
+                var bereich = $('#Bereich').val();
+                var unternehmen = $('#Unternehmen').val();
+                var standort = $('#Standort').val();
 
-                searchArray.push(value);
-                searchArray = searchArray.filter(function(value, index, arr){
-                    return value !== clickedValue ;
+                searchStringSelects = '';
+                var selectArray = [bereich, unternehmen, standort];
+                var counter = 0;
+
+                selectArray.forEach(function( value ) {
+                    if(value != ''){
+                        counter = counter + 1;
+                        if(counter === 2 || counter === 3){
+                            searchStringSelects = searchStringSelects + '|';
+                        }
+                        searchStringSelects = searchStringSelects + '(' + value + ')';
+                    }
                 });
 
-                setSearchString(value, false);
+                setSearchString('', false);
             });
 
             // Set search on Suche search
@@ -102,7 +112,6 @@ jQuery(document).ready(function($){
                 var value = $(this).val();
 
                 setSearchString(value, true);
-                console.log(value);
             })
 
             function setSearchString(value, searchState){
@@ -113,9 +122,6 @@ jQuery(document).ready(function($){
                     if($('#Suche').val() !== ''){
                         searchStringText = '(' + $('#Suche').val() + ')|';
                     }
-                    searchStringSelects = searchArray.map(function(value){
-                        return '(' + value + ')';
-                    }).join('|');
                 }
 
                 // Search via textfield
@@ -127,14 +133,19 @@ jQuery(document).ready(function($){
                     searchStringText = '';
                 }
 
-                searchString = '(' + searchStringText + searchStringSelects + ')';
+                searchString = '(' + searchStringText  + searchStringSelects + ')';
+
                 searchString = searchString.replace(')|)', '))');
                 searchString = searchString.replace(')(', ')|(');
 
                 // Set search
 
                 $('#searchPhrase').val(searchString);
+                //var test = $('#searchPhrase').val();
+                console.log('Suchen' + searchString);
                 table.search(searchString, true).draw(true);
+                var rowCount = document.getElementById('joblistTable').rows.length - 1;
+                jQuery('.joblistResults').html('Ergebnisse: ' + rowCount);
             }
 
             // TR on click visit link

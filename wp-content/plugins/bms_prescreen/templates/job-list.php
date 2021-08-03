@@ -76,7 +76,7 @@ $companies = $joblistHelper->getCompaniesSelect($data);
                     <div>
                         <label class="uk-form-label" for="Standort">Standort</label>
                         <div class="uk-form-controls">
-                            <select class="uk-select filterSelect" id="Bereich" name="Bereich">
+                            <select class="uk-select filterSelect" id="Standort" name="Standort">
                                 <option value="">Standort</option>
                                 <?php foreach ($cities as $city): ?>
                                     <option value="<?= $city; ?>"><?= $city; ?></option>
