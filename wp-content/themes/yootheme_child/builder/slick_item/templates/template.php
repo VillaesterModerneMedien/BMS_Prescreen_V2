@@ -26,7 +26,7 @@ $el = $this->el($props['link'] && $element['overlay_link'] ? 'a' : 'div', [
         <span class="sliderTopHeadline"><?= $props['topHeadline']; ?></span>
         <img class="sliderTopLogo" src="<?= $props['logo']; ?>" />
         <h3 class="sliderTopTitle"><?= $props['title']; ?></h3>
-        <a class="uk-button uk-button-default sliderButton" href="<?= $props['link']; ?>"><?= $props['buttonText']; ?></a>
+        <a class="uk-button uk-button-default sliderButton" href="<?= $props['link']; ?>" uk-scroll><?= $props['buttonText']; ?></a>
     </div>
 </div>
 

@@ -59,7 +59,7 @@ class JoblistHelper
                 $unternehmen = [
                     'name'  =>  'NPO Applications',
                     'url'   =>  'https://www.npo-applications.de',
-                    'type'  =>  'Finanzdienstleister'
+                    'type'  =>  'Non Profit Organisationen'
                 ];
                 break;
             case "BMSUG":
@@ -73,14 +73,28 @@ class JoblistHelper
                 $unternehmen = [
                     'name'  =>  'BMS Orga & Design',
                     'url'   =>  'https://www.bms-od.de',
-                    'type'  =>  'Design'
+                    'type'  =>  'Finanzdienstleister'
                 ];
                 break;
             case "BMSTC":
                 $unternehmen = [
                     'name'  =>  'BMS Training & Coaching',
                     'url'   =>  'https://www.bms-tc.de',
-                    'type'  =>  'Training'
+                    'type'  =>  'Finanzdienstleister'
+                ];
+                break;
+            case "PAYFREE":
+                $unternehmen = [
+                    'name'  =>  'Payfree',
+                    'url'   =>  'https://www.payfree.io',
+                    'type'  =>  'Finanzdienstleister'
+                ];
+                break;
+            case "BMSCS":
+                $unternehmen = [
+                    'name'  =>  'BMS Corporate Solutions',
+                    'url'   =>  'https://www.bms-cs.de',
+                    'type'  =>  'Finanzdienstleister'
                 ];
                 break;
             default:

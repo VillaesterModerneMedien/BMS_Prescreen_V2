@@ -39,6 +39,10 @@
             "label": "Bildverschiebung (in px, H/V)",
             "source": true
         },
+        "image_id": {
+            "label": "Image ID",
+            "source": true
+        },
         "ausrichten": {
             "type": "checkbox",
             "text": "Links ausrichten?"
@@ -118,6 +122,7 @@
                         "icon",
                         "image",
                         "bild_verschieben",
+                        "image_id",
                         "content",
                         "ausrichten",
                         "buttonText",

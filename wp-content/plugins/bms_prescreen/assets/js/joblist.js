@@ -1,10 +1,11 @@
 jQuery(document).ready(function($){
 
-  var searchArray = [];
-  var clickedValue;
-  var searchString = '';
-  var searchStringSelects = '';
-  var searchStringText = '';
+    var searchArray = [];
+    var clickedValue;
+    var searchString = '';
+    var searchStringSelects = '';
+    var searchStringText = '';
+    var numRows = 0;
 
     /**********************************/
     // Init loading joblist via ajax
@@ -22,6 +23,10 @@ jQuery(document).ready(function($){
             /**********************************/
 
             var table = $('#joblistTable').DataTable({
+                "drawCallback": function( settings ) {
+                    var api = this.api();
+                    numRows = api.rows( {page:'current'} ).data().length
+                },
                 responsive: true,
                 fixedColumns: true,
                 paging: false,
@@ -30,7 +35,7 @@ jQuery(document).ready(function($){
 
                 ],
                 "language": {
-                    "sEmptyTable":   	"Keine Daten in der Tabelle vorhanden",
+                    "sEmptyTable":   	"Deine Suche ergab leider keine Treffer.",
                     "sInfo":         	"_START_ bis _END_ von _TOTAL_ Einträgen",
                     "sInfoEmpty":    	"0 bis 0 von 0 Einträgen",
                     "sInfoFiltered": 	"(gefiltert von _MAX_ Einträgen)",
@@ -40,7 +45,7 @@ jQuery(document).ready(function($){
                     "sLoadingRecords": 	"Wird geladen...",
                     "sProcessing":   	"Bitte warten...",
                     "sSearch":       	"Suchen",
-                    "sZeroRecords":  	"Keine Einträge vorhanden.",
+                    "sZeroRecords":  	"Deine Suche ergab leider keine Treffer.",
                     "oPaginate": {
                         "sFirst":    	"Erste",
                         "sPrevious": 	"Zurück",
@@ -53,7 +58,7 @@ jQuery(document).ready(function($){
                     }
                 }
             });
-            var numRows = table.rows( ).count();
+
             jQuery('.joblistResults').html('Ergebnisse: ' + numRows);
 
             /**********************************/
@@ -75,78 +80,33 @@ jQuery(document).ready(function($){
                 if (!$clicked.parents().hasClass('dropdown')) $('.dropdown dd ul').hide();
             });
 
-            /**********************************/
-            // Check or uncheck
-            // Fill search array
-            /**********************************/
+            function columnSearch(columnIndex, searchValue){
+                // Filter event handler
+                table
+                    .column(columnIndex)
+                    .search(searchValue)
+                    .draw();
 
-            $('.filterSelect').on('change', function () {
-                var id = $(this).data('id');
-                var value = $(this).val();
+                jQuery('.joblistResults').html('Ergebnisse: ' + numRows);
 
-                var bereich = $('#Bereich').val();
-                var unternehmen = $('#Unternehmen').val();
-                var standort = $('#Standort').val();
-
-                searchStringSelects = '';
-                var selectArray = [bereich, unternehmen, standort];
-                var counter = 0;
-
-                selectArray.forEach(function( value ) {
-                    if(value != ''){
-                        counter = counter + 1;
-                        if(counter === 2 || counter === 3){
-                            searchStringSelects = searchStringSelects + '|';
-                        }
-                        searchStringSelects = searchStringSelects + '(' + value + ')';
-                    }
-                });
-
-                setSearchString('', false);
-            });
-
-            // Set search on Suche search
-
-            $('#Suche').on("keyup change click", function(e) {
-
-                var value = $(this).val();
-
-                setSearchString(value, true);
-            })
-
-            function setSearchString(value, searchState){
-
-                // Search via Select
-
-                if(value !== '' && searchState === false){
-                    if($('#Suche').val() !== ''){
-                        searchStringText = '(' + $('#Suche').val() + ')|';
-                    }
-                }
-
-                // Search via textfield
-                if(searchState === true && value !== ''){
-                    searchStringText = '(' + value + ')';
-                }
-
-                if(searchState === true && value === ''){
-                    searchStringText = '';
-                }
-
-                searchString = '(' + searchStringText  + searchStringSelects + ')';
-
-                searchString = searchString.replace(')|)', '))');
-                searchString = searchString.replace(')(', ')|(');
-
-                // Set search
-
-                $('#searchPhrase').val(searchString);
-                //var test = $('#searchPhrase').val();
-                console.log('Suchen' + searchString);
-                table.search(searchString, true).draw(true);
-                var rowCount = document.getElementById('joblistTable').rows.length - 1;
-                jQuery('.joblistResults').html('Ergebnisse: ' + rowCount);
             }
+
+            $('#Suche' ).on( 'keyup change', function (e) {
+                var searchValue =  $(this).val();
+                columnSearch(4,searchValue);
+            });
+            $('#Bereich' ).on( 'keyup change', function (e) {
+                var searchValue =  $(this).val();
+                columnSearch(1,searchValue);
+            });
+            $('#Unternehmen' ).on( 'change', function (e) {
+                var searchValue =  $(this).val();
+                columnSearch(2,searchValue);
+            });
+            $('#Standort' ).on( 'change', function (e) {
+                var searchValue =  $(this).val();
+                columnSearch(3,searchValue);
+            });
 
             // TR on click visit link
 
@@ -157,7 +117,4 @@ jQuery(document).ready(function($){
         }
 
     });
-
-
-
 });

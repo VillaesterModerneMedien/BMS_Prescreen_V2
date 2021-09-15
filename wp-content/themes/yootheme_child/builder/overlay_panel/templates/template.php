@@ -55,30 +55,32 @@ if($props['ausrichten']){
     <div class="tm-grid-expand uk-grid-margin uk-grid" uk-grid="">
 
         <?php if(!$props['ausrichten']): ?>
-        <div class="flexContainer uk-width-1-2@m uk-first-column">
-            <h4 class="uk-heading-small uk-margin-remove-vertical">
-                <?= $props['subtitle']; ?>
-            </h4>
-            <h2 class="uk-heading-large uk-margin-remove-top uk-margin-remove-bottom">
-                <?= $props['title']; ?>
-            </h2>
-            <div class="uk-panel uk-margin">
-                <?= $props['content']; ?>
+        <div class="flexContainer uk-width-1-2@m uk-width-2-5@l uk-width-1-3@xl uk-first-column">
+            <div class="overlayMaxContainer">
+                <h4 class="uk-heading-small uk-margin-remove-vertical">
+                    <?= $props['subtitle']; ?>
+                </h4>
+                <h2 class="uk-heading-large uk-margin-remove-top uk-margin-remove-bottom">
+                    <?= $props['title']; ?>
+                </h2>
+                <div class="uk-panel uk-margin">
+                    <?= $props['content']; ?>
+                </div>
+                <?php if($props['buttonText']): ?>
+                    <div class="uk-margin">
+                        <a class="uk-button uk-button-default-dark" href="<?= $props['link']; ?>" uk-scroll="">
+                            <?= $props['buttonText']; ?>
+                        </a>
+                    </div>
+                <?php endif; ?>
             </div>
-            <?php if($props['buttonText']): ?>
-            <div class="uk-margin">
-                <a class="uk-button uk-button-default-dark" href="<?= $props['link']; ?>" uk-scroll="">
-                    <?= $props['buttonText']; ?>
-                </a>
-            </div>
-            <?php endif; ?>
         </div>
 
-        <div class="uk-width-1-2@m">
+        <div class="uk-width-1-2@m  uk-width-3-5@l uk-width-2-3@xl">
             <div class="uk-flex">
                 <?php if($props['image']): ?>
                 <div class="imageOverlayContainer imageOverlayContainerRight" style="background: <?= $props['backgroundColor']; ?>; ">
-                    <div class="overlayImage" style="background-image: url(<?= $props['image']; ?>); background-position: <?= $props['bild_verschieben']; ?>">
+                    <div class="overlayImage"  id="<?= $props['image_id']; ?>; " style="background-image: url(<?= $props['image']; ?>); background-position: <?= $props['bild_verschieben']; ?>">
 
                     </div>
                 </div>
@@ -92,11 +94,11 @@ if($props['ausrichten']){
 
         <?php else: ?>
 
-            <div class=" uk-width-1-2@m uk-first-column">
+            <div class=" uk-width-1-2@m uk-width-3-5@l uk-width-2-3@xl uk-first-column">
                 <div class="uk-flex">
                     <?php if($props['image']): ?>
                         <div class="imageOverlayContainer imageOverlayContainerLeft" style="background: <?= $props['backgroundColor']; ?>; ">
-                            <div class="overlayImage" style="background-image: url(<?= $props['image']; ?>); background-position: <?= $props['bild_verschieben']; ?>">
+                            <div class="overlayImage" id="<?= $props['image_id']; ?>; " style="background-image: url(<?= $props['image']; ?>); background-position: <?= $props['bild_verschieben']; ?>">
 
                             </div>
                         </div>
@@ -108,27 +110,27 @@ if($props['ausrichten']){
                 </div>
             </div>
 
-            <div class="flexContainer uk-width-1-2@m">
-                <h4 class="uk-heading-small uk-margin-remove-vertical">
-                    <?= $props['subtitle']; ?>
-                </h4>
-                <h2 class="uk-heading-large uk-margin-remove-top uk-margin-remove-bottom">
-                    <?= $props['title']; ?>
-                </h2>
-                <div class="uk-panel uk-margin">
-                    <?= $props['content']; ?>
-                </div>
-
-                <?php if($props['buttonText']): ?>
-                    <div class="uk-margin">
-                        <a class="uk-button uk-button-default-dark" href="<?= $props['link']; ?>" uk-scroll="">
-                            <?= $props['buttonText']; ?>
-                        </a>
+            <div class="flexContainer flexContainerTextRight uk-width-1-2@m  uk-width-2-5@l uk-width-1-3@xl">
+                <div class="overlayMaxContainer">
+                    <h4 class="uk-heading-small uk-margin-remove-vertical">
+                        <?= $props['subtitle']; ?>
+                    </h4>
+                    <h2 class="uk-heading-large uk-margin-remove-top uk-margin-remove-bottom">
+                        <?= $props['title']; ?>
+                    </h2>
+                    <div class="uk-panel uk-margin">
+                        <?= $props['content']; ?>
                     </div>
-                <?php endif; ?>
+
+                    <?php if($props['buttonText']): ?>
+                        <div class="uk-margin">
+                            <a class="uk-button uk-button-default-dark" href="<?= $props['link']; ?>" uk-scroll="">
+                                <?= $props['buttonText']; ?>
+                            </a>
+                        </div>
+                    <?php endif; ?>
+                </div>
             </div>
-
-
 
         <?php endif; ?>
     </div>
@@ -139,11 +141,15 @@ if($props['ausrichten']){
 
                 <div class="uk-width-1-1@m">
                     <div class="uk-flex">
-                        <div class="imageOverlayContainer imageOverlayContainerMobile <?php if(!$props['ausrichten']): ?>imageOverlayContainerRight<?php else: ?>imageOverlayContainerLeft<?php endif; ?>" style="background: <?= $props['backgroundColor']; ?>; ">
-                            <div class="overlayImage" style="background-image: url(<?= $props['image']; ?>); background-position: <?= $props['bild_verschieben']; ?>">
+                        <div class="imageOverlayContainer imageOverlayContainerMobile <?php if($props['icon']): ?>iconContainerMobile<?php endif; ?> <?php if(!$props['ausrichten']): ?>imageOverlayContainerRight<?php else: ?>imageOverlayContainerLeft<?php endif; ?>" style="background: <?= $props['backgroundColor']; ?>; ">
+                            <?php if($props['image']): ?>
+                            <div class="overlayImage" id="<?= $props['image_id']; ?>" style="background-image: url(<?= $props['image']; ?>); background-position: <?= $props['bild_verschieben']; ?>">
 
                             </div>
+                            <?php else: ?>
+                                <img class="iconOverlayIcon" src="<?= $props['icon']; ?>" />
 
+                            <?php endif; ?>
                             <div class="flexContainerMobile">
                                 <h4 class="uk-heading-small uk-margin-remove-vertical">
                                     <?= $props['subtitle']; ?>
@@ -154,12 +160,13 @@ if($props['ausrichten']){
                                 <div class="uk-panel uk-margin uk-text-light">
                                     <?= $props['content']; ?>
                                 </div>
-
+                                <?php if($props['buttonText']): ?>
                                 <div class="uk-margin">
-                                    <a class="uk-button uk-button-default-light" href="<?= $props['link']; ?>" uk-scroll="">
+                                    <a class="uk-button uk-button-default-light uk-button-default-light-filled" href="<?= $props['link']; ?>" uk-scroll="">
                                         <?= $props['buttonText']; ?>
                                     </a>
                                 </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>

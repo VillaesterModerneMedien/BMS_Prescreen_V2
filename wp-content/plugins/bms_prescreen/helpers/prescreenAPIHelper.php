@@ -24,11 +24,12 @@ class PrescreenAPIHelper
      */
 
     public function PrescreenAPI($type, $method, $parameters, $id){
-
         $curl = curl_init();
 
+        $url = $this->_PrescreenURLMatcher($type, $method, $parameters, $id);
+
         $curlOptions =  [
-            CURLOPT_URL => $this->_PrescreenURLMatcher($type, $method, $parameters, $id),
+            CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,

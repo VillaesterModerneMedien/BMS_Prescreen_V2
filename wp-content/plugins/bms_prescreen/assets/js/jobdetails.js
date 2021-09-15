@@ -3,6 +3,12 @@ var imNotARobot = function() {
 };
 jQuery(document).ready(function($){
 
+  jQuery('#bewerben').on('click', function(){
+    $("html, body").delay(200).animate({
+      scrollTop: $('#bewerbung').offset().top
+    }, 1000);
+  });
+
   var fileValidation = true;
   var fileCounter = 0;
 
@@ -47,6 +53,7 @@ jQuery(document).ready(function($){
       var files = fileInput.files;
       var filesArray = Array.from(files);
       fileCounter = filesArray.length;
+      var fileState = true;
 
       filesArray.forEach(function( file, index ) {
         var position = file.name.lastIndexOf('.');
@@ -60,10 +67,12 @@ jQuery(document).ready(function($){
         if(!allowedTypes.includes(fileType)){
           jQuery('.warningText').text('Falsches Dateiformat')
           UIkit.modal(modalElement).show();
+          fileState = false;
         }
         else if(fileCounter > maxFiles){
           jQuery('.warningText').text('Beim Lebenslauf ist nur eine Datei erlaubt')
           UIkit.modal(modalElement).show();
+          fileState = false;
         }
 
         inputValidation();
@@ -87,14 +96,95 @@ jQuery(document).ready(function($){
           filenames = filenames + files[i].name;
         }
       }
-
-      $('.' + uploadMessage).html(filenames);
+      if(fileState)
+      {
+        $('.' + uploadMessage).html(filenames);
+      }
+      else{
+        $('.' + uploadMessage).html('Dateien mit der Mouse hereinziehen oder auf das Feld klicken zum Hochladen<br><strong>Achtung: Nur doc, docx, pdf und rtf erlaubt.</strong>');
+      }
     });
 
+  }
+  function clickInput(dragContainer,fileInputID, uploadMessage, allowedTypes, maxFiles){
+    var target = document.getElementById(dragContainer);
+    var body = document.body;
+    var fileInput = document.getElementById(fileInputID);
+    fileInput.addEventListener('change', (e) => {
+
+      e.preventDefault();
+      body.classList.remove('dragging');
+
+      fileInput.files = e.files;
+      var files = fileInput.files;
+      var filesArray = Array.from(files);
+      fileCounter = filesArray.length;
+      var fileState = true;
+      
+      filesArray.forEach(function( file, index ) {
+        var position = file.name.lastIndexOf('.');
+        var length = file.name.length;
+        var fileType = file.name.substr(position,length);
+        fileType = fileType.replace('.','');
+        console.log(file.name, position, length, fileType, fileCounter);
+        fileValidation = allowedTypes.includes(fileType);
+
+        var modalElement = jQuery('#validationModal');
+        if(!allowedTypes.includes(fileType)){
+          jQuery('.warningText').text('Falsches Dateiformat');
+          UIkit.modal(modalElement).show();
+          fileState = false;
+        }
+        else if(fileCounter > maxFiles){
+          jQuery('.warningText').text('Beim Lebenslauf ist nur eine Datei erlaubt')
+          UIkit.modal(modalElement).show();
+          fileState = false;
+        }
+
+        inputValidation();
+        recaptchaValidation();
+
+        if(recaptchaValidState && inputValidState && fileValidation && fileCounter < maxFiles){
+          jQuery('#sendCandidate').attr('disabled', false);
+        }
+        else{
+          jQuery('#sendCandidate').attr('disabled', true);
+        }
+
+      });
+
+      var filenames = '';
+      for (i = 0; i < files.length; i++) {
+        if(i > 0){
+          filenames = filenames + ', ' +  files[i].name;
+        }
+        else{
+          filenames = filenames + files[i].name;
+        }
+      }
+      if(fileState)
+      {
+        $('.' + uploadMessage).html(filenames);
+      }
+      else{
+        $('.' + uploadMessage).html('Dateien mit der Mouse hereinziehen oder auf das Feld klicken zum Hochladen<br><strong>Achtung: Nur doc, docx, pdf und rtf erlaubt.</strong>');
+      }
+    });
   }
 
   dragFileToInput('uploadAdditional','filesAdditional', 'uploadMessageAdd',['doc','docx', 'pdf', 'rtf'],99);
   dragFileToInput('uploadCV','fileCV', 'uploadMessageCV', ['doc','docx', 'pdf', 'rtf'], 1);
+
+  $('.upload-areaCV').on('click', function(){
+    clickInput('uploadCV','fileCV', 'uploadMessageCV', ['doc','docx', 'pdf', 'rtf'], 1);
+    $('#fileCV').trigger('click');
+  })
+
+  $('.upload-areaAdd').on('click', function(){
+    clickInput('uploadAdditional','filesAdditional', 'uploadMessageAdd',['doc','docx', 'pdf', 'rtf'],99);
+    $('#filesAdditional').trigger('click');
+
+  })
 
 
   /********************************************************************************************************************/
@@ -160,10 +250,10 @@ jQuery(document).ready(function($){
           processData: false,
           success: function(response){
             console.log('candidateResponse', response)
+            $('.preloader').removeClass('preloaderVisible');
+            window.location.href = '/bewerbung-erfolgreich';
           }
         });
-        $('.preloader').removeClass('preloaderVisible');
-        //window.location.href = "/";
       }
     });
   }
@@ -310,7 +400,7 @@ jQuery(document).ready(function($){
   // file selected
   $('#sendCandidate').click(function(e){
     e.preventDefault();
-    var form = $('#formTest');
+    var form = $('#bewerbung');
     inputValidation();
     recaptchaValidation();
 

@@ -91,7 +91,9 @@ class BMS_Prescreen_Plugin {
         // CSS
         //wp_enqueue_style( 'style-css', plugins_url( '/style.css', __FILE__ ));
         //wp_enqueue_style( 'bootstrap-css', plugins_url( 'assets/css/bootstrap.min.css', __FILE__ ));
+        //wp_enqueue_style( 'custom-css', 'wp-content/themes/yootheme_child/css/custom.css', __FILE__ ));
         wp_enqueue_style( 'jobdetails-css', plugins_url( 'assets/css/jobdetails.css', __FILE__ ));
+        wp_enqueue_style('tem-location-style', esc_url( get_template_directory_uri() ) . '_child/' . 'css/custom.css');
 
         // JavaScript
        // wp_enqueue_script( 'bootstrap-js', plugins_url( 'assets/js/bootstrap.min.js', __FILE__ ),array('jquery'));

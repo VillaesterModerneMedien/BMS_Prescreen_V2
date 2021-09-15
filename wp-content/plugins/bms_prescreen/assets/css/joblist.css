@@ -6,7 +6,7 @@
   font-size: 14px;
   letter-spacing: 1px;
   line-height: 3em;
-  width: 101%;
+  width: 100% !important;
   text-align: left !important;
   margin-top: -30px;
 }
@@ -192,7 +192,7 @@ label:hover:before {
 
 #searchPhrase {
   width: 700px;
-  /* display:none; */
+  display: none;
 }
 
 tr {
@@ -215,6 +215,7 @@ tr {
   width: 100%;
   margin: 20px auto;
   padding: 20px 15px;
+  box-sizing: border-box;
 }
 
 .joblistResultRow > * {
@@ -224,7 +225,39 @@ tr {
 .joblistResultLeft {
   display: flex;
   flex-direction: column;
-  width: 70%;
+  width: 100%;
+  position: relative;
+}
+@media only screen and (max-width: 380px) {
+  .joblistResultLeft {
+    padding-top: 30px !important;
+  }
+}
+
+.joblistResultLeft .standort {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 16px;
+  text-transform: none;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+@media only screen and (max-width: 468px) {
+  .joblistResultLeft .standort {
+    right: auto;
+    left: 10px;
+    top: auto;
+    margin-top: 10px;
+    bottom: 0px;
+    position: relative;
+    display: block;
+  }
+}
+
+.joblistResultLeft .standort img {
+  height: 16px;
+  margin-right: 10px;
 }
 
 .joblistResultType {
@@ -259,12 +292,12 @@ table.dataTable thead th, table.dataTable thead td {
 }
 
 .joblistResultType.bms_consulting {
-  color: #CC151A;
+  color: #FF4D5E;
   background: none;
 }
 
 .joblistResultType.eudemonia_solutions {
-  color: #1870B7;
+  color: #2E9BE5;
   background: none;
 }
 
@@ -274,27 +307,27 @@ table.dataTable thead th, table.dataTable thead td {
 }
 
 .joblistResultType.bms_training___coaching {
-  color: #991917;
+  color: #FF4D5E;
   background: none;
 }
 
 .joblistResultType.npo_applications {
-  color: #669934;
+  color: #8ECC46;
   background: none;
 }
 
 .joblistResultType.bms_corporate_solutions {
-  color: #1870B7;
+  color: #2E9BE5;
   background: none;
 }
 
 .joblistResultType.payfree {
-  color: #00BFA7;
+  color: #00E5C4;
   background: none;
 }
 
 .joblistResultType.banking_guide {
-  color: #232856;
+  color: #2E9BE5;
   background: none;
 }
 
@@ -302,6 +335,7 @@ table.dataTable thead th, table.dataTable thead td {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 30px;
 }
 
 .joblistResultsHeadline {
@@ -313,6 +347,11 @@ table.dataTable thead th, table.dataTable thead td {
 .joblistResults {
   color: #333333BF;
   font-size: 16px;
+}
+
+.invisibleTable {
+  display: none;
+  visibility: hidden;
 }
 
 /*# sourceMappingURL=joblist.css.map */

@@ -35,7 +35,7 @@ class Joblist{
         $html .= '<div class="joblistContainer">
                     <div class="preloader">
                         <div class="spinner-border" role="status">
-                            <span class="sr-only"><img src="/wp-content/plugins/bms_prescreen/assets/images/spinner-joblist.gif"></span>
+                            <span class="sr-only"><img src="/wp-content/plugins/bms_prescreen/assets/images/preloader.gif"></span>
                         </div>
                         <p>Daten werden geladen</p>
                         <table id="joblistTable" class="joblistTable"></table>

@@ -24,7 +24,7 @@ $companies = $joblistHelper->getCompaniesSelect($data);
                         <div class="uk-form-controls">
                             <div class="uk-inline uk-display-block">
                                 <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: search"></span>
-                                <input class="uk-input" id="Suche" type="text" name="Suche" placeholder="Suche">
+                                <input class="uk-input" id="Suche" type="text" name="Suche" placeholder="Jobtitel">
 
                             </div>
                         </div>
@@ -41,7 +41,7 @@ $companies = $joblistHelper->getCompaniesSelect($data);
                         <label class="uk-form-label" for="Bereich">Bereich</label>
                         <div class="uk-form-controls">
                             <select class="uk-select filterSelect" id="Bereich" name="Bereich">
-                                <option value="">Bereich</option>
+                                <option value="">Alle</option>
                                 <option value="Finanzdienstleister">Finanzdienstleister</option>
                                 <option value="Non Profit Organisationen">Non Profit Organisationen</option>
                                 <option value="Verwaltung">Verwaltung</option>
@@ -60,7 +60,7 @@ $companies = $joblistHelper->getCompaniesSelect($data);
                         <label class="uk-form-label" for="Unternehmen">Unternehmen</label>
                         <div class="uk-form-controls">
                             <select class="uk-select filterSelect" id="Unternehmen" name="Unternehmen">
-                                <option value="">Unternehmen</option>
+                                <option value="">Alle</option>
                                 <?php foreach ($companies as $company): ?>
                                     <option value="<?= $company; ?>"><?= $company; ?></option>
                                 <?php endforeach; ?>
@@ -77,7 +77,7 @@ $companies = $joblistHelper->getCompaniesSelect($data);
                         <label class="uk-form-label" for="Standort">Standort</label>
                         <div class="uk-form-controls">
                             <select class="uk-select filterSelect" id="Standort" name="Standort">
-                                <option value="">Standort</option>
+                                <option value="">Alle</option>
                                 <?php foreach ($cities as $city): ?>
                                     <option value="<?= $city; ?>"><?= $city; ?></option>
                                 <?php endforeach; ?>
@@ -97,8 +97,12 @@ $companies = $joblistHelper->getCompaniesSelect($data);
             <table id="joblistTable" class="joblistTable">
                 <thead>
                 <tr>
-                    <th></th>
-                    <th></th>
+                    <th class="invisibleTable">Company</th>
+                    <th class="invisibleTable">Bereich</th>
+                    <th class="invisibleTable">Name</th>
+                    <th class="invisibleTable">Standort</th>
+                    <th class="invisibleTable">Title</th>
+                    <th class="invisibleTable"></th>
                 </tr>
                 </thead>
                     <?php foreach ($data as $stellenanzeige): ?>
@@ -117,6 +121,12 @@ $companies = $joblistHelper->getCompaniesSelect($data);
                     ?>
 
                     <tr class="joblistResultRow" data-link="<?= $link; ?>">
+                        <td class="invisibleTable"><?= $company; ?></td>
+                        <td class="invisibleTable"><?= $joblistHelper->setUnternehmen($customFields['00_wer_schreibt_aus'])['type']; ?></td>
+                        <td class="invisibleTable"><?= $joblistHelper->setUnternehmen($customFields['00_wer_schreibt_aus'])['name']; ?></td>
+                        <td class="invisibleTable"><?= $customFields['01a_standort_der_stelle']; ?></td>
+                        <td class="invisibleTable"><?= substr($stellenanzeige->title, 0, 55 ) . '...'; ?></td>
+
                         <td class="joblistResultLeft">
                             <span class="joblistResultType <?= $company; ?>">
                                 <?= $joblistHelper->setUnternehmen($customFields['00_wer_schreibt_aus'])['type']; ?>
@@ -127,9 +137,7 @@ $companies = $joblistHelper->getCompaniesSelect($data);
                             <h3 class="joblistResultHeadline">
                                 <?= substr($stellenanzeige->title, 0, 55 ) . '...'; ?>
                             </h3>
-                        </td>
-                        <td class="joblistResultRight">
-                            <?= $customFields['01a_standort_der_stelle']; ?>
+                            <span class="standort"><img src="/wp-content/plugins/bms_prescreen/assets/images/icon-standort.svg" /><?= $customFields['01a_standort_der_stelle']; ?></span>
                         </td>
                     </tr>
                     <?php endforeach; ?>

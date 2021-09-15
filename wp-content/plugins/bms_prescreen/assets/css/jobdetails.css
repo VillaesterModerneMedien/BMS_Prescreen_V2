@@ -56,6 +56,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .customCheckbox {
@@ -233,6 +234,12 @@ h4.subtitles {
   grid-template-columns: 1fr 1fr 1fr;
   grid-column-gap: 40px;
   grid-row-gap: 40px;
+  margin-top: 80px;
+}
+@media only screen and (max-width: 768px) {
+  .typeCheckboxes {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .circle {
@@ -241,6 +248,7 @@ h4.subtitles {
   height: 84px;
   width: 84px;
   position: relative;
+  cursor: pointer;
 }
 
 .circle img {
@@ -263,10 +271,16 @@ h4.subtitles {
   display: block;
 }
 
-.typChecked .innerCircle, .circle:hover .innerCircle {
+.typChecked .innerCircle {
   display: block;
 }
 
+@media only screen and (min-width: 959px) {
+  .circle:hover .innerCircle {
+    display: block;
+    background: #CCC !important;
+  }
+}
 .typeCheckbox {
   display: none;
 }
@@ -308,15 +322,25 @@ form button {
   padding: 0;
   list-style: none;
   margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  margin-top: 60px;
 }
 
 .contactData img {
   max-width: 200px;
+  border-radius: 50%;
 }
 
 .contactName {
   font-size: 18px;
   font-weight: bold;
+}
+
+.contactDetails {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
 }
 
 .mb-3 {
@@ -404,8 +428,12 @@ form button {
   padding: 0;
 }
 
+#jobdetailsTop .uk-first-column {
+  padding-left: 0;
+}
+
 #jobdetailsTop div {
-  height: 100% !important;
+  height: 65vh !important;
 }
 
 .jobdetailsHeadline {
@@ -419,10 +447,21 @@ form button {
   align-items: center;
   justify-content: flex-end;
   flex-direction: column;
+  color: #FFF;
+}
+
+#jobdetailsSuccessHeadlineContainer {
+  display: flex;
+  border-radius: 0px 0px 16px 16px;
+  padding: 30px 120px 120px 120px;
+  align-items: flex-start;
+  justify-content: flex-end;
+  flex-direction: column;
+  color: #FFF;
 }
 
 #recaptcha {
-  float: left;
+  margin: 0 auto;
 }
 
 #jobdetailsCompanyContainer {
@@ -435,38 +474,80 @@ form button {
   text-align: center;
   border-radius: 0px 16px 16px 0px;
 }
+@media only screen and (max-width: 768px) {
+  .wirbietendirElements {
+    border-radius: 16px 16px 16px 16px;
+    padding: 30px 15px !important;
+  }
+}
 
 .wirbietendirElements.uk-first-column {
   border-radius: 16px 0px 0px 16px;
+}
+@media only screen and (max-width: 768px) {
+  .wirbietendirElements.uk-first-column {
+    border-radius: 16px 16px 16px 16px;
+  }
 }
 
 .wirbietendirElements:nth-child(1) {
   background: #FFCE00;
 }
+@media only screen and (max-width: 768px) {
+  .wirbietendirElements:nth-child(1) {
+    border-radius: 16px 0px 0px 16px;
+    margin-right: -65px;
+  }
+}
 
 .wirbietendirElements:nth-child(2) {
   background: #2E9BE5;
+}
+@media only screen and (max-width: 768px) {
+  .wirbietendirElements:nth-child(2) {
+    border-radius: 0px 16px 16px 0px;
+    margin-left: -65px;
+  }
 }
 
 .wirbietendirElements:nth-child(3) {
   background: #FF4D5E;
 }
+@media only screen and (max-width: 768px) {
+  .wirbietendirElements:nth-child(3) {
+    border-radius: 16px 0px 0px 16px;
+    margin-right: -65px;
+  }
+}
 
 .wirbietendirElements:nth-child(4) {
   background: #8ECC46;
+}
+@media only screen and (max-width: 768px) {
+  .wirbietendirElements:nth-child(4) {
+    border-radius: 0px 16px 16px 0px;
+    margin-left: -65px;
+  }
 }
 
 .wirbietendirElements:nth-child(5) {
   background: #00E5C4;
 }
+@media only screen and (max-width: 768px) {
+  .wirbietendirElements:nth-child(5) {
+    border-radius: 16px 0px 0px 16px;
+    margin-right: -65px;
+  }
+}
 
 .wirbietendirElements:nth-child(6) {
   background: #A9B8DE;
 }
-
-.companySubtitle.bms_consulting {
-  color: #CC151A;
-  background: none;
+@media only screen and (max-width: 768px) {
+  .wirbietendirElements:nth-child(6) {
+    border-radius: 0px 16px 16px 0px;
+    margin-left: -65px;
+  }
 }
 
 .companyData {
@@ -501,14 +582,15 @@ form button {
   margin-bottom: 15px;
 }
 
-.dirwichtigContent {
+/*
+.dirwichtigContent{
   float: right;
   margin-right: 80px;
   max-width: 70%;
-}
-
+}*/
 .bmsSkillField {
   padding: 0 30px 20px 30px;
+  cursor: pointer;
 }
 
 .jobdetailsMainContainer .uk-heading-large {
@@ -516,6 +598,13 @@ form button {
   padding: 0 !important;
   text-align: left;
   margin-bottom: 20px !important;
+  word-break: break-word;
+  hyphens: auto;
+}
+@media only screen and (max-width: 639px) {
+  .jobdetailsMainContainer .uk-heading-large {
+    font-size: 2rem !important;
+  }
 }
 
 .uk-grid-nopadding > * {
@@ -525,6 +614,14 @@ form button {
 .jobdetailsText {
   font-size: 20px;
   margin: 0;
+}
+
+.uk-heading-medium {
+  font-size: 30px !important;
+  line-height: 32px !important;
+  text-transform: none !important;
+  font-weight: normal !important;
+  margin: 0px !important;
 }
 
 .uk-container-expand-right .uk-tile-muted {
@@ -608,6 +705,7 @@ form button {
   margin-top: 10px;
   text-align: left;
   font-size: 20px;
+  align-items: center;
 }
 
 .sliderRight {
@@ -617,6 +715,7 @@ form button {
   margin-top: 10px;
   text-align: right;
   font-size: 20px;
+  align-items: center;
 }
 
 .sliderContainer {
@@ -633,7 +732,7 @@ form button {
   align-items: center;
 }
 
-.bms_consulting::-webkit-slider-thumb {
+.slider::-webkit-slider-thumb {
   cursor: pointer;
   appearance: none !important;
   border: 0px solid #000000 !important;
@@ -661,139 +760,139 @@ form button {
   padding: 80px 0 0px 0;
 }
 
-.bms_consulting::-webkit-slider-thumb {
-  background: #CC151A !important;
+.group_bms_consulting::-webkit-slider-thumb {
+  background: #FF4D5E !important;
 }
 
-.bms_consulting::-moz-range-thumb {
-  background: #CC151A !important;
+.group_bms_consulting::-moz-range-thumb {
+  background: #FF4D5E !important;
 }
 
-.eudemonia_solutions::-webkit-slider-thumb {
-  background: #1870B7 !important;
+.group_eudemonia_solutions::-webkit-slider-thumb {
+  background: #2E9BE5 !important;
 }
 
-.eudemonia_solutions::-moz-range-thumb {
-  background: #1870B7 !important;
+.group_eudemonia_solutions::-moz-range-thumb {
+  background: #2E9BE5 !important;
 }
 
-.bms_orga___design::-webkit-slider-thumb {
+.group_bms_orga___design::-webkit-slider-thumb {
   background: #A9B8DE !important;
 }
 
-.bms_orga___design::-moz-range-thumb {
+.group_bms_orga___design::-moz-range-thumb {
   background: #A9B8DE !important;
 }
 
-.bms_training___coaching::-webkit-slider-thumb {
-  background: #991917 !important;
+.group_bms_training___coaching::-webkit-slider-thumb {
+  background: #FF4D5E !important;
 }
 
-.slider.bms_training___coaching::-moz-range-thumb {
-  background: #991917 !important;
+.group_bms_training___coaching::-moz-range-thumb {
+  background: #FF4D5E !important;
 }
 
-.npo_applications::-webkit-slider-thumb {
-  background: #669934 !important;
+.group_npo_applications::-webkit-slider-thumb {
+  background: #8ECC46 !important;
 }
 
-.npo_applications::-moz-range-thumb {
-  background: #669934 !important;
+.group_npo_applications::-moz-range-thumb {
+  background: #8ECC46 !important;
 }
 
-.bms_corporate_solutions::-webkit-slider-thumb {
-  background: #1870B7 !important;
+.group_bms_corporate_solutions::-webkit-slider-thumb {
+  background: #2E9BE5 !important;
 }
 
-.bms_corporate_solutions::-moz-range-thumb {
-  background: #1870B7 !important;
+.group_bms_corporate_solutions::-moz-range-thumb {
+  background: #2E9BE5 !important;
 }
 
-.payfree::-webkit-slider-thumb {
-  background: #00BFA7 !important;
+.group_payfree::-webkit-slider-thumb {
+  background: #00E5C4 !important;
 }
 
-.payfree::-moz-range-thumb {
-  background: #00BFA7 !important;
+.group_payfree::-moz-range-thumb {
+  background: #00E5C4 !important;
 }
 
-.banking_guide::-webkit-slider-thumb {
-  background: #232856 !important;
+.group_banking_guide::-webkit-slider-thumb {
+  background: #2E9BE5 !important;
 }
 
-.banking_guide::-moz-range-thumb {
-  background: #232856 !important;
+.group_banking_guide::-moz-range-thumb {
+  background: #2E9BE5 !important;
 }
 
-.bms_consulting .star:hover, .bms_consulting .starMarked, .bms_consulting .starSelected, .bms_consulting .starChecked {
-  background: #CC151A !important;
+.group_bms_consulting .star:hover, .group_bms_consulting .starMarked, .group_bms_consulting .starSelected, .group_bms_consulting .starChecked {
+  background: #FF4D5E !important;
 }
 
-.eudemonia_solutions .star:hover, .eudemonia_solutions .starMarked, .eudemonia_solutions .starSelected, .eudemonia_solutions .starChecked {
-  background: #1870B7 !important;
+.group_eudemonia_solutions .star:hover, .group_eudemonia_solutions .starMarked, .group_eudemonia_solutions .starSelected, .group_eudemonia_solutions .starChecked {
+  background: #2E9BE5 !important;
 }
 
-.bms_orga___design .star:hover, .bms_orga___design .starMarked, .bms_orga___design .starSelected, .bms_orga___design .starChecked {
+.group_bms_orga___design .star:hover, .group_bms_orga___design .starMarked, .group_bms_orga___design .starSelected, .group_bms_orga___design .starChecked {
   background: #A9B8DE !important;
 }
 
-.bms_training___coaching .star:hover, .bms_training___coaching .starMarked, .bms_training___coaching .starSelected, .bms_training___coaching .starChecked {
-  background: #991917 !important;
+.group_bms_training___coaching .star:hover, .group_bms_training___coaching .starMarked, .group_bms_training___coaching .starSelected, .group_bms_training___coaching .starChecked {
+  background: #FF4D5E !important;
 }
 
-.npo_applications .star:hover, .npo_applications .starMarked, .npo_applications .starSelected, .npo_applications .starChecked {
-  background: #669934 !important;
+.group_npo_applications .star:hover, .group_npo_applications .starMarked, .group_npo_applications .starSelected, .group_npo_applications .starChecked {
+  background: #8ECC46 !important;
 }
 
-.bms_corporate_solutions .star:hover, .bms_corporate_solutions .starMarked, .bms_corporate_solutions .starSelected, .bms_corporate_solutions .starChecked {
-  background: #1870B7 !important;
+.group_bms_corporate_solutions .star:hover, .group_bms_corporate_solutions .starMarked, .group_bms_corporate_solutions .starSelected, .group_bms_corporate_solutions .starChecked {
+  background: #2E9BE5 !important;
 }
 
-.payfree .star:hover, .payfree .starMarked, .payfree .starSelected, .payfree .starChecked {
-  background: #00BFA7 !important;
+.group_payfree .star:hover, .group_payfree .starMarked, .group_payfree .starSelected, .group_payfree .starChecked {
+  background: #00E5C4 !important;
 }
 
-.banking_guide .star:hover, .banking_guide .starMarked, .banking_guide .starSelected, .banking_guide .starChecked {
-  background: #232856 !important;
+.group_banking_guide .star:hover, .group_banking_guide .starMarked, .group_banking_guide .starSelected, .group_banking_guide .starChecked {
+  background: #2E9BE5 !important;
 }
 
-.companySubtitle.bms_consulting {
-  color: #CC151A;
+.companySubtitle.group_bms_consulting {
+  color: #FF4D5E;
   background: none;
 }
 
-.companySubtitle.eudemonia_solutions {
-  color: #1870B7;
+.companySubtitle.group_eudemonia_solutions {
+  color: #2E9BE5;
   background: none;
 }
 
-.companySubtitle.bms_orga___design {
+.companySubtitle.group_bms_orga___design {
   color: #A9B8DE;
   background: none;
 }
 
-.companySubtitle.bms_training___coaching {
-  color: #991917;
+.companySubtitle.group_bms_training___coaching {
+  color: #FF4D5E;
   background: none;
 }
 
-.companySubtitle.npo_applications {
-  color: #669934;
+.companySubtitle.group_npo_applications {
+  color: #8ECC46;
   background: none;
 }
 
-.companySubtitle.bms_corporate_solutions {
-  color: #1870B7;
+.companySubtitle.group_bms_corporate_solutions {
+  color: #2E9BE5;
   background: none;
 }
 
-.companySubtitle.payfree {
-  color: #00BFA7;
+.companySubtitle.group_payfree {
+  color: #00E5C4;
   background: none;
 }
 
-.companySubtitle.banking_guide {
-  color: #232856;
+.companySubtitle.group_banking_guide {
+  color: #2E9BE5;
   background: none;
 }
 
@@ -815,8 +914,84 @@ form button {
   text-align: center;
 }
 
+#sendCandidate {
+  cursor: pointer;
+}
+
 #sendCandidate:disabled {
   opacity: 0.5;
+}
+
+.companyTopHeadline {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  text-align: left;
+}
+
+.uk-heading-success {
+  margin: 0;
+  margin-bottom: 30px;
+}
+
+#jobdetailsSuccessHeadlineContainer img {
+  margin: 0 auto;
+}
+
+#jobdetailsSuccessHeadlineContainer p {
+  margin: 0;
+  margin-bottom: 40px;
+}
+
+#jobdetailsSuccessHeadlineContainer .sliderButton {
+  max-width: 320px;
+}
+
+#jobdetailsTop .sliderItem {
+  margin: 0;
+}
+
+@media only screen and (max-width: 768px) {
+  .uk-grid > * {
+    padding-left: 0px !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .greyBoxSection .uk-grid {
+    margin-left: 0px !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .greyBoxSection .uk-container {
+    padding-left: 35px !important;
+    padding-right: 35px !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .greyBoxSection .uk-tile-muted {
+    border-radius: 16px 16px 16px 16px;
+  }
+}
+
+/*
+.tileMobileRight{
+  @media only screen and (max-width: 768px) {
+    border-radius: 16px 0px 0px 16px;
+    margin-right: -35px;
+  }
+}
+.tileMobileLeft{
+  @media only screen and (max-width: 768px) {
+    border-radius: 0px 16px 16px 0px;
+    margin-left: -35px;
+  }
+}
+*/
+.upload-area span {
+  padding: 15px;
 }
 
 /*# sourceMappingURL=jobdetails.css.map */

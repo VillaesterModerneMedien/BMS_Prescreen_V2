@@ -1,0 +1,122 @@
+{
+    "@import": "./element.php",
+    "name": "headslider_item",
+    "title": "Item",
+    "width": 500,
+    "placeholder": {
+        "props": {
+            "image": "${url:~yootheme/theme/assets/images/element-image-placeholder.png}",
+            "video": "",
+            "title": "",
+            "meta": "",
+            "content": ""
+        }
+    },
+    "templates": {
+        "render": "./templates/template.php",
+        "content": "./templates/content.php"
+    },
+    "fields": {
+        "topHeadline": {
+            "label": "Top Headline",
+            "source": true
+        },
+        "logo": {
+            "label": "Logo",
+            "type": "image",
+            "source": true,
+            "show": "!video"
+        },
+        "title": {
+            "label": "Main Headline",
+            "source": true
+        },
+        "buttonText": {
+            "label": "Button Text",
+            "source": true
+        },
+
+        "link": "${builder.link}",
+        "backgroundColor": {
+            "label": "BG Color",
+            "type": "color",
+            "source": true
+        },
+        "text_color_hover": {
+            "type": "checkbox",
+            "text": "Inverse the text color on hover"
+        },
+        "status": "${builder.statusItem}",
+        "source": "${builder.source}"
+    },
+    "fieldset": {
+        "default": {
+            "type": "tabs",
+            "fields": [
+                {
+                    "title": "Content",
+                    "fields": [
+                        "topHeadline",
+                        "logo",
+                        "title",
+                        "buttonText",
+                        "link",
+                        "backgroundColor"
+                    ]
+                },
+                "${builder.advancedItem}"
+            ]
+        }
+    },
+    "panels": {
+        "builder-slider-item-media": {
+            "title": "Image/Video",
+            "width": 500,
+            "fields": {
+                "media_background": {
+                    "label": "Background Color",
+                    "description": "Use the background color in combination with blend modes.",
+                    "type": "color"
+                },
+                "media_blend_mode": {
+                    "label": "Blend Mode",
+                    "description": "Determine how the image or video will blend with the background color.",
+                    "type": "select",
+                    "options": {
+                        "Normal": "",
+                        "Multiply": "multiply",
+                        "Screen": "screen",
+                        "Overlay": "overlay",
+                        "Darken": "darken",
+                        "Lighten": "lighten",
+                        "Color-dodge": "color-dodge",
+                        "Color-burn": "color-burn",
+                        "Hard-light": "hard-light",
+                        "Soft-light": "soft-light",
+                        "Difference": "difference",
+                        "Exclusion": "exclusion",
+                        "Hue": "hue",
+                        "Saturation": "saturation",
+                        "Color": "color",
+                        "Luminosity": "luminosity"
+                    },
+                    "enable": "media_background"
+                },
+                "media_overlay": {
+                    "label": "Overlay Color",
+                    "description": "Set an additional transparent overlay to soften the image or video.",
+                    "type": "color"
+                }
+            },
+            "fieldset": {
+                "default": {
+                    "fields": [
+                        "media_background",
+                        "media_blend_mode",
+                        "media_overlay"
+                    ]
+                }
+            }
+        }
+    }
+}

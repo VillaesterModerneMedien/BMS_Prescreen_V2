@@ -26,7 +26,7 @@ class Jobdetails{
         $id = get_query_var( 'jobid' );
         //var_dump($id);
         $idPos = (int) strrpos($id, '-') + 1;
-        $id = (int) substr($id, $idPos, 6);
+        $id = (int) substr($id, $idPos, 10);
         $slug = get_query_var( 'jobid' );
 
         $parameters = [
@@ -49,11 +49,12 @@ class Jobdetails{
         //Company Grid Item
         // achtung --> 5 scheint ROW zu sein, bei Umbau der Startseite muss ggf hier angepasst werden
 
-        $numOfItems = count($companyGrid->children[5]->children[0]->children[1]->children[1]->children);
+        $numOfItems = count($companyGrid->children[6]->children[0]->children[1]->children[1]->children);
 
         $companyInformations = array();
         for($i = 0; $i < $numOfItems; $i++){
-            $item = $companyGrid->children[5]->children[0]->children[1]->children[1]->children[$i]->props;
+            $item = $companyGrid->children[6]->children[0]->children[1]->children[1]->children[$i]->props;
+
             $company        = $item->title;
             $webseiteLink   = $item->webseiteLink;
             $jobLink        = $item->jobLink;

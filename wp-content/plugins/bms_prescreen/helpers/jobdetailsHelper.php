@@ -45,31 +45,40 @@ class JobdetailsHelper
         $value = str_replace('.', '', $value);
         $value = str_replace('&', '_', $value);
         $value = str_replace("ä", "ae", $value);
+        $value = str_replace("_auml;", "ae", $value);
         $value = str_replace("ü", "ue", $value);
+        $value = str_replace("_uuml;", "ue", $value);
         $value = str_replace("ö", "oe", $value);
+        $value = str_replace("_ouml;", "oe", $value);
         $value = str_replace("Ä", "Ae", $value);
         $value = str_replace("Ü", "Ue", $value);
         $value = str_replace("Ö", "Oe", $value);
         $value = str_replace("ß", "ss", $value);
         $value = strtolower($value);
+        $value = strip_tags($value);
         //var_dump($value);
         return $value;
     }
 
-    function getRecruitainmentLi($html, $className) {
+    function getRecruitainmentLi($html, $toggleCount, $fieldType) {
         $dom = new DOMDocument('1.0', 'utf-8');
         $dom->loadHTML($html);
         $lis = $dom->getElementsByTagName('li');
-        //var_dump($lis);
+
+        $counter = 0;
 
         $elements = [];
         foreach ($lis as $li){
-            foreach ($li->childNodes as $node){
-                if($node->getAttribute('class') === $className)
-                {
-                    $elements[] = $node->textContent;
-                }
+            $counter++;
+            if($fieldType === 'skill' && $counter > $toggleCount)
+            {
+                $elements[] = $li->nodeValue;
             }
+            if($fieldType === 'switch' && $counter <= $toggleCount)
+            {
+                $elements[] = $li->nodeValue;
+            }
+
         }
 
         return $elements;

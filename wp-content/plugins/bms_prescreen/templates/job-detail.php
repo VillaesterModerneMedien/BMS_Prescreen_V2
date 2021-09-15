@@ -15,45 +15,43 @@ $jobdetailsHelper = new JobdetailsHelper();
 $joblistHelper = new JoblistHelper();
 
 $customFields = $jobdetailsHelper->getCustomFields($jobdetails->custom_fields);
-//var_dump($customFields);
-
-$switches = $jobdetailsHelper->getRecruitainmentLi($jobdetails->description, 'recruitainment-toggleswitches');
-$skills = $jobdetailsHelper->getRecruitainmentLi($jobdetails->description, 'recruitainment-skills');
-
-//var_dump($customFields['00_wer_schreibt_aus']);
-
+$toggleCount = $customFields['ToggleSwitches'];
+//var_dump($jobdetails->description);
+//var_dump($jobdetails->job_contents[2]->content);die();
+$switches = $jobdetailsHelper->getRecruitainmentLi($jobdetails->job_contents[5]->content, $toggleCount, 'switch');
+$skills = $jobdetailsHelper->getRecruitainmentLi($jobdetails->job_contents[5]->content, $toggleCount, 'skill');
+//var_dump($toggleCount);
+//var_dump($jobdetails->job_contents[5]->content);
 $companyInformationsJoblist = $joblistHelper->setUnternehmen($customFields['00_wer_schreibt_aus']);
 $companyInfosYootheme = $args['company'][$companyInformationsJoblist['name']];
-//var_dump($companyInfosYootheme);
 
 $companyName = $companyInfosYootheme['company'];
 $companyClass = $companyName;
 $companyClass = preg_replace("/[^A-Za-z0-9 ]/", '_', $companyClass);
 $companyClass = str_replace(' ', '_', $companyClass);
 $companyClass = strtolower($companyClass);
-$html = $jobdetails->job_contents[0]->content;
+$html = $jobdetails->job_contents[9]->content;
+//var_dump($jobdetails);
 ?>
 <?php get_header(); ?>
 
 <div class="preloader">
     <div class="spinner-border" role="status">
-        <span class="sr-only"><img src="/wp-content/plugins/bms_prescreen/assets/images/spinner-joblist.gif"></span>
+        <span class="sr-only"><img src="/wp-content/plugins/bms_prescreen/assets/images/preloader.gif"></span>
     </div>
     <p>Ihre Bewerbung wird übermittelt...</p>
-    <p>Nach erfolreicher Übermittlung werden Sie zurück zur Startseite geleitet.</p>
 </div>
 <div class="jobdetailsMainContainer">
-
-
     <div class="uk-section-default uk-section" id="jobdetailsTop">
         <div class="uk-container uk-container-small">
             <div class="tm-grid-expand uk-child-width-1-1 uk-grid-margin uk-grid uk-grid-stack" uk-grid="">
                 <div class="uk-first-column">
-                    <div class="uk-panel uk-margin <?= $companyClass; ?>" id="jobdetailsTopHeadlineContainer">
+                    <div class="uk-panel uk-margin group_<?= $companyClass; ?>" id="jobdetailsTopHeadlineContainer">
+                        <span class="companyTopHeadline"><?= $companyInfosYootheme['company']; ?></span>
                         <h1 class="uk-heading-large uk-heading-light jobdetailsHeadline">
                             <?= $jobdetails->title; ?>
                         </h1>
-                        <a href="#" class="uk-button-default-white">Bewirb dich jetzt</a>
+                        <a href="#" id="bewerben" class="uk-button-default-white">Bewirb dich jetzt</a>
                     </div>
                 </div>
             </div>
@@ -67,7 +65,7 @@ $html = $jobdetails->job_contents[0]->content;
                     <div class="uk-panel uk-margin" id="jobdetailsCompanyContainer">
                         <img class="jobdetailsLogo" src="/<?= $companyInfosYootheme['logo']; ?>" />
                         <div class="companyData">
-                            <span class="companySubtitle <?= $companyClass; ?>">Kurzportrait</span>
+                            <span class="companySubtitle group_<?= $companyClass; ?>">Kurzportrait</span>
                             <h3 class="uk-heading-large companyHeadline"><?= $companyInfosYootheme['headline']; ?></h3>
                             <div>
                                 <?= $companyInfosYootheme['content']; ?>
@@ -83,9 +81,21 @@ $html = $jobdetails->job_contents[0]->content;
     <div class="uk-section-default uk-section" id="wirbietendirSection">
         <div class="uk-container uk-container-small">
             <div class="tm-grid-expand uk-child-width-1-2@m uk-grid-margin uk-grid uk-grid-stack" id="wirbietendirGrid" uk-grid="">
-                <?php foreach($jobdetailsHelper->getListElements($html) as $listenelement): ?>
+                <?php
+                    $aufgaben = [
+                        $jobdetails->job_contents[11]->content,
+                        $jobdetails->job_contents[12]->content,
+                        $jobdetails->job_contents[13]->content,
+                        $jobdetails->job_contents[14]->content,
+                        //$jobdetails->job_contents[19]->content,
+                        $jobdetails->job_contents[17]->content,
+                        $jobdetails->job_contents[18]->content,
+                        //$jobdetails->job_contents[22]->content,
+                    ];
+                ?>
+                <?php foreach($aufgaben as $listenelement): ?>
                     <div class="wirbietendirElements">
-                        <img src="<?= '/wp-content/plugins/bms_prescreen//assets/images/recruitainment/wirbieten_icons/' . $jobdetailsHelper->imageRenaming($listenelement) . '.svg'; ?>" />
+                        <img src="<?= '/wp-content/plugins/bms_prescreen/assets/images/recruitainment/wirbieten_icons/' . $jobdetailsHelper->imageRenaming($listenelement) . '.svg'; ?>" />
                         <h4 class="wirbietendirHeadline"><?= $listenelement; ?></h4>
                     </div>
                 <?php endforeach; ?>
@@ -96,13 +106,13 @@ $html = $jobdetails->job_contents[0]->content;
     <div class="uk-section-default uk-section" id="aufgabenSection">
         <div class="uk-container uk-container-small">
             <?php
-                $html = $jobdetails->job_contents[1]->content;
+                $html = $jobdetails->job_contents[3]->content;
             ?>
             <div class="tm-grid-expand uk-grid-margin uk-grid-nopadding" uk-grid="">
                 <div class="uk-width-1-1@m">
                     <span class="subtitle">Stellenprofil</span>
                     <h3 class="uk-heading-large">
-                        <?= $jobdetailsHelper->getByID($html, 'recruitainment-aufgaben-ueberschrift'); ?>
+                        <?= $jobdetails->job_contents[2]->content; ?>
                     </h3>
                 </div>
                 <div class="uk-width-1-1@m">
@@ -118,15 +128,12 @@ $html = $jobdetails->job_contents[0]->content;
         </div>
     </div>
 
-    <form enctype="multipart/form-data" action="<?=admin_url( 'admin-post.php' ) ?>" method="post" name="formTest" id="formTest">
-        <div class="uk-section-default uk-section" id="unswichtigSection">
-            <div class="uk-container uk-container-xlarge uk-padding-remove-horizontal uk-container-expand-right">
+    <form enctype="multipart/form-data" action="<?=admin_url( 'admin-post.php' ) ?>" method="post" name="bewerbungForm" id="bewerbung">
+        <div class="uk-section-default uk-section greyBoxSection" id="unswichtigSection">
+            <div class="uk-container uk-container-small">
                 <div class="tm-grid-expand uk-grid-margin uk-grid" uk-grid="">
-                    <div class="uk-width-1-6@m uk-first-column">
-
-                    </div>
-                    <div class="uk-grid-item-match uk-width-5-6@m">
-                        <div class="uk-tile-muted uk-tile">
+                    <div class="uk-grid-item-match uk-width-1-1@m">
+                        <div class="uk-tile-muted uk-tile tileMobileRight">
                             <span class="subtitle">Selbsteinschätzung</span>
                             <h3 class="uk-heading-large">
                                 <?= $customFields['03_unswichtig_ueberschrift']; ?>
@@ -143,10 +150,10 @@ $html = $jobdetails->job_contents[0]->content;
                     <?php $counter = 0; ?>
                     <?php foreach($switches as $switch): ?>
                         <?php $counter++; ?>
-                        <div class="uk-width-1-3@m">
+                        <div class="uk-width-1-3@s">
                             <label class="customCheckboxLabel" for="<?= $jobdetailsHelper->imageRenaming($switch); ?>">
                                 <span class="switchLabel"><?= $switch; ?></span>
-                                <input data-company="<?= $companyClass; ?>" id="<?= $jobdetailsHelper->imageRenaming($switch); ?>" name="skillSwitch<?= $counter; ?>" aria-describedby="<?= $jobdetailsHelper->imageRenaming($switch); ?>" class="recruit-toggleswitch-checkbox skillCheckbox" type="checkbox" value="<?= $jobdetailsHelper->imageRenaming($switch); ?>">
+                                <input data-company="group_<?= $companyClass; ?>" id="<?= $jobdetailsHelper->imageRenaming($switch); ?>" name="skillSwitch<?= $counter; ?>" aria-describedby="<?= $jobdetailsHelper->imageRenaming($switch); ?>" class="recruit-toggleswitch-checkbox skillCheckbox" type="checkbox" value="<?= $jobdetailsHelper->imageRenaming($switch); ?>">
                                 <span class="customCheckbox"></span>
                             </label>
                         </div>
@@ -157,12 +164,12 @@ $html = $jobdetails->job_contents[0]->content;
                     <?php $counter = 0; ?>
                     <?php foreach($skills as $skill): ?>
                         <?php $counter++; ?>
-                        <div class="uk-width-1-2@m">
+                        <div class="uk-width-1-2@s">
                             <div class="bmsSkillField">
                                 <div class="starRatingContainer">
                                     <div class="bms-field-element">
                                         <span class="starrating">
-                                            <div class="stars <?= $companyClass; ?>" data-id="<?= $jobdetailsHelper->imageRenaming($skill); ?>">
+                                            <div class="stars group_<?= $companyClass; ?>" data-id="<?= $jobdetailsHelper->imageRenaming($skill); ?>">
                                                 <a class="star" title="1"></a>
                                                 <a class="star" title="2"></a>
                                                 <a class="star" title="3"></a>
@@ -183,12 +190,12 @@ $html = $jobdetails->job_contents[0]->content;
             </div>
         </div>
 
-        <div class="uk-section-default uk-section" id="dirwichtigSection">
-            <div class="uk-container uk-container-xlarge uk-padding-remove-horizontal uk-container-expand-left">
+        <div class="uk-section-default uk-section greyBoxSection" id="dirwichtigSection">
+            <div class="uk-container uk-container-small">
 
                 <div class="tm-grid-expand uk-grid-margin uk-grid" uk-grid="">
-                    <div class="uk-width-5-6@m uk-first-column">
-                        <div class="uk-tile-muted uk-tile">
+                    <div class="uk-width-1-1@m uk-first-column">
+                        <div class="uk-tile-muted uk-tile tileMobileLeft">
                             <div class="dirwichtigContent">
                                 <span class="subtitle">Selbsteinschätzung</span>
                                 <h3 class="uk-heading-large">
@@ -198,20 +205,19 @@ $html = $jobdetails->job_contents[0]->content;
                             </div>
                         </div>
                     </div>
-                    <div class="uk-grid-item-match uk-width-1-6@m">
-                    </div>
                 </div>
             </div>
 
             <div class="slidersSection">
                 <div class="uk-container uk-container-small">
                     <div class="tm-grid-expand uk-grid-margin uk-grid sliders" uk-grid="">
+                        <?php
+                            $field = $customFields['07_slider_1'];
+                            $values = explode('<->', $field);
+                            if($field !== '' && $field !== '(slider nicht vorhanden)'):
+                        ?>
                         <div class="uk-width-1-2@m uk-first-column">
                             <div class="field">
-                                <?php
-                                $field = $customFields['07_slider_1'];
-                                $values = explode('<->', $field);
-                                ?>
                                 <div class="sliderLeft">
                                     <img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/slider_icons/<?= $jobdetailsHelper->imageRenaming(strtolower($values[0])); ?>.svg">
                                     <label><?= $values[0]; ?></label>
@@ -222,17 +228,19 @@ $html = $jobdetails->job_contents[0]->content;
 
                                 </div>
                                 <div class="sliderContainer">
-                                    <input type="range" min="-100" max="100" value="0" class="slider <?= $companyClass; ?>" id="slider1">
+                                    <input type="range" min="-100" max="100" value="0" class="slider group_<?= $companyClass; ?>" id="slider1">
                                     <input type="hidden" name="slider1" id="slider1hidden" $value="<?= $field; ?>" data-value="<?= $field; ?>">
                                 </div>
                             </div>
                         </div>
+                        <?php endif; ?>
+                        <?php
+                            $field = $customFields['07_slider_2'];
+                            $values = explode('<->', $field);
+                            if($field !== '' && $field !== '(slider nicht vorhanden)'):
+                        ?>
                         <div class="uk-width-1-2@m">
                             <div class="field">
-                                <?php
-                                $field = $customFields['07_slider_2'];
-                                $values = explode('<->', $field);
-                                ?>
                                 <div class="sliderLeft">
                                     <img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/slider_icons/<?= $jobdetailsHelper->imageRenaming(strtolower($values[0])); ?>.svg">
                                     <label><?= $values[0]; ?></label>
@@ -243,17 +251,19 @@ $html = $jobdetails->job_contents[0]->content;
 
                                 </div>
                                 <div class="sliderContainer">
-                                    <input type="range" min="-100" max="100" value="0" class="slider <?= $companyClass; ?>" id="slider2">
+                                    <input type="range" min="-100" max="100" value="0" class="slider group_<?= $companyClass; ?>" id="slider2">
                                     <input type="hidden" name="slider2" id="slider2hidden" $value="<?= $field; ?>" data-value="<?= $field; ?>">
                                 </div>
                             </div>
                         </div>
+                        <?php endif; ?>
+                        <?php
+                            $field = $customFields['07_slider_3'];
+                            $values = explode('<->', $field);
+                            if($field !== '' && $field !== '(slider nicht vorhanden)'):
+                        ?>
                         <div class="uk-width-1-2@m">
                             <div class="field">
-                                <?php
-                                $field = $customFields['07_slider_3'];
-                                $values = explode('<->', $field);
-                                ?>
                                 <div class="sliderLeft">
                                     <img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/slider_icons/<?= $jobdetailsHelper->imageRenaming(strtolower($values[0])); ?>.svg">
                                     <label><?= $values[0]; ?></label>
@@ -264,17 +274,19 @@ $html = $jobdetails->job_contents[0]->content;
 
                                 </div>
                                 <div class="sliderContainer">
-                                    <input type="range" min="-100" max="100" value="0" class="slider <?= $companyClass; ?>" id="slider3">
+                                    <input type="range" min="-100" max="100" value="0" class="slider group_<?= $companyClass; ?>" id="slider3">
                                     <input type="hidden" name="slider3" id="slider3hidden" $value="<?= $field; ?>" data-value="<?= $field; ?>">
                                 </div>
                             </div>
                         </div>
+                        <?php endif; ?>
+                        <?php
+                            $field = $customFields['07_slider_4'];
+                            $values = explode('<->', $field);
+                            if($field !== '' && $field !== '(slider nicht vorhanden)'):
+                        ?>
                         <div class="uk-width-1-2@m">
                             <div class="field">
-                                <?php
-                                $field = $customFields['07_slider_4'];
-                                $values = explode('<->', $field);
-                                ?>
                                 <div class="sliderLeft">
                                     <img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/slider_icons/<?= $jobdetailsHelper->imageRenaming(strtolower($values[0])); ?>.svg">
                                     <label><?= $values[0]; ?></label>
@@ -285,24 +297,68 @@ $html = $jobdetails->job_contents[0]->content;
 
                                 </div>
                                 <div class="sliderContainer">
-                                    <input type="range" min="-100" max="100" value="0" class="slider <?= $companyClass; ?>" id="slider4">
+                                    <input type="range" min="-100" max="100" value="0" class="slider group_<?= $companyClass; ?>" id="slider4">
                                     <input type="hidden" name="slider4" id="slider4hidden" $value="<?= $field; ?>" data-value="<?= $field; ?>">
                                 </div>
                             </div>
                         </div>
+                        <?php endif; ?>
+                        <?php
+                            $field = $customFields['07_slider_5'];
+                            $values = explode('<->', $field);
+                            if($field !== '' && $field !== '(slider nicht vorhanden)'):
+                        ?>
+                        <div class="uk-width-1-2@m">
+                            <div class="field">
+                                <div class="sliderLeft">
+                                    <img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/slider_icons/<?= $jobdetailsHelper->imageRenaming(strtolower($values[0])); ?>.svg">
+                                    <label><?= $values[0]; ?></label>
+                                </div>
+                                <div class="sliderRight">
+                                    <img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/slider_icons/<?= $jobdetailsHelper->imageRenaming(strtolower($values[1])); ?>.svg">
+                                    <label><?= $values[1]; ?></label>
+
+                                </div>
+                                <div class="sliderContainer">
+                                    <input type="range" min="-100" max="100" value="0" class="slider group_<?= $companyClass; ?>" id="slider4">
+                                    <input type="hidden" name="slider4" id="slider4hidden" $value="<?= $field; ?>" data-value="<?= $field; ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+                        <?php
+                            $field = $customFields['07_slider_6'];
+                            $values = explode('<->', $field);
+                            if($field !== '' && $field !== '(slider nicht vorhanden)'):
+                        ?>
+                        <div class="uk-width-1-2@m">
+                            <div class="field">
+                                <div class="sliderLeft">
+                                    <img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/slider_icons/<?= $jobdetailsHelper->imageRenaming(strtolower($values[0])); ?>.svg">
+                                    <label><?= $values[0]; ?></label>
+                                </div>
+                                <div class="sliderRight">
+                                    <img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/slider_icons/<?= $jobdetailsHelper->imageRenaming(strtolower($values[1])); ?>.svg">
+                                    <label><?= $values[1]; ?></label>
+
+                                </div>
+                                <div class="sliderContainer">
+                                    <input type="range" min="-100" max="100" value="0" class="slider group_<?= $companyClass; ?>" id="slider4">
+                                    <input type="hidden" name="slider4" id="slider4hidden" $value="<?= $field; ?>" data-value="<?= $field; ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="uk-section-default uk-section" id="typSection">
-            <div class="uk-container uk-container-xlarge uk-padding-remove-horizontal uk-container-expand-right">
+        <div class="uk-section-default uk-section greyBoxSection" id="typSection">
+            <div class="uk-container uk-container-small">
                 <div class="tm-grid-expand uk-grid-margin uk-grid" uk-grid="">
-                    <div class="uk-width-1-6@m uk-first-column">
-
-                    </div>
-                    <div class="uk-grid-item-match uk-width-5-6@m">
-                        <div class="uk-tile-muted uk-tile">
+                    <div class="uk-grid-item-match uk-width-1-1@m">
+                        <div class="uk-tile-muted uk-tile tileMobileRight">
                             <span class="subtitle">Selbsteinschätzung</span>
                             <h3 class="uk-heading-large">
                                 <?= $customFields['08_werbistdu_ueberschrift']; ?>
@@ -319,7 +375,7 @@ $html = $jobdetails->job_contents[0]->content;
                         <div class="typeCheckboxes">
                             <label class="typeCheckboxLabel" for="typeCheckbox-1">
                                 <div class="circle">
-                                    <div class="innerCircle <?= $companyClass; ?>"></div>
+                                    <div class="innerCircle group_<?= $companyClass; ?>"></div>
                                     <img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/werbistdu_icons/<?= $jobdetailsHelper->imageRenaming($customFields['10_personas_1']); ?>.svg">
                                 </div>
                                 <input class="typeCheckbox" id="typeCheckbox-1" type="checkbox" name="personas1" value="<?= $customFields['10_personas_1']; ?>">
@@ -328,7 +384,7 @@ $html = $jobdetails->job_contents[0]->content;
 
                             <label class="typeCheckboxLabel" for="typeCheckbox-2">
                                 <div class="circle">
-                                    <div class="innerCircle <?= $companyClass; ?>"></div>
+                                    <div class="innerCircle group_<?= $companyClass; ?>"></div>
                                     <img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/werbistdu_icons/<?= $jobdetailsHelper->imageRenaming($customFields['10_personas_2']); ?>.svg">
                                 </div>
                                 <input class="typeCheckbox" id="typeCheckbox-2" type="checkbox" name="personas2" value="<?= $customFields['10_personas_2']; ?>">
@@ -337,7 +393,7 @@ $html = $jobdetails->job_contents[0]->content;
 
                             <label class="typeCheckboxLabel" for="typeCheckbox-3">
                                 <div class="circle">
-                                    <div class="innerCircle <?= $companyClass; ?>"></div>
+                                    <div class="innerCircle group_<?= $companyClass; ?>"></div>
                                     <img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/werbistdu_icons/<?= $jobdetailsHelper->imageRenaming($customFields['10_personas_3']); ?>.svg">
                                 </div>
                                 <input class="typeCheckbox" id="typeCheckbox-3" type="checkbox" name="personas3" value="<?= $customFields['10_personas_3']; ?>">
@@ -346,7 +402,7 @@ $html = $jobdetails->job_contents[0]->content;
 
                             <label class="typeCheckboxLabel" for="typeCheckbox-4">
                                 <div class="circle">
-                                    <div class="innerCircle <?= $companyClass; ?>"></div>
+                                    <div class="innerCircle group_<?= $companyClass; ?>"></div>
                                     <img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/werbistdu_icons/<?= $jobdetailsHelper->imageRenaming($customFields['10_personas_4']); ?>.svg">
                                 </div>
                                 <input class="typeCheckbox" id="typeCheckbox-4" type="checkbox" name="personas4" value="<?= $customFields['10_personas_4']; ?>">
@@ -355,7 +411,7 @@ $html = $jobdetails->job_contents[0]->content;
 
                             <label class="typeCheckboxLabel" for="typeCheckbox-5">
                                 <div class="circle">
-                                    <div class="innerCircle <?= $companyClass; ?>"></div>
+                                    <div class="innerCircle group_<?= $companyClass; ?>"></div>
                                     <img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/werbistdu_icons/<?= $jobdetailsHelper->imageRenaming($customFields['10_personas_5']); ?>.svg">
                                 </div>
                                 <input class="typeCheckbox" id="typeCheckbox-5" type="checkbox" name="personas5" value="<?= $customFields['10_personas_5']; ?>">
@@ -364,7 +420,7 @@ $html = $jobdetails->job_contents[0]->content;
 
                             <label class="typeCheckboxLabel" for="typeCheckbox-6">
                                 <div class="circle">
-                                    <div class="innerCircle <?= $companyClass; ?>"></div>
+                                    <div class="innerCircle group_<?= $companyClass; ?>"></div>
                                     <img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/werbistdu_icons/<?= $jobdetailsHelper->imageRenaming($customFields['10_personas_6']); ?>.svg">
                                 </div>
                                 <input class="typeCheckbox" id="typeCheckbox-6" type="checkbox" name="personas6" value="<?= $customFields['10_personas_6']; ?>">
@@ -373,7 +429,7 @@ $html = $jobdetails->job_contents[0]->content;
 
                             <label class="typeCheckboxLabel" for="typeCheckbox-7">
                                 <div class="circle">
-                                    <div class="innerCircle <?= $companyClass; ?>"></div>
+                                    <div class="innerCircle group_<?= $companyClass; ?>"></div>
                                     <img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/werbistdu_icons/<?= $jobdetailsHelper->imageRenaming($customFields['10_personas_7']); ?>.svg">
                                 </div>
                                 <input class="typeCheckbox" id="typeCheckbox-7" type="checkbox" name="personas7" value="<?= $customFields['10_personas_7']; ?>">
@@ -382,7 +438,7 @@ $html = $jobdetails->job_contents[0]->content;
 
                             <label class="typeCheckboxLabel" for="typeCheckbox-8">
                                 <div class="circle">
-                                    <div class="innerCircle <?= $companyClass; ?>"></div>
+                                    <div class="innerCircle group_<?= $companyClass; ?>"></div>
                                     <img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/werbistdu_icons/<?= $jobdetailsHelper->imageRenaming($customFields['10_personas_8']); ?>.svg">
                                 </div>
                                 <input class="typeCheckbox" id="typeCheckbox-8" type="checkbox" name="personas8" value="<?= $customFields['10_personas_8']; ?>">
@@ -391,7 +447,7 @@ $html = $jobdetails->job_contents[0]->content;
 
                             <label class="typeCheckboxLabel" for="typeCheckbox-9">
                                 <div class="circle">
-                                    <div class="innerCircle <?= $companyClass; ?>"></div>
+                                    <div class="innerCircle group_<?= $companyClass; ?>"></div>
                                     <img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/werbistdu_icons/<?= $jobdetailsHelper->imageRenaming($customFields['10_personas_9']); ?>.svg">
                                 </div>
                                 <input class="typeCheckbox" id="typeCheckbox-9" type="checkbox" name="personas9" value="<?= $customFields['10_personas_9']; ?>">
@@ -411,16 +467,20 @@ $html = $jobdetails->job_contents[0]->content;
                     <h2 class="uk-heading-large">
                         <?= $customFields['11_ansprechpartner_ueberschrift']; ?>
                     </h2>
+                    <h3 class="uk-heading-medium">
+                        Dein/e Ansprechpartner:in
+                    </h3>
                     <ul class="contactData">
                         <?php
                         $contactData = $jobdetails->main_contact;
                         ?>
-                        <li><img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/ansprechpartner/recruitainment_<?= strtolower($contactData->firstname . '_' . $contactData->lastname); ?>.png"></li>
-                        <li class="contactName"><strong><?= $contactData->firstname . ' ' . $contactData->lastname; ?></strong></li>
-                        <li class="contactPosition"><?= $contactData->job_title; ?></li>
-                        <li class="contactPhone"><?= $contactData->phone; ?></li>
+                        <li class="contactImage"><img src="/wp-content/plugins/bms_prescreen/assets/images/recruitainment/ansprechpartner/recruitainment_<?= strtolower($contactData->firstname . '_' . $contactData->lastname); ?>.png"></li>
+                        <li class="contactDetails">
+                            <span class="contactName"><strong><?= $contactData->firstname . ' ' . $contactData->lastname; ?></strong></span>
+                            <span class="contactPosition"><?= $contactData->job_title; ?></span>
+                            <span class="contactPhone"><?= $contactData->phone; ?></span>
+                        </li>
                     </ul>
-                    <span class="subheading">Deine Daten</span>
                 </div>
 
                 <div class="tm-grid-expand uk-child-width-1-1 uk-grid-margin uk-grid uk-grid-stack sectionMeta uk-text-center" uk-grid="">
@@ -489,7 +549,7 @@ $html = $jobdetails->job_contents[0]->content;
                     <div class="formRow">
                         <div class="uk-form-controls">
                             <div class="uk-inline uk-display-block">
-                                <button type="submit" id="sendCandidate" class="uk-button-default-company <?= $companyClass; ?>" disabled>Bewerbung abschicken</button>
+                                <button type="submit" id="sendCandidate" class="uk-button-default-company group_<?= $companyClass; ?>" disabled>Bewerbung abschicken</button>
                             </div>
                         </div>
                     </div>
@@ -503,13 +563,15 @@ $html = $jobdetails->job_contents[0]->content;
 
 <!-- This is the modal -->
 <div id="validationModal" uk-modal>
-    <div class="uk-modal-dialog uk-modal-body">
-        <h2 class="uk-heading-large">Achtung</h2>
-        <p class="warningText">
-        </p>
-        <p class="uk-text-right">
-            <button class="uk-button uk-button-primary  uk-modal-close" type="button">Schliessen</button>
-        </p>
+    <div class="uk-modal-dialog uk-modal-body uk-container uk-container-small ">
+        <div class="companyModalDialog">
+            <button class="uk-modal-close-default" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="29.25" height="29.25" viewBox="0 0 29.25 29.25"><path d="M23.295,21.705,19.589,18l3.705-3.705a1.124,1.124,0,0,0-1.589-1.589L18,16.411l-3.705-3.705a1.124,1.124,0,0,0-1.589,1.589L16.411,18l-3.705,3.705a1.086,1.086,0,0,0,0,1.589,1.116,1.116,0,0,0,1.589,0L18,19.589l3.705,3.705a1.129,1.129,0,0,0,1.589,0A1.116,1.116,0,0,0,23.295,21.705Z" transform="translate(-3.375 -3.375)"/><path d="M18,5.344A12.651,12.651,0,1,1,9.049,9.049,12.573,12.573,0,0,1,18,5.344m0-1.969A14.625,14.625,0,1,0,32.625,18,14.623,14.623,0,0,0,18,3.375Z" transform="translate(-3.375 -3.375)"/></svg>
+            </button>
+            <h2 class="uk-heading-large">Achtung</h2>
+            <p class="warningText">
+            </p>
+        </div>
     </div>
 </div>
 <?php do_action('qodef_page_after_container') ?>
